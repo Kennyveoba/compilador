@@ -176,8 +176,7 @@ public final class Scanner {
       takeIt();
       return Token.RCURLY;
 
-    case SourceFile.EOT:
-      return Token.EOT;
+
 
     default:
       takeIt();

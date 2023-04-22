@@ -152,10 +152,7 @@ public class Parser {
     try {
       Command cAST = parseCommand();
       programAST = new Program(cAST, previousTokenPosition);
-      if (currentToken.kind != Token.EOT) {
-        syntacticError("\"%\" not expected after end of program",
-          currentToken.spelling);
-      }
+     
     }
     catch (SyntaxError s) { return null; }
     return programAST;
@@ -315,6 +312,15 @@ public class Parser {
         accept(Token.THEN);
         Command c1AST = parseCommand();
         
+       
+         while (currentToken.kind == Token.BAR-1) {
+            acceptIt();
+            Expression eAST = parseExpression();
+            accept(Token.THEN);
+            Command cAST = parseCommand();
+            c1AST = new IfCommand(eAST, cAST, new EmptyCommand(currentToken.position), currentToken.position);
+          }
+        
         accept(Token.ELSE);
         Command c2AST = parseCommand();
         accept(Token.END);
@@ -326,8 +332,9 @@ public class Parser {
     //| "repeat" "while" Expression "do" Command "end"
     case Token.REPEAT:
     {
+ 
         acceptIt();
-        accept(Token.WHILE);
+        accept(Token.UNTIL);
         Expression eAST = parseExpression();
         accept(Token.DO);
         Command cAST = parseCommand();
@@ -342,7 +349,7 @@ public class Parser {
       case Token.END:
       case Token.ELSE:
       case Token.IN:
-      case Token.EOT:
+
 
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
