@@ -131,6 +131,7 @@ public final class Scanner {
     case '.':
       takeIt();
       return Token.DOT;
+     
 
     case ':':
       takeIt();
@@ -151,6 +152,14 @@ public final class Scanner {
     case '~':
       takeIt();
       return Token.IS;
+      
+    case '|':
+      takeIt();
+      return Token.BAR;
+      
+    case '$':
+      takeIt();
+      return Token.DOLLAR;
 
     case '(':
       takeIt();

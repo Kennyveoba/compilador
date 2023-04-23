@@ -59,12 +59,15 @@ final class Token extends Object {
   // Token classes...
 
   public static final int
-
+    
+    // literals, identifiers, operators...
     INTLITERAL  = 0,
     CHARLITERAL = 1,
     IDENTIFIER  = 2,
     OPERATOR    = 3,
     ARRAY     = 4,
+          
+    // reserved words - must be in alphabetical order...
     CONST     = 5,
     DO        = 6,
     ELSE      = 7,
@@ -88,6 +91,8 @@ final class Token extends Object {
     VAR       = 25,
     WHEN      = 26,
     WHILE     = 27,
+          
+    // punctuation...
     DOT       = 28,
     COLON     = 29,
     SEMICOLON = 30,
@@ -95,14 +100,19 @@ final class Token extends Object {
     BECOMES   = 32,
     IS        = 33,
     BAR       = 34,
-    LPAREN    = 35,
-    RPAREN    = 36,
-    LBRACKET  = 37,
-    RBRACKET  = 38,
-    LCURLY    = 39,
-    RCURLY    = 40,
-    EOT       = 41,
-    ERROR     = 42;
+    DOLLAR    = 35,
+          
+    // brackets...
+    LPAREN    = 36,
+    RPAREN    = 37,
+    LBRACKET  = 38,
+    RBRACKET  = 39,
+    LCURLY    = 40,
+    RCURLY    = 41,
+          
+     // special tokens...    
+    EOT       = 42,
+    ERROR     = 43;
 
 
   private static String[] tokenTable = new String[] {
@@ -141,6 +151,7 @@ final class Token extends Object {
     ":=",
     "~",
     "|" ,
+    "$" ,
     "(",
     ")",
     "[",

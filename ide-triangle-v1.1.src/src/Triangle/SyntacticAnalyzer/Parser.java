@@ -148,7 +148,6 @@ public class Parser {
     previousTokenPosition.start = 0;
     previousTokenPosition.finish = 0;
     currentToken = lexicalAnalyser.scan();
-
     try {
       Command cAST = parseCommand();
       programAST = new Program(cAST, previousTokenPosition);
@@ -263,7 +262,39 @@ public class Parser {
     }
     return commandAST;
   }
+    
+  
+  //Secuencial command del if
+  // ("|" Expression "then" Command)*
+  //     "else" Command "end"
+   Command parseRestoDelIf() throws SyntaxError {
+    Command commandAST = null; // in case there's a syntactic error
 
+    SourcePosition commandPos = new SourcePosition();
+    start(commandPos);
+    if (currentToken.kind == Token.BAR) {
+        acceptIt();
+        Expression eAST = parseExpression();
+        accept(Token.THEN);
+        Command c1AST = parseCommand();
+        Command c2AST = parseRestoDelIf();
+        finish(commandPos);
+        return new IfCommand(eAST, c1AST,c2AST, commandPos);
+    }
+    else if(currentToken.kind == Token.ELSE){
+        acceptIt();
+        commandAST = parseCommand();
+        accept(Token.END);
+        finish(commandPos);
+        return commandAST;
+    }
+    else{
+            //ERROR
+   }
+    return commandAST;
+  }
+   
+   
   Command parseSingleCommand() throws SyntaxError {
     Command commandAST = null; // in case there's a syntactic error
 
@@ -292,7 +323,20 @@ public class Parser {
         }
       }
       break;
-      
+     
+     //| "if" Expression "then" Command + RESTO DEL IF ("|" Expression "then" Command)*
+     //                                                    "else" Command "end"
+     case Token.IF:
+      {
+        acceptIt();
+        Expression eAST = parseExpression();
+        accept(Token.THEN);
+        Command c1AST = parseCommand();
+        Command c2AST = parseRestoDelIf();
+        finish(commandPos);
+        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+      }
+      break;
      
 
     //Implementacion de 
@@ -300,11 +344,8 @@ public class Parser {
     //Se realiza el cambio para que termine con END 
     case Token.LET:
       {
-        
         acceptIt();
-        System.out.print(currentToken);
         Declaration dAST = parseDeclaration();
-        System.out.print(currentToken);
         accept(Token.IN);
         Command cAST = parseCommand();
         accept(Token.END);
@@ -312,6 +353,7 @@ public class Parser {
         commandAST = new LetCommand(dAST, cAST, commandPos);
       }
     break;
+    
     //Adicion de:
     //| "repeat" "while" Expression "do" Command "end"
     //| "repeat" "until" Expression "do" Command "end"
@@ -378,7 +420,7 @@ public class Parser {
      }
     break;
     
-     //| "for" Identifier ":=" Expression ".." Expression
+    //| "for" Identifier ":=" Expression ".." Expression
     //    "do" Command "end"
     //| "for" Identifier ":=" Expression ".." Expression
     //    "while" Expression "do" Command "end"
