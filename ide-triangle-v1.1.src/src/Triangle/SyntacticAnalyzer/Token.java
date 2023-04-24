@@ -1,17 +1,3 @@
-/*
- * @(#)Token.java                        2.1 2003/10/07
- *
- * Copyright (C) 1999, 2003 D.A. Watt and D.F. Brown
- * Dept. of Computing Science, University of Glasgow, Glasgow G12 8QQ Scotland
- * and School of Computer and Math Sciences, The Robert Gordon University,
- * St. Andrew Street, Aberdeen AB25 1HG, Scotland.
- * All rights reserved.
- *
- * This software is provided free for educational use only. It may
- * not be used for commercial purposes without the prior written permission
- * of the authors.
- */
-
 package Triangle.SyntacticAnalyzer;
 
 
@@ -65,9 +51,9 @@ final class Token extends Object {
     CHARLITERAL = 1,
     IDENTIFIER  = 2,
     OPERATOR    = 3,
-    ARRAY     = 4,
           
     // reserved words - must be in alphabetical order...
+    ARRAY     = 4,
     CONST     = 5,
     DO        = 6,
     ELSE      = 7,
@@ -78,12 +64,12 @@ final class Token extends Object {
     IN        = 12,
     LET       = 13,
     OF        = 14,
-    PACKAGE   = 15,
-    PRIVATE   = 16,
-    PROC      = 17,
-    REC       = 18,
-    RECORD    = 19,
-    REPEAT    = 20,
+    PRIVATE   = 15,
+    PROC      = 16,
+    REC       = 17,
+    RECORD    = 18,
+    REPEAT    = 19,
+    SKIP      = 20,
     THEN      = 21,
     TIMES     = 22,
     TYPE      = 23,
@@ -110,7 +96,7 @@ final class Token extends Object {
     LCURLY    = 40,
     RCURLY    = 41,
           
-     // special tokens...    
+    // special tokens...  
     EOT       = 42,
     ERROR     = 43;
 
@@ -131,12 +117,12 @@ final class Token extends Object {
     "in",
     "let",
     "of",
-    "package",
     "private",
     "proc",
     "rec",
     "record",
     "repeat",
+    "skip",
     "then",
     "times",
     "type",
