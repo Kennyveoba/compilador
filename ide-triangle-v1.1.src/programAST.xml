@@ -1,40 +1,38 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<IfCommand>
+<WhileCommand>
 <BinaryExpression>
-<BinaryExpression>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="j"/>
+</SimpleVname>
+</VnameExpression>
 <Operator value="="/>
 <IntegerExpression>
 <IntegerLiteral value="1"/>
 </IntegerExpression>
 </BinaryExpression>
-<Operator value="+"/>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+<BinaryExpression>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="j"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="*"/>
 <IntegerExpression>
 <IntegerLiteral value="3"/>
 </IntegerExpression>
 </BinaryExpression>
-<CallCommand>
-<Identifier value="puteol"/>
-<EmptyActualParameterSequence/>
-</CallCommand>
-<SequentialCommand>
-<CallCommand>
-<Identifier value="put"/>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<CharacterExpression>
-<CharacterLiteral value="'x'"/>
-</CharacterExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-<CallCommand>
-<Identifier value="puteol"/>
-<EmptyActualParameterSequence/>
-</CallCommand>
-</SequentialCommand>
-</IfCommand>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</BinaryExpression>
+</AssignCommand>
+</WhileCommand>
 </Program>

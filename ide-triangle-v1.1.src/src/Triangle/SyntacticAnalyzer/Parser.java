@@ -1,5 +1,6 @@
 package Triangle.SyntacticAnalyzer;
 
+import PrintTree.Writer;
 import Triangle.ErrorReporter;
 import Triangle.AbstractSyntaxTrees.ActualParameter;
 import Triangle.AbstractSyntaxTrees.ActualParameterSequence;
@@ -142,8 +143,13 @@ public class Parser {
           currentToken.spelling);
       }
     }
+    
     catch (SyntaxError s) { return null; }
+    Writer writer = new Writer("programAST.xml");
+    writer.write(programAST);
     return programAST;
+    
+            
   }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -252,7 +258,7 @@ public class Parser {
   
   //Secuencial command del if
   // ("|" Expression "then" Command)*
-  //     "else" Command "end"
+  //     "else" Command "end"         (Resto del if) 
    Command parseRestoDelIf() throws SyntaxError {
     Command commandAST = null; // in case there's a syntactic error
 
@@ -450,12 +456,7 @@ public class Parser {
     }
     break;
 
-
-    case Token.SEMICOLON:
-    case Token.END:
-    case Token.ELSE:
-    case Token.IN:
-    case Token.EOT:
+    case Token.SKIP:
 
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
