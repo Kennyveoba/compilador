@@ -145,8 +145,7 @@ public class Parser {
     }
     
     catch (SyntaxError s) { return null; }
-    Writer writer = new Writer("programAST.xml");
-    writer.write(programAST);
+
     return programAST;
     
             
@@ -267,11 +266,13 @@ public class Parser {
     if (currentToken.kind == Token.BAR) {
         acceptIt();
         Expression eAST = parseExpression();
+        // Verificar si se encuentra la palabra clave "then" después de la expresión
         accept(Token.THEN);
         Command c1AST = parseCommand();
         Command c2AST = parseRestoDelIf();
         finish(commandPos);
         return new IfCommand(eAST, c1AST,c2AST, commandPos);
+        
     }
     else if(currentToken.kind == Token.ELSE){
         acceptIt();
@@ -281,7 +282,8 @@ public class Parser {
         return commandAST;
     }
     else{
-            //ERROR
+        // Si no se encuentra la palabra clave "ELSE o | ", se ha producido un error sintáctico
+        syntacticError("ERROR: 'else or | ' expected here ", currentToken.spelling); 
    }
     return commandAST;
   }
@@ -292,9 +294,9 @@ public class Parser {
 
     SourcePosition commandPos = new SourcePosition();
     start(commandPos);
-  
+    
     switch (currentToken.kind) {
-
+    
     case Token.IDENTIFIER:
       {
         Identifier iAST = parseIdentifier();
@@ -319,16 +321,23 @@ public class Parser {
      //| "if" Expression "then" Command + RESTO DEL IF ("|" Expression "then" Command)*
      //                                                    "else" Command "end"
      case Token.IF:
-      {
+    {
         acceptIt();
         Expression eAST = parseExpression();
-        accept(Token.THEN);
-        Command c1AST = parseCommand();
-        Command c2AST = parseRestoDelIf();
-        finish(commandPos);
-        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
-      }
-      break;
+
+        // Verificar si se encuentra la palabra clave "then" después de la expresión
+        if (currentToken.kind == Token.THEN) {
+            accept(Token.THEN);
+            Command c1AST = parseCommand();
+            Command c2AST = parseRestoDelIf();
+            finish(commandPos);
+            commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+        } else {
+            // Si no se encuentra la palabra clave "then", se ha producido un error sintáctico
+            syntacticError("ERROR: 'then' expected here ", currentToken.spelling); 
+        }
+    }
+    break;
      
 
     //Implementacion de 
@@ -406,7 +415,7 @@ public class Parser {
             }
             else{
                 //Caso de error
-                System.out.print("ERROR:");
+                syntacticError("ERROR: 'times' expected here ", currentToken.spelling); 
             }
         }
      }
@@ -429,12 +438,14 @@ public class Parser {
         Expression e1AST = parseExpression();
         
         if (currentToken.kind == Token.DO) {
+        
             acceptIt();
             Command cAST = parseCommand();
             accept(Token.END);
             finish(commandPos);
         }
         else if (currentToken.kind == Token.WHILE) {
+         
             acceptIt();
             Expression e2AST = parseExpression();
             accept(Token.DO);
@@ -443,6 +454,7 @@ public class Parser {
             finish(commandPos);
         }
         else if (currentToken.kind == Token.UNTIL) {
+           
             acceptIt();
             Expression e2AST = parseExpression();
             accept(Token.DO);
@@ -451,13 +463,13 @@ public class Parser {
             finish(commandPos);
         }
         else{
-         System.out.print("ERROR");
+         syntacticError("'do, while or until' expected here ", currentToken.spelling); 
         }
     }
     break;
 
     case Token.SKIP:
-
+      acceptIt();
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
       break;
