@@ -426,13 +426,13 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
 
   /*
-        Eliminar:
+        Se elimino las siguientes reglas:
         ::= (vacio)
         | "begin" Command "end"
         | "let" Declaration "in" single-Command
         | "if" Expression "then" single-Command "else" single-Command
         | "while" Expression "do" single-Command
-        Maynor Martinez, Cesar Jimenez, Fernanda Murillo y Sebastian Chaves
+        Sahid Rojas Chacon , Kenny Vega
    */
 
   Command parseSingleCommand() throws SyntaxError {
@@ -628,9 +628,9 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
     }
     break;
 
-      /* Agregar:
-            Skip
-        Fernanda Murillo
+      /* Se agrego el skip:
+            
+        Kenny Vega
         */
     case Token.SKIP:
       acceptIt();
