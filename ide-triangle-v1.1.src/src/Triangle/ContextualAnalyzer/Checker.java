@@ -25,6 +25,8 @@ import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
+import Triangle.AbstractSyntaxTrees.CaseLiteral;
+import Triangle.AbstractSyntaxTrees.CaseRange;
 import Triangle.AbstractSyntaxTrees.CharTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
@@ -32,6 +34,8 @@ import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
 import Triangle.AbstractSyntaxTrees.Declaration;
+import Triangle.AbstractSyntaxTrees.DoUntilLoop;
+import Triangle.AbstractSyntaxTrees.DoWhileLoop;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
@@ -39,6 +43,10 @@ import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;
+import Triangle.AbstractSyntaxTrees.ForInCommand;
+import Triangle.AbstractSyntaxTrees.ForUntilCommand;
+import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -52,26 +60,39 @@ import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
 import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.LongIdentifier;
+import Triangle.AbstractSyntaxTrees.LongIdentifierComplex;
+import Triangle.AbstractSyntaxTrees.LongIdentifierSimple;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
 import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
+import Triangle.AbstractSyntaxTrees.PackageIdentifier;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
 import Triangle.AbstractSyntaxTrees.Program;
+import Triangle.AbstractSyntaxTrees.RECDeclaration;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.RepeatTimes;
+import Triangle.AbstractSyntaxTrees.SelectCommand;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCommand;
 import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
+import Triangle.AbstractSyntaxTrees.SequentialPackage;
 import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
 import Triangle.AbstractSyntaxTrees.SimpleVname;
 import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.SingleCase;
 import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.SinglePackage;
 import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.SubscriptVname;
 import Triangle.AbstractSyntaxTrees.Terminal;
@@ -79,12 +100,15 @@ import Triangle.AbstractSyntaxTrees.TypeDeclaration;
 import Triangle.AbstractSyntaxTrees.TypeDenoter;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
 import Triangle.AbstractSyntaxTrees.UnaryOperatorDeclaration;
+import Triangle.AbstractSyntaxTrees.UntilLoop;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
+import Triangle.AbstractSyntaxTrees.VariableInitializedDeclaration;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.WhileLoop;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
 public final class Checker implements Visitor {
@@ -106,16 +130,18 @@ public final class Checker implements Visitor {
 
   public Object visitCallCommand(CallCommand ast, Object o) {
 
+    /*ast.I.visit(this, null);
+    ast.APS.visit(this, null);*/
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
-      reportUndeclared(ast.I);
+      reportUndeclared(ast.I.getSimpleIdentifier());
     else if (binding instanceof ProcDeclaration) {
       ast.APS.visit(this, ((ProcDeclaration) binding).FPS);
     } else if (binding instanceof ProcFormalParameter) {
       ast.APS.visit(this, ((ProcFormalParameter) binding).FPS);
     } else
       reporter.reportError("\"%\" is not a procedure identifier",
-                           ast.I.spelling, ast.I.position);
+                           ast.I.getSimpleIdentifier().spelling, ast.I.position);
     return null;
   }
 
@@ -168,7 +194,9 @@ public final class Checker implements Visitor {
   }
 
   public Object visitBinaryExpression(BinaryExpression ast, Object o) {
-
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitForCommand'");
+    /*
     TypeDenoter e1Type = (TypeDenoter) ast.E1.visit(this, null);
     TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
     Declaration binding = (Declaration) ast.O.visit(this, null);
@@ -194,12 +222,13 @@ public final class Checker implements Visitor {
       ast.type = bbinding.RES;
     }
     return ast.type;
+    */
   }
 
   public Object visitCallExpression(CallExpression ast, Object o) {
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null) {
-      reportUndeclared(ast.I);
+      reportUndeclared(ast.I.getSimpleIdentifier());
       ast.type = StdEnvironment.errorType;
     } else if (binding instanceof FuncDeclaration) {
       ast.APS.visit(this, ((FuncDeclaration) binding).FPS);
@@ -209,7 +238,7 @@ public final class Checker implements Visitor {
       ast.type = ((FuncFormalParameter) binding).T;
     } else
       reporter.reportError("\"%\" is not a function identifier",
-                           ast.I.spelling, ast.I.position);
+                           ast.I.getSimpleIdentifier().spelling, ast.I.position);
     return ast.type;
   }
 
@@ -606,11 +635,11 @@ public final class Checker implements Visitor {
   public Object visitSimpleTypeDenoter(SimpleTypeDenoter ast, Object o) {
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null) {
-      reportUndeclared (ast.I);
+      reportUndeclared (ast.I.getSimpleIdentifier());
       return StdEnvironment.errorType;
     } else if (! (binding instanceof TypeDeclaration)) {
       reporter.reportError ("\"%\" is not a type identifier",
-                            ast.I.spelling, ast.I.position);
+                            ast.I.getSimpleIdentifier().spelling, ast.I.position);
       return StdEnvironment.errorType;
     }
     return ((TypeDeclaration) binding).T;
@@ -700,7 +729,7 @@ public final class Checker implements Visitor {
     ast.type = StdEnvironment.errorType;
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
-      reportUndeclared(ast.I);
+      reportUndeclared(ast.I.getSimpleIdentifier());
     else
       if (binding instanceof ConstDeclaration) {
         ast.type = ((ConstDeclaration) binding).E.type;
@@ -716,7 +745,7 @@ public final class Checker implements Visitor {
         ast.variable = true;
       } else
         reporter.reportError ("\"%\" is not a const or var identifier",
-                              ast.I.spelling, ast.I.position);
+                              ast.I.getSimpleIdentifier().spelling, ast.I.position);
     return ast.type;
   }
 
@@ -938,4 +967,126 @@ public final class Checker implements Visitor {
     StdEnvironment.unequalDecl = declareStdBinaryOp("\\=", StdEnvironment.anyType, StdEnvironment.anyType, StdEnvironment.booleanType);
 
   }
+
+
+  @Override
+  public Object visitForCommand(ForCommand ast, Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitForCommand'");
+  }
+  public Object visitPackageDeclaration(PackageDeclaration aThis, Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitPackageDeclaration'");
+  }
+
+
+  @Override
+  public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitForWhileCommand'");
+  }
+
+
+  @Override
+  public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitForUntilCommand'");
+  }
+
+
+  @Override
+  public Object visitForInCommand(ForInCommand ast, Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitForInCommand'");
+  }
+  public Object visitPackageIdentifier(PackageIdentifier packageIdentifier, Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitPackageIdentifier'");
+  }
+
+  @Override
+  public Object visitRecDeclaration(RECDeclaration ast, Object o) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  @Override
+  public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  @Override
+  public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+    @Override
+    public Object visitWhileLoop(WhileLoop aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Object visitUntilLoop(UntilLoop aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Object visitDoWhileLoop(DoWhileLoop aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Object visitDoUntilLoop(DoUntilLoop aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitLongIdentifierComplex(LongIdentifierComplex ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitSelectCommand(SelectCommand aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitSequentialCase(SequentialCase aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitSingleCase(SingleCase aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitCaseRange(CaseRange aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitCaseLiteral(CaseLiteral aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitSinglePackageDeclaration(SinglePackage aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitSequentialPackageDeclaration(SequentialPackage aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
 }

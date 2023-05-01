@@ -23,6 +23,7 @@ public final class Scanner {
   private char currentChar;
   private StringBuffer currentSpelling;
   private boolean currentlyScanningToken;
+  private boolean writingHTML;
 
   private boolean isLetter(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
@@ -48,6 +49,7 @@ public final class Scanner {
     sourceFile = source;
     currentChar = sourceFile.getSource();
     debug = false;
+    writingHTML = false;
   }
 
   public void enableDebugging() {
@@ -127,11 +129,25 @@ public final class Scanner {
         return Token.CHARLITERAL;
       } else
         return Token.ERROR;
-
+    /*
+      Add new character literals here
+      Maynor Martinez, César Jiménez, Fernanda Murillo, Sebastian Chavez
+     */
+    case '$':
+      takeIt();
+      return Token.DOLLAR;
+    
+    case '|':
+      takeIt();
+      return Token.BAR;
+    
     case '.':
       takeIt();
-      return Token.DOT;
-     
+      if (currentChar == '.') {
+        takeIt();
+        return Token.DOTDOT;
+      } else
+        return Token.DOT;
 
     case ':':
       takeIt();
@@ -152,14 +168,6 @@ public final class Scanner {
     case '~':
       takeIt();
       return Token.IS;
-      
-    case '|':
-      takeIt();
-      return Token.BAR;
-      
-    case '$':
-      takeIt();
-      return Token.DOLLAR;
 
     case '(':
       takeIt();
@@ -184,10 +192,30 @@ public final class Scanner {
     case '}':
       takeIt();
       return Token.RCURLY;
-
+    
+    case '!':
+      takeIt();
+        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT))
+          takeIt();
+        if (currentChar == SourceFile.EOL)
+          takeIt();
+        return Token.COMMENT;
+    
+    case '\t':
+      takeIt();
+      return Token.TAB;
+    
+    case '\r':
+      takeIt();
+      if (currentChar == '\n') {
+        takeIt();
+        return Token.EOL;
+      } else
+        return Token.EOL;
+    
     case SourceFile.EOT:
       return Token.EOT;
-
+    
     default:
       takeIt();
       return Token.ERROR;
@@ -199,6 +227,7 @@ public final class Scanner {
     SourcePosition pos;
     int kind;
 
+    if(!writingHTML){
     currentlyScanningToken = false;
     while (currentChar == '!'
            || currentChar == ' '
@@ -206,7 +235,7 @@ public final class Scanner {
            || currentChar == '\r'
            || currentChar == '\t')
       scanSeparator();
-
+    }
     currentlyScanningToken = true;
     currentSpelling = new StringBuffer("");
     pos = new SourcePosition();
@@ -221,4 +250,7 @@ public final class Scanner {
     return tok;
   }
 
+    public void setWritingHTML(boolean writingHTML) {
+        this.writingHTML = writingHTML;
+    }
 }

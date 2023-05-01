@@ -17,7 +17,6 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Element;
 import javax.swing.tree.DefaultMutableTreeNode;
-import PrintTree.Writer;
 
 /**
  * File Frame. Contains the source edition text box, console, ASTs and 
