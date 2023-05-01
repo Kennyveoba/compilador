@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<WhileCommand>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</WhileCommand>
+</Program>

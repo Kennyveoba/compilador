@@ -127,15 +127,14 @@ public interface Visitor {
   public abstract Object visitLongIdentifierComplex (LongIdentifierComplex ast, Object o);
 
 
-    public Object visitWhileLoop(WhileLoop aThis, Object o);
 
     public Object visitUntilLoop(UntilLoop aThis, Object o);
 
     public Object visitRepeatTimes(RepeatTimes aThis, Object o);
 
-    public Object visitDoWhileLoop(DoWhileLoop aThis, Object o);
+    public Object visitDoWhileLoop(DoWhileCommand aThis, Object o);
 
-    public Object visitDoUntilLoop(DoUntilLoop aThis, Object o);
+    public Object visitDoUntilLoop(DoUntilCommand aThis, Object o);
 
 
   //SelectCommand visitor

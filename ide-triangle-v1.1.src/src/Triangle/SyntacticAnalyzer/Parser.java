@@ -31,8 +31,8 @@ import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
 import Triangle.AbstractSyntaxTrees.Declaration;
-import Triangle.AbstractSyntaxTrees.DoUntilLoop;
-import Triangle.AbstractSyntaxTrees.DoWhileLoop;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
@@ -101,7 +101,6 @@ import Triangle.AbstractSyntaxTrees.VariableInitializedDeclaration;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
-import Triangle.AbstractSyntaxTrees.WhileLoop;
 
 public class Parser {
 
@@ -541,7 +540,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             Command cAST = parseCommand();
             accept(Token.END);
             finish(commandPos);
-            commandAST = new DoWhileLoop(cAST, eAST, commandPos);
+            commandAST = new DoWhileCommand(cAST, eAST, commandPos);
         }
         else if (currentToken.kind == Token.UNTIL) {
             acceptIt();
@@ -550,7 +549,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             Command cAST = parseCommand();
             accept(Token.END);
             finish(commandPos);
-            commandAST = new DoUntilLoop(cAST, eAST, commandPos);
+            commandAST = new DoUntilCommand(cAST, eAST, commandPos);
         }
         else if (currentToken.kind == Token.DO) {
             acceptIt();
@@ -560,13 +559,13 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
                 Expression eAST = parseExpression();
                 accept(Token.END);
                 finish(commandPos);
-                commandAST = new DoUntilLoop(cAST, eAST, commandPos);
+                commandAST = new DoUntilCommand(cAST, eAST, commandPos);
             } else if (currentToken.kind == Token.UNTIL) {
                 acceptIt();
                 Expression eAST = parseExpression();
                 accept(Token.END);
                 finish(commandPos);
-                commandAST = new DoUntilLoop(cAST, eAST, commandPos);
+                commandAST = new DoUntilCommand(cAST, eAST, commandPos);
             }
         }
         else{ 

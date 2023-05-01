@@ -17,8 +17,8 @@ import Triangle.AbstractSyntaxTrees.CharacterLiteral;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
-import Triangle.AbstractSyntaxTrees.DoUntilLoop;
-import Triangle.AbstractSyntaxTrees.DoWhileLoop;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
@@ -86,7 +86,6 @@ import Triangle.AbstractSyntaxTrees.VariableInitializedDeclaration;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
-import Triangle.AbstractSyntaxTrees.WhileLoop;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -812,17 +811,6 @@ public class WriterVisitor implements Visitor {
     }
 
     
-          @Override
-     public Object visitWhileLoop(WhileLoop aThis, Object o) {
-        writeLineHTML("<WhileLoop>");
-        aThis.E.visit(this, null);
-        aThis.C.visit(this, null);
-        writeLineHTML("</WhileLoop>");
-        return null;
-    }
-
-    
-    
      @Override
      public Object visitUntilLoop(UntilLoop aThis, Object o) {
         writeLineHTML("<UntilLoop>");
@@ -844,7 +832,7 @@ public class WriterVisitor implements Visitor {
 
     
          @Override
-     public Object visitDoWhileLoop(DoWhileLoop aThis, Object o) {
+     public Object visitDoWhileLoop(DoWhileCommand aThis, Object o) {
         writeLineHTML("<DoWhileLoop>");
         aThis.E.visit(this, null);
         aThis.C.visit(this, null);
@@ -854,7 +842,7 @@ public class WriterVisitor implements Visitor {
 
     
          @Override
-     public Object visitDoUntilLoop(DoUntilLoop aThis, Object o) {
+     public Object visitDoUntilLoop(DoUntilCommand aThis, Object o) {
         writeLineHTML("<DoUntilLoop>");
         aThis.E.visit(this, null);
         aThis.C.visit(this, null);

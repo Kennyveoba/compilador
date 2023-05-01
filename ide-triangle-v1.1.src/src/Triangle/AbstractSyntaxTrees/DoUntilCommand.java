@@ -2,8 +2,8 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public class DoUntilLoop extends Command {
-    public DoUntilLoop(Command cAST, Expression eAST, SourcePosition thePosition) {
+public class DoUntilCommand extends Command {
+    public DoUntilCommand(Command cAST, Expression eAST, SourcePosition thePosition) {
         super(thePosition);
         C = cAST;
         E = eAST;
