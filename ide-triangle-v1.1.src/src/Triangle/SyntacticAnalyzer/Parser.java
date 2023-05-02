@@ -160,9 +160,10 @@ public class Parser {
   //
   ///////////////////////////////////////////////////////////////////////////////
 
-  /* Modificar Program:
-        Program ::= Package-Declaration * Command
-        Maynor Martinez
+  /* 
+  Modificar Program:
+    Program ::= Package-Declaration * Command
+  Sahid Rojas
   */
   public Program parseProgram() {
 
@@ -210,10 +211,12 @@ public class Parser {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/* Agregar:
-        PackageDeclaration ::= "package" Package-Identifier "~" 
-                                         Declaration "end"
-        Maynor Martinez
+/* 
+  Agregar:
+  PackageDeclaration ::= "package" Package-Identifier "~" 
+           Declaration "end"
+   
+  Sahid Rojas
   */
 PackageDeclaration parsePackageDeclaration() throws SyntaxError {  
   PackageDeclaration pacDecAST = null;
@@ -230,9 +233,9 @@ PackageDeclaration parsePackageDeclaration() throws SyntaxError {
 }
 
 /* Agregar:
-        Package-Identifier ::= Identifier
-        Maynor Martinez
-    */
+   Package-Identifier ::= Identifier
+   Sahid Rojas
+*/
 PackageIdentifier parsePackageIdentifier() throws SyntaxError {
   PackageIdentifier pacIDAST = null;
   SourcePosition pacIDPos = new SourcePosition();
@@ -250,8 +253,13 @@ PackageIdentifier parsePackageIdentifier() throws SyntaxError {
   return pacIDAST;
 }
 
-//parseLongIdentifier Long-Identifier ::= [ Package-Identifier "$" ] Identifier
-//Maynor Martinez
+
+/*
+ Agregar:
+ parseLongIdentifier Long-Identifier ::= [ Package-Identifier "$" ] Identifier
+ Sahid Rojas
+
+*/
 LongIdentifier parseLongIdentifier() throws SyntaxError {
   LongIdentifier LI = null;
   SourcePosition LIpos = new SourcePosition();
@@ -363,7 +371,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
     return O;
   }
   
-  
+  // Kenny Vega
   //Secuencial command del if
   // ("|" Expression "then" Command)*
   //     "else" Command "end"         (Resto del if) 
@@ -446,8 +454,10 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         LongIdentifier longI = parseLongIdentifier();
 
         /*
-        * add: LongIdentifier in the case of a call expression
-        * Maynor Martínez
+        Anadir: 
+        LongIdentifier 
+        parse | V-name ":=" Expression
+        Sahid Rojas
         */
         if (currentToken.kind == Token.LPAREN) {
           acceptIt();
@@ -457,8 +467,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
           commandAST = new CallCommand(longI, apsAST, commandPos); // We modify this line to a longIdentifier the position 1 of the command
 
         } else {
-          //parse | V-name ":=" Expression
-          //Maynor Martínez
+      
           Vname vAST = parseRestOfVname(longI);
           accept(Token.BECOMES);
           Expression eAST = parseExpression();
@@ -586,11 +595,11 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
      }
     break;
 
-      /*
-        Agregar:
-        | "let" Declaration "in" Command "end"
-        Kenny Vega
-      */
+      
+        //Agregar:
+        //| "let" Declaration "in" Command "end"
+        //Kenny Vega
+     
       case Token.LET: {
         acceptIt();
         Declaration dAST = parseDeclaration();
@@ -604,7 +613,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
       
       
       
-      
+     //Kenny Vega
       //| "if" Expression "then" Command + RESTO DEL IF ("|" Expression "then" Command)*
      //                                                    "else" Command "end"
      case Token.IF:
@@ -625,10 +634,10 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
     }
     break;
 
-      /* Se agrego el skip:
+     /* Se agrego el skip:
             
         Kenny Vega
-        */
+     */
     case Token.SKIP:
       acceptIt();
       finish(commandPos);
@@ -748,14 +757,15 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
       }
         break;
       /*
-       * add: LongIdentifier in the case of a call expression
-       * Maynor Martínez
+       A�adir: 
+        LongIdentifier
+        Sahid Rojas
        */
       case Token.IDENTIFIER: {
         Identifier iAST = null;
         LongIdentifier longI = parseLongIdentifier();
 
-        //This if is to check if the longIdentifier is a longIdentifierComplex or a longIdentifierSimple and save the simpleIdentifier in iAST
+        
         iAST = longI.getSimpleIdentifier();
 
         if (currentToken.kind == Token.LPAREN) {
@@ -763,7 +773,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
           ActualParameterSequence apsAST = parseActualParameterSequence();
           accept(Token.RPAREN);
           finish(expressionPos);
-          LongIdentifier longIAST = new LongIdentifierSimple(iAST, expressionPos); // We create a longIdentifierSimple with the identifier
+          LongIdentifier longIAST = new LongIdentifierSimple(iAST, expressionPos);  
           expressionAST = new CallExpression(longIAST, apsAST, expressionPos);
 
         } else {
@@ -820,7 +830,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
 
   ArrayAggregate parseArrayAggregate() throws SyntaxError {
-    ArrayAggregate aggregateAST = null; // in case there's a syntactic error
+    ArrayAggregate aggregateAST = null; 
 
     SourcePosition aggregatePos = new SourcePosition();
     start(aggregatePos);
@@ -846,17 +856,16 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   ///////////////////////////////////////////////////////////////////////////////
 
   /*
-
+    Modificar:
     V-name ::= [ Package-Identifier "$" ] Var-name
-
     Var-name ::= Identifier
-    | Var-name "." Identifier
-    | Var-name "[" Expression "]"
-    Maynor Martínez
+            | Var-name "." Identifier
+            | Var-name "[" Expression "]"
+    Sahid Rojas
    */
 
   Vname parseVname() throws SyntaxError {
-    Vname vnameAST = null; // in case there's a syntactic error
+    Vname vnameAST = null; 
     LongIdentifier iAST = parseLongIdentifier();
     vnameAST = parseRestOfVname(iAST);
     return vnameAST;
@@ -897,12 +906,11 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
 ///////////////////////////////////////////////////////////////////////////////
   
    /*
-    Modificar Declaration:
+    Modificar:  
     ::= compound-Declaration 
     |   Declaration ";" compound-Declaration
-    es decir, ::= compound-Declaration (";" compound-Declaration)*
-
-    Fernanda Murillo
+  
+    Sahid Rojas
    */
 
   Declaration parseDeclaration() throws SyntaxError {
@@ -944,9 +952,9 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
       
 
     /*
-       add:
+       Agregar:
         | "var" Identifier ":=" Expression
-        Fernadna Murillo
+        Sahid Rojas
     */
     case Token.VAR:
       {
@@ -978,10 +986,15 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         break;
 
     /*
-       Modificar en single_Declaration:
+       Modificar
+        Proc-Func
        | "proc" Identifier "(" Formal-Parameter-Sequence ")"
+        
+       | "func" Identifier "(" Formal-Parameter-Sequence ")"
+        ":" Type-denoter "~" Expression
          "~" Command "end"
-        Fernadna Murillo
+        
+        Sahid Rojas
     */
     case Token.PROC:
       {
@@ -1037,12 +1050,12 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
   
   /*
-    add: 
+    Agregar: 
     compound-Declaration
         ::= single-Declaration
         | "rec" Proc-Funcs "end"
         | "private" Declaration "in" Declaration "end"
-        Fernadna Murillo
+    Sahid Rojas
   */
   
   Declaration parseCompoundDeclaration() throws SyntaxError {
@@ -1090,13 +1103,13 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
   
   /*
-    add:
+    Agregar:
     ProcFunc
         ::= "proc" Identifier "(" Formal-Parameter-Sequence ")"
              "~" Command "end"
         | "func" Identifier "(" Formal-Parameter-Sequence ")"
              ":" Type-denoter "~" Expression
-        Fernadna Murillo
+     Sahid Rojas
   */
   
   Declaration parse_ProcFunc_Declaration() throws SyntaxError{
@@ -1122,10 +1135,10 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
   
   /*
-    add:
+    Agregar:
     ProcFuncs 
         ::= Proc-Func ("|" Proc-Func)+
-    Fernadna Murillo
+     Sahid Rojas
   */
   
   Declaration parse_ProcFuncs_Declaration() throws SyntaxError{
@@ -1351,11 +1364,13 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   // TYPE-DENOTERS
   //
   ///////////////////////////////////////////////////////////////////////////////
+  
   /*
-   Type-denoter ::= Long-Identifier
-| "array" Integer-Literal "of" Type-denoter
-| "record" Record-Type-denoter "end"
-Maynor Martinez
+    Modificar
+        Type-denoter ::= Long-Identifier
+            | "array" Integer-Literal "of" Type-denoter
+            | "record" Record-Type-denoter "end"
+      Sahid Rojas
    */
   TypeDenoter parseTypeDenoter() throws SyntaxError {
     TypeDenoter typeAST = null; // in case there's a syntactic error
