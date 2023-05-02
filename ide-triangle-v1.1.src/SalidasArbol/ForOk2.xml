@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<ForCommand>
+<Identifier value="i"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+<IntegerExpression>
+<IntegerLiteral value="6"/>
+</IntegerExpression>
+<SequentialCommand>
+<EmptyCommand/>
+<EmptyCommand/>
+</SequentialCommand>
+</ForCommand>
+</Program>

@@ -8,8 +8,8 @@ package Triangle;
 import Triangle.CodeGenerator.Frame;
 import java.awt.event.ActionListener;
 import Triangle.SyntacticAnalyzer.SourceFile;
-import Triangle.Writer.Writer2;
-import Triangle.Writer.WriterVisitor2;
+import Triangle.Writer.WriterHTML;
+import Triangle.Writer.WriterHTMLController;
 import Triangle.SyntacticAnalyzer.Scanner;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.SyntacticAnalyzer.Parser;
@@ -54,12 +54,12 @@ public class IDECompiler {
         report = new IDEReporter();
         Parser parser = new Parser(scanner, report);
         //html writer
-        Writer2 writer = new Writer2(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
+        WriterHTML writer = new WriterHTML(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
         source = new SourceFile(sourceName);
         Scanner scanner2 = new Scanner(source);
         scanner2.setWritingHTML(true);
-        WriterVisitor2 writerController;
-        writerController = new WriterVisitor2(scanner2, writer);
+        WriterHTMLController writerController;
+        writerController = new WriterHTMLController(scanner2, writer);
         writerController.writeHTML();
         scanner2.setWritingHTML(false);
         

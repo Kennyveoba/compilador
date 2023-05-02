@@ -10,7 +10,7 @@ public class DoUntilCommand extends Command {
     }
 
     public Object visit(Visitor v, Object o) {
-        return v.visitDoUntilLoop(this, o);
+        return v.visitDoUntilCommand(this, o);
     }
 
     public Expression E;

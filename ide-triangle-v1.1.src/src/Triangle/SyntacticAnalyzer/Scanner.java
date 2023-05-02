@@ -23,7 +23,7 @@ public final class Scanner {
   private char currentChar;
   private StringBuffer currentSpelling;
   private boolean currentlyScanningToken;
-  private boolean Detenerse;
+  private boolean writingHTML;
 
   private boolean isLetter(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
@@ -49,7 +49,7 @@ public final class Scanner {
     sourceFile = source;
     currentChar = sourceFile.getSource();
     debug = false;
-    Detenerse = false;
+    writingHTML = false;
   }
 
   public void enableDebugging() {
@@ -209,9 +209,9 @@ public final class Scanner {
       takeIt();
       if (currentChar == '\n') {
         takeIt();
-        return Token.FIN;
+        return Token.EOL;
       } else
-        return Token.FIN;
+        return Token.EOL;
     
     case SourceFile.EOT:
       return Token.EOT;
@@ -227,17 +227,14 @@ public final class Scanner {
     SourcePosition pos;
     int kind;
 
-    if (!Detenerse) {
-        currentlyScanningToken = false;
-        while (true) {
-            if (currentChar == '!') {
-                scanSeparator();
-            } else if (Character.isWhitespace(currentChar)) {
-                scanSeparator();
-            } else {
-                break;
-            }
-        }
+    if(!writingHTML){
+    currentlyScanningToken = false;
+    while (currentChar == '!'
+           || currentChar == ' '
+           || currentChar == '\n'
+           || currentChar == '\r'
+           || currentChar == '\t')
+      scanSeparator();
     }
     currentlyScanningToken = true;
     currentSpelling = new StringBuffer("");
@@ -248,14 +245,12 @@ public final class Scanner {
 
     pos.finish = sourceFile.getCurrentLine();
     tok = new Token(kind, currentSpelling.toString(), pos);
-    if (debug) {
-        System.out.println(tok);
-    }
+    if (debug)
+      System.out.println(tok);
     return tok;
-}
+  }
 
-
-    public void setWritingHTML(boolean Detenerse) {
-        this.Detenerse = Detenerse;
+    public void setWritingHTML(boolean writingHTML) {
+        this.writingHTML = writingHTML;
     }
 }

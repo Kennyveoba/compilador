@@ -10,7 +10,7 @@ public class DoWhileCommand extends Command {
     }
 
     public Object visit(Visitor v, Object o) {
-        return v.visitDoWhileLoop(this, o);
+        return v.visitDoWhileCommand(this, o);
     }
 
     public Expression E;

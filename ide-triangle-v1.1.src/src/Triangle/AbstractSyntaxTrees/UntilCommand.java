@@ -11,7 +11,7 @@ public class UntilCommand extends Command {
     }
 
     public Object visit(Visitor v, Object o) {
-        return v.visitUntilLoop(this, o);
+        return v.visitUntilCommand(this, o);
     }
 
     public Expression E;
