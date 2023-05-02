@@ -67,62 +67,62 @@
  
    // literals, identifiers, operators...
    INTLITERAL = 0,
-       CHARLITERAL = 1,
-       IDENTIFIER = 2,
-       OPERATOR = 3,
- 
-       // reserved words - must be in alphabetical order...
-       ARRAY = 4,
-       CONST = 5,
-       DO = 6,
-       ELSE = 7,
-       END = 8,
-       FOR = 9,
-       FROM = 10,
-       FUNC = 11,
-       IF = 12,
-       IN = 13,
-       LET = 14,
-       OF = 15,
-       PACKAGE = 16,
-       PRIVATE = 17,
-       PROC = 18,
-       REC = 19,
-       RECORD = 20,       
-       REPEAT = 21,
-       SKIP = 22,
-       THEN = 23,
-       TIMES = 24,
-       TYPE = 25,
-       UNTIL = 26,
-       VAR = 27,
-       WHILE = 28,
- 
-       // punctuation...
-       DOLLAR = 29,
-       BAR = 30,
-       DOTDOT = 31,
-       DOT = 32,
-       COLON = 33,
-       SEMICOLON = 34,
-       COMMA = 35,
-       BECOMES = 36,
-       IS = 37,
- 
-       // brackets...
-       LPAREN = 38,
-       RPAREN = 39,
-       LBRACKET = 40,
-       RBRACKET = 41,
-       LCURLY = 42,
-       RCURLY = 43,
- 
-       // special tokens...
-       EOT = 44,
-       ERROR = 45,
-       COMMENT = 46,
-       EOL = 47,
-       TAB = 48;
+    CHARLITERAL = 1,
+    IDENTIFIER = 2,
+    OPERATOR = 3,
+
+    // reserved words - must be in alphabetical order...
+    ARRAY = 4,
+    CONST = 5,
+    DO = 6,
+    ELSE = 7,
+    END = 8,
+    FOR = 9,
+    FROM = 10,
+    FUNC = 11,
+    IF = 12,
+    IN = 13,
+    LET = 14,
+    OF = 15,
+    PACKAGE = 16,
+    PRIVATE = 17,
+    PROC = 18,
+    REC = 19,
+    RECORD = 20,       
+    REPEAT = 21,
+    SKIP = 22,
+    THEN = 23,
+    TIMES = 24,
+    TYPE = 25,
+    UNTIL = 26,
+    VAR = 27,
+    WHILE = 28,
+
+    // punctuation...
+    DOLLAR = 29,
+    BAR = 30,
+    DOTDOT = 31,
+    DOT = 32,
+    COLON = 33,
+    SEMICOLON = 34,
+    COMMA = 35,
+    BECOMES = 36,
+    IS = 37,
+
+    // brackets...
+    LPAREN = 38,
+    RPAREN = 39,
+    LBRACKET = 40,
+    RBRACKET = 41,
+    LCURLY = 42,
+    RCURLY = 43,
+
+    // special tokens...
+    EOT = 44,
+    ERROR = 45,
+    COMMENT = 46,
+    EOL = 47,
+    TAB = 48;
 
  
    private static String[] tokenTable = new String[] {

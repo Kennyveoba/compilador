@@ -205,13 +205,10 @@ public final class Scanner {
       takeIt();
       return Token.TAB;
     
-    case '\r':
-      takeIt();
-      if (currentChar == '\n') {
+    case '\n':
         takeIt();
         return Token.EOL;
-      } else
-        return Token.EOL;
+
     
     case SourceFile.EOT:
       return Token.EOT;
