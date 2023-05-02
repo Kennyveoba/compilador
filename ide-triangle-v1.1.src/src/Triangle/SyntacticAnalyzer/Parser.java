@@ -71,7 +71,7 @@ import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
 import Triangle.AbstractSyntaxTrees.Program;
-import Triangle.AbstractSyntaxTrees.RECDeclaration;
+import Triangle.AbstractSyntaxTrees.ReDefinition;
 import Triangle.AbstractSyntaxTrees.RecordAggregate;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
@@ -174,32 +174,33 @@ public class Parser {
     currentToken = lexicalAnalyser.scan();
     
     try {
-      int packageCounter = 0;
-      PackageDeclaration packageDeclarationAST = null;
-      PackageDeclaration tempPackageDeclaration = null;
+        // CHANGES MADE TO SUPPORT PACKAGES
+      int pkgCounter = 0;
+      PackageDeclaration pkgDeclarationAST = null;
+      PackageDeclaration tempPkgDeclaration = null;
       while(currentToken.kind == Token.PACKAGE){
-          tempPackageDeclaration = parsePackageDeclaration();
+          tempPkgDeclaration = parsePackageDeclaration();
           if(currentToken.kind != Token.END){
-              syntacticError("end expected at the end of package declaration ",
+              syntacticError("Expected 'end' at the conclusion of package declaration, but found ",
                       currentToken.spelling);
           }else{
               acceptIt();
-              packageCounter++;
-              if (packageCounter == 1)
-                  packageDeclarationAST = tempPackageDeclaration;
+              pkgCounter++;
+              if (pkgCounter == 1)
+                  pkgDeclarationAST = tempPkgDeclaration;
               else
-                  packageDeclarationAST = new SequentialPackage(packageDeclarationAST, tempPackageDeclaration, previousTokenPosition);
+                  pkgDeclarationAST = new SequentialPackage(pkgDeclarationAST, tempPkgDeclaration, previousTokenPosition);
           }
 
       }
-      Command cAST = parseCommand();
-      programAST = new Program(packageDeclarationAST, cAST, previousTokenPosition);
+      Command cmdAST = parseCommand();
+      programAST = new Program(pkgDeclarationAST, cmdAST, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {
-        syntacticError("\"%\" not expected after end of program",
+        syntacticError("\"%\" is not a valid token after the end of the program",
             currentToken.spelling);
       }
   }
-  catch (SyntaxError s) { return null; }
+  catch (SyntaxError e) { return null; }
   return programAST;
   }
 
@@ -218,18 +219,22 @@ public class Parser {
    
   Sahid Rojas
   */
-PackageDeclaration parsePackageDeclaration() throws SyntaxError {  
-  PackageDeclaration pacDecAST = null;
-  SourcePosition pacDecPos = new SourcePosition();
-  start(pacDecPos);
-  accept(Token.PACKAGE);
-  PackageIdentifier pacIDAST = parsePackageIdentifier();
-  accept(Token.IS);
-  Declaration dAST = parseDeclaration();
- 
-  finish(pacDecPos);
-  pacDecAST = new SinglePackage(pacIDAST, dAST, pacDecPos);
-  return pacDecAST;
+  //ESTE METODO AGREGAR AL PARSE EL PACKAGE DECLARATION 
+PackageDeclaration parsePackageDeclaration() throws SyntaxError {
+    PackageDeclaration packageDeclaration = null;
+    SourcePosition packageDeclarationPos = new SourcePosition();
+    start(packageDeclarationPos);
+    // Parse the 'package' keyword and the package identifier
+    accept(Token.PACKAGE);
+    PackageIdentifier packageIdentifier = parsePackageIdentifier();
+     // Parse the 'is' keyword and the declaration
+    accept(Token.IS);
+    Declaration declaration = parseDeclaration();
+    // Finish parsing and create the AST node
+    finish(packageDeclarationPos);
+    packageDeclaration = new SinglePackage(packageIdentifier, declaration, packageDeclarationPos);
+    // Return the AST node
+    return packageDeclaration;
 }
 
 /* Agregar:
@@ -237,20 +242,28 @@ PackageDeclaration parsePackageDeclaration() throws SyntaxError {
    Sahid Rojas
 */
 PackageIdentifier parsePackageIdentifier() throws SyntaxError {
-  PackageIdentifier pacIDAST = null;
-  SourcePosition pacIDPos = new SourcePosition();
-  start(pacIDPos);
-  if (currentToken.kind == Token.IDENTIFIER) {
-    previousTokenPosition = currentToken.position;
-    String spelling = currentToken.spelling;
-    pacIDAST = new PackageIdentifier(spelling, previousTokenPosition);
-    currentToken = lexicalAnalyser.scan();
-  } else {
-    pacIDAST = null;
-    syntacticError("a Package-identifier expected here", currentToken.spelling);
-  }
-  finish(pacIDPos);
-  return pacIDAST;
+    PackageIdentifier packageId = null;
+    SourcePosition packageIdPos = new SourcePosition();
+    start(packageIdPos);
+    // Check if the current token is an identifier
+    if (currentToken.kind == Token.IDENTIFIER) {
+        // Save the position of the previous token
+        previousTokenPosition = currentToken.position;
+        // Save the spelling of the current token
+        String spelling = currentToken.spelling;
+         // Create a new PackageIdentifier object with the spelling and position
+        packageId = new PackageIdentifier(spelling, previousTokenPosition);
+        // Scan the next token
+        currentToken = lexicalAnalyser.scan();
+    } else {
+        // If the current token is not an identifier, throw a syntax error
+        packageId = null;
+        syntacticError("Expected a Package-identifier here", currentToken.spelling);
+    }
+    // Set the finish position of the package identifier
+    finish(packageIdPos);
+    // Return the PackageIdentifier object
+    return packageId;
 }
 
 
@@ -260,37 +273,38 @@ PackageIdentifier parsePackageIdentifier() throws SyntaxError {
  Sahid Rojas
 
 */
+// This method parses a Long Identifier from the source code
 LongIdentifier parseLongIdentifier() throws SyntaxError {
-  LongIdentifier LI = null;
-  SourcePosition LIpos = new SourcePosition();
-  start(LIpos);
-  PackageIdentifier pacIDAST = null;
-  Identifier tempAST = null;
-  Identifier idAST = null;
-  if (currentToken.kind == Token.IDENTIFIER) {
-    previousTokenPosition = currentToken.position;
-    String spelling = currentToken.spelling;
-    tempAST = new Identifier(spelling, previousTokenPosition); // Create the Identifier before the $ in the LongIdentifier
-    currentToken = lexicalAnalyser.scan();
+  LongIdentifier longIdentifier = null; // This will store the resulting LongIdentifier object
+  SourcePosition longIdentifierPos = new SourcePosition(); // This will store the position of the LongIdentifier
+  start(longIdentifierPos); // Start measuring the position of the LongIdentifier
+  PackageIdentifier packageIdentifierAST = null; // This will store the PackageIdentifier object, if any
+  Identifier tempIdentifierAST = null; // This will store the first Identifier object before the $
+  Identifier idAST = null; // This will store the second Identifier object after the $
 
-    if (currentToken.kind == Token.DOLLAR) {
-      acceptIt();        
-      idAST = parseIdentifier();
-      pacIDAST = new PackageIdentifier(tempAST); // Create the PackageIdentifier with the Identifier before the $ 
-      finish(LIpos);
-      LI = new LongIdentifierComplex(pacIDAST, idAST, LIpos);
-    } else{ //This case is when is a longIdentifierSimple
-      finish(LIpos);
-      LI = new LongIdentifierSimple(tempAST, LIpos);
-      return LI;
+  if (currentToken.kind == Token.IDENTIFIER) { // If the current token is an Identifier
+    previousTokenPosition = currentToken.position; // Store the position of the previous token
+    String spelling = currentToken.spelling; // Get the spelling of the current token
+    tempIdentifierAST = new Identifier(spelling, previousTokenPosition); // Create an Identifier object with the spelling and position
+    currentToken = lexicalAnalyser.scan(); // Move to the next token
 
+    if (currentToken.kind == Token.DOLLAR) { // If the current token is a dollar sign ($)
+      acceptIt(); // Move to the next token
+      idAST = parseIdentifier(); // Parse the second Identifier
+      packageIdentifierAST = new PackageIdentifier(tempIdentifierAST); // Create a PackageIdentifier with the first Identifier
+      finish(longIdentifierPos); // Finish measuring the position of the LongIdentifier
+      longIdentifier = new LongIdentifierComplex(packageIdentifierAST, idAST, longIdentifierPos); // Create a LongIdentifierComplex object with the PackageIdentifier and second Identifier
+    } else{ // If the current token is not a dollar sign ($), it means it's a LongIdentifierSimple
+      finish(longIdentifierPos); // Finish measuring the position of the LongIdentifier
+      longIdentifier = new LongIdentifierSimple(tempIdentifierAST, longIdentifierPos); // Create a LongIdentifierSimple object with the first Identifier
+      return longIdentifier;
     }
-  } else {
-    LI = null;
-    syntacticError("identifier expected here", "$");
+  } else { // If the current token is not an Identifier
+    longIdentifier = null;
+    syntacticError("Expecting identifier here", "$"); // Report a syntax error with the expected token
   }
   
-  return LI;
+  return longIdentifier; // Return the resulting LongIdentifier object
 }
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -921,7 +935,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
     declarationAST = parseCompoundDeclaration();
     while (currentToken.kind == Token.SEMICOLON) {
       acceptIt();
-      Declaration d2AST = parseCompoundDeclaration();
+      Declaration d2AST = parseCompoundDeclaration();//Aqui cambiamos SingleDeclaration por el CompoudDeclaration
       finish(declarationPos);
       declarationAST = new SequentialDeclaration(declarationAST, d2AST,
           declarationPos);
@@ -978,7 +992,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             }
             break;
           default:
-            syntacticError("\"%\" is not a valid declaration",
+            syntacticError("\"%\" Syntax Error:  not a valid declaration",
               currentToken.spelling);
             break;              
         }
@@ -1005,7 +1019,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         accept(Token.RPAREN);
         accept(Token.IS);
         Command cAST = parseCommand();
-        accept(Token.END);
+        accept(Token.END);//Aquie le agregamos el comando END que previamente no estaba
         finish(declarationPos);
         declarationAST = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
       }
@@ -1071,16 +1085,16 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
       case Token.FUNC:
       case Token.TYPE:
         {
-          declarationAST = parseSingleDeclaration();
+          declarationAST = parseSingleDeclaration();//Aqui usamos el Single Declaration 
         }
         break;
       case Token.REC:
         {
           acceptIt();
-          Declaration pfsDeclaration = parse_ProcFuncs_Declaration();
+          Declaration pfsDeclaration = parseProcFuncsDeclaration();
           accept(Token.END);
           finish(declarationPos);
-          declarationAST = new RECDeclaration(pfsDeclaration, declarationPos);
+          declarationAST = new ReDefinition(pfsDeclaration, declarationPos);
         }
         break;
       case Token.PRIVATE:
@@ -1095,7 +1109,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         }
         break;
       default:
-      syntacticError("\"%\" cannot start a compound declaration",
+      syntacticError("\"%\" Unable start a compound declaration",
         currentToken.spelling);
       break;
     }
@@ -1112,7 +1126,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
      Sahid Rojas
   */
   
-  Declaration parse_ProcFunc_Declaration() throws SyntaxError{
+  Declaration parseProcFuncDeclaration() throws SyntaxError{
     Declaration declarationAST = null; // in case there's a syntactic error
     SourcePosition declarationPos = new SourcePosition();
     
@@ -1126,7 +1140,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         }
         break;
       default:
-      syntacticError("\"%\" cannot start neither a process nor a function declaration",
+      syntacticError("\"%\" Unable to commence a declaration for either a process or a function.",
         currentToken.spelling);
       break;
     }
@@ -1141,21 +1155,21 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
      Sahid Rojas
   */
   
-  Declaration parse_ProcFuncs_Declaration() throws SyntaxError{
+  Declaration parseProcFuncsDeclaration() throws SyntaxError{
     Declaration declarationAST = null; // in case there's a syntactic error
     SourcePosition declarationPos = new SourcePosition();
     
     start(declarationPos);
     
-    declarationAST = parse_ProcFunc_Declaration();
+    declarationAST = parseProcFuncDeclaration();
     accept(Token.BAR);
-    Declaration pf2AST = parse_ProcFunc_Declaration();
+    Declaration p2AST = parseProcFuncDeclaration();
     
-    declarationAST = new SequentialDeclaration(declarationAST, pf2AST, declarationPos);
+    declarationAST = new SequentialDeclaration(declarationAST, p2AST, declarationPos);
     
     while(currentToken.kind == Token.BAR){
       acceptIt();
-      Declaration pfAuxAST = parse_ProcFunc_Declaration();
+      Declaration pfAuxAST = parseProcFuncDeclaration();
       finish(declarationPos);
       declarationAST = new SequentialDeclaration(declarationAST, pfAuxAST, declarationPos);
     }

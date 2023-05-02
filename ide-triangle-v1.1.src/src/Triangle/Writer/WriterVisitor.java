@@ -60,7 +60,7 @@ import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
 import Triangle.AbstractSyntaxTrees.Program;
-import Triangle.AbstractSyntaxTrees.RECDeclaration;
+import Triangle.AbstractSyntaxTrees.ReDefinition;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
 import Triangle.AbstractSyntaxTrees.RepeatTimes;
@@ -712,7 +712,7 @@ public class WriterVisitor implements Visitor {
 
     
          @Override
-     public Object visitRecDeclaration(RECDeclaration ast, Object o) {
+     public Object visitRecDeclaration(ReDefinition ast, Object o) {
         writeLineHTML("<RECDeclaration>");
         ast.PFS.visit(this, null);
         writeLineHTML("</RECDeclaration>");

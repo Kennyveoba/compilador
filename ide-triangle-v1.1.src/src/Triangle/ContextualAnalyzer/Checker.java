@@ -74,7 +74,7 @@ import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
 import Triangle.AbstractSyntaxTrees.Program;
-import Triangle.AbstractSyntaxTrees.RECDeclaration;
+import Triangle.AbstractSyntaxTrees.ReDefinition;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
 import Triangle.AbstractSyntaxTrees.RepeatTimes;
@@ -996,7 +996,7 @@ public final class Checker implements Visitor {
     }
 
     @Override
-    public Object visitRecDeclaration(RECDeclaration ast, Object o) {
+    public Object visitRecDeclaration(ReDefinition ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

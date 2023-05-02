@@ -6,9 +6,9 @@
 package Triangle.AbstractSyntaxTrees;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public class RECDeclaration extends Declaration{
+public class ReDefinition extends Declaration{
 
-    public RECDeclaration(Declaration pfsAST,SourcePosition thePosition) {
+    public ReDefinition(Declaration pfsAST,SourcePosition thePosition) {
         super(thePosition);
         
         PFS = pfsAST;
