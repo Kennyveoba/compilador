@@ -1,3 +1,9 @@
+/*
+  Kenny Vega
+
+  Se agregaron las nuevas opereciones y comandos 
+*/
+
 package Triangle.Writer;
 
 import Triangle.AbstractSyntaxTrees.AnyTypeDenoter;

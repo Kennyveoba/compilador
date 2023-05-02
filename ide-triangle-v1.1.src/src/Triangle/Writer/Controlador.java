@@ -1,3 +1,8 @@
+/*
+  Kenny Vega
+
+  Se agregaron las clases para crear el html con su respectivo formato 
+*/
 package Triangle.Writer;
 
 import Triangle.SyntacticAnalyzer.Scanner;

@@ -53,14 +53,18 @@ public class IDECompiler {
         Scanner scanner = new Scanner(source);
         report = new IDEReporter();
         Parser parser = new Parser(scanner, report);
-        //html writer
+        
+        //Kenny Vega 
+        //Escribir salida HTML en otro archivo y
+        //manipular el escáner para la escritura en HTML
         Writer2 writer = new Writer2(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
         source = new SourceFile(sourceName);
         Scanner scanner2 = new Scanner(source);
+        
         scanner2.setWritingHTML(true);
-        Controlador writerController;
-        writerController = new Controlador(scanner2, writer);
-        writerController.writeHTML();
+        Controlador Controladores;
+        Controladores = new Controlador(scanner2, writer);
+        Controladores.writeHTML();
         scanner2.setWritingHTML(false);
         
         boolean success = false;
@@ -72,7 +76,10 @@ public class IDECompiler {
             //Checker checker = new Checker(report);
             //checker.check(rootAST);
             
-            writeXML(rootAST, sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
+             
+            Writer writerXML = new Writer(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
+        
+            writerXML.write(rootAST);
             if (report.numErrors == 0) {
                
                 //System.out.println("Code Generation ...");
@@ -110,12 +117,6 @@ public class IDECompiler {
         return(rootAST);
     }
 
-    private void writeXML(Program programAST, String sourceName){
-        Writer writerXML = new Writer(sourceName);
-        
-        writerXML.write(programAST);
-        
-    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Attributes ">
