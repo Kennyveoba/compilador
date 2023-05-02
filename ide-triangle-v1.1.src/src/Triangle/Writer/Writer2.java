@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class WriterHTML {
+public class Writer2 {
     private FileWriter fileWriter;
 
-    public WriterHTML(String fileName){
+    public Writer2(String fileName){
         try {
             
             File carpeta = new File("SalidasHTML" + File.separator);
@@ -20,7 +20,7 @@ public class WriterHTML {
             writeHTML("<p style=\"font-family: monospace; font-size: 1em;\">");
         
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -36,7 +36,7 @@ public class WriterHTML {
             writeHTML("</html>");
             fileWriter.close();
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
    
@@ -44,7 +44,7 @@ public class WriterHTML {
         try {
             writeHTML("<b> " + word + " </b>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -52,7 +52,7 @@ public class WriterHTML {
         try {
             writeHTML("<span style=\"color:black\">" + word + "</span>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -60,7 +60,7 @@ public class WriterHTML {
         try {
             writeHTML("<span style=\"color:green\">" + word + "</span><br>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -68,7 +68,7 @@ public class WriterHTML {
         try {
             writeHTML("<span style=\"color:blue\">" + word + "</span>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -76,7 +76,7 @@ public class WriterHTML {
         try {
             writeHTML("<br>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -84,7 +84,7 @@ public class WriterHTML {
         try {
             writeHTML("&nbsp;&nbsp;&nbsp;");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

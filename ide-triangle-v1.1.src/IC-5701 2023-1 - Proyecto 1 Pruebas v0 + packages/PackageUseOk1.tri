@@ -1,4 +1,5 @@
-package myP ~ 
+package myP ~
+ 
 	var a: Integer
 end
 

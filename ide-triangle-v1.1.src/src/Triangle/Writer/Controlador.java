@@ -2,13 +2,14 @@ package Triangle.Writer;
 
 import Triangle.SyntacticAnalyzer.Scanner;
 import Triangle.SyntacticAnalyzer.Token;
+import java.util.Arrays;
 
-public class WriterHTMLController {
+public class Controlador {
     private Scanner scanner;
     private Token currentToken;
-    private WriterHTML writerHTML;
+    private Writer2 writerHTML;
 
-    public WriterHTMLController(Scanner scanner, WriterHTML writerHTML) {
+    public Controlador(Scanner scanner, Writer2 writerHTML) {
         this.scanner = scanner;
         this.writerHTML = writerHTML;
     }
@@ -30,6 +31,7 @@ public class WriterHTMLController {
                     writerHTML.writeComment(currentToken.spelling);
                     break;
                 case Token.EOL:
+                    System.out.print("Salto de linea");
                     writerHTML.writeEndOfLine();
                     break;
                 case Token.TAB:
@@ -40,15 +42,10 @@ public class WriterHTMLController {
                     String[] reservedWords = {"array", "const", "do", "else", "end", "for", "from", "func", "if", "in",
                     "let", "of", "package", "private", "proc", "rec","record", "repeat", "select", "skip", "then",
                     "times", "type", "until", "var", "when", "while"};
-                    //check if the current token is a reserved word
-                    boolean isReservedWord = false;
-                    for (String reservedWord : reservedWords) {
-                        if (currentToken.spelling.equals(reservedWord)) {
-                            isReservedWord = true;
-                            break;
-                        }
-                    }
-                    if (isReservedWord) {
+                   
+                    
+                     //Valida si es una palabra reservada o no 
+                    if (Arrays.asList(reservedWords).contains(currentToken.spelling)) {
                         writerHTML.writeReservedWord(currentToken.spelling);
                     } else {
                         writerHTML.write(currentToken.spelling);
@@ -60,3 +57,5 @@ public class WriterHTMLController {
         writerHTML.TerminarHTML();
     }
 }
+
+
