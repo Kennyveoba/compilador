@@ -48,7 +48,7 @@ public class Writer2 {
         }
     }
 
-    public void writeNormal(String word){
+    public void write(String word){
         try {
             writeHTML("<span style=\"color:black\">" + word + "</span>");
         } catch (IOException ex) {

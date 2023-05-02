@@ -29,7 +29,7 @@ public class Writer {
             fileWriter.close();
 
         } catch (IOException e) {
-            System.err.println("Error while creating file for print the AST");
+            System.err.println("Error al escribir el archivo para imprimir el AST");
             e.printStackTrace();
         }
     }
