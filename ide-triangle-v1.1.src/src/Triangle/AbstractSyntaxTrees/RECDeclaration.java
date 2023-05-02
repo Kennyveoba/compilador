@@ -5,10 +5,7 @@
  */
 package Triangle.AbstractSyntaxTrees;
 import Triangle.SyntacticAnalyzer.SourcePosition;
-/**
- *
- * @author muril
- */
+
 public class RECDeclaration extends Declaration{
 
     public RECDeclaration(Declaration pfsAST,SourcePosition thePosition) {

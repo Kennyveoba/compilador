@@ -8,7 +8,7 @@ public class SinglePackage extends PackageDeclaration{
         super( thePosition);
         I = iAST;
         D = dAST;
-        //TODO Auto-generated constructor stub
+      
     }
     @Override
     public Object visit(Visitor v, Object o) {

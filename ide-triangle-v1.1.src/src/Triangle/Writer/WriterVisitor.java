@@ -58,7 +58,6 @@ import Triangle.AbstractSyntaxTrees.RECDeclaration;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
 import Triangle.AbstractSyntaxTrees.RepeatTimes;
-import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCommand;
 import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialPackage;
@@ -598,7 +597,6 @@ public class WriterVisitor implements Visitor {
     }
 
 
-    // Value-or-variable names
          @Override
      public Object visitDotVname(DotVname ast, Object obj) {
         writeLineHTML("<DotVname>");
@@ -649,9 +647,6 @@ public class WriterVisitor implements Visitor {
         }
     }
 
-    /*
-     * Convert the characters "<" & "<=" to their equivalents in html
-     */
     private String transformOperator(String operator) {
         if (operator.compareTo("<") == 0)
             return "&lt;";
@@ -675,7 +670,6 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
-    
          @Override
      public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
         writeLineHTML("<ForWhileCommand>");
@@ -688,7 +682,6 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
-    
          @Override
      public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
         writeLineHTML("<ForUntilCommand>");
@@ -701,7 +694,6 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
-    
          @Override
      public Object visitForInCommand(ForInCommand ast, Object o) {
         writeLineHTML("<ForInCommand>");
@@ -741,15 +733,6 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
-    /*
-     @Override
-     public Object visitPackageDeclaration(PackageDeclaration aThis, Object o) {
-        writeLineHTML("<PackageDeclaration>");
-        aThis.I.visit(this, null);
-        aThis.D.visit(this, null);
-        writeLineHTML("</PackageDeclaration>");
-        return null;
-    }*/
      
     @Override
     public Object visitSinglePackageDeclaration(SinglePackage aThis, Object o) {
@@ -777,17 +760,7 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("<PackageIdentifier value=\"" + packageIdentifier.spelling + "\"/>");
         return null;
     }
-    
-    /*
-         @Override
-     public Object visitLongIdentifier(LongIdentifier ast, Object o) {
-        writeLineHTML("<LongIdentifier>");
-        ast.I.visit(this, null);
-        writeLineHTML("</LongIdentifier>");
-        return null;
-    }*/
-        
-    
+         
          @Override
      public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
         writeLineHTML("<LongIdentifierSimple>");
@@ -806,9 +779,7 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</LongIdentifierComplex>");
         return null;
     }
-
-     
-    
+   
     
      @Override
      public Object visitUntilCommand(UntilCommand aThis, Object o) {
@@ -818,8 +789,7 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</UntilCommand>");
         return null;
     }
-
-    
+  
          @Override
      public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
         writeLineHTML("<RepeatTimes>");
@@ -848,17 +818,5 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</DoUntilCommand>");
         return null;
     }
-
-    
-
-    @Override
-    public Object visitSequentialCase(SequentialCase aThis, Object o) {
-        writeLineHTML("<SequentialCase>");
-        aThis.Case1.visit(this, null);
-        aThis.Case2.visit(this, null);
-        writeLineHTML("</SequentialCase>");
-        return null;
-    }
-   
 
 }

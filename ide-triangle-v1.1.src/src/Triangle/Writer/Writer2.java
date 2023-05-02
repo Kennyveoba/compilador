@@ -28,6 +28,15 @@ public class Writer2 {
         fileWriter.write(html);
         fileWriter.flush();
     }
+    
+    
+    public void write(String texto){
+        try {
+            writeHTML("<span style=\"color:black\">" + texto + "</span>");
+        } catch (IOException ex) {
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void TerminarHTML(){
         try {
@@ -40,41 +49,18 @@ public class Writer2 {
         }
     }
    
-    public void writeReservedWord(String word){
+
+    public void writeComment(String texto){
         try {
-            writeHTML("<b> " + word + " </b>");
+            writeHTML("<span style=\"color:green\">" + texto + "</span><br>");
         } catch (IOException ex) {
             Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void write(String word){
+    
+    public void writeReservedWord(String texto){
         try {
-            writeHTML("<span style=\"color:black\">" + word + "</span>");
-        } catch (IOException ex) {
-            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void writeComment(String word){
-        try {
-            writeHTML("<span style=\"color:green\">" + word + "</span><br>");
-        } catch (IOException ex) {
-            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void writeColor(String word){
-        try {
-            writeHTML("<span style=\"color:blue\">" + word + "</span>");
-        } catch (IOException ex) {
-            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void writeEndOfLine(){
-        try {
-            writeHTML("<br>");
+            writeHTML("<b> " + texto + " </b>");
         } catch (IOException ex) {
             Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,6 +69,23 @@ public class Writer2 {
     public void writeTab(){
         try {
             writeHTML("&nbsp;&nbsp;&nbsp;");
+        } catch (IOException ex) {
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void writeColor(String texto){
+        try {
+            writeHTML("<span style=\"color:blue\">" + texto + "</span>");
+        } catch (IOException ex) {
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void writeEndOfLine(){
+        try {
+            writeHTML("<br>");
         } catch (IOException ex) {
             Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }

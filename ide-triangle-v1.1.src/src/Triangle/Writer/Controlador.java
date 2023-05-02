@@ -5,9 +5,12 @@ import Triangle.SyntacticAnalyzer.Token;
 import java.util.Arrays;
 
 public class Controlador {
-    private Scanner scanner;
-    private Token currentToken;
-    private Writer2 writerHTML;
+    private final Scanner scanner;
+    private final Writer2 writerHTML;
+    private final static String[] RESERVED_WORDS = {"array", "const", "do", 
+        "else", "end", "for", "from", "func", "if", "in", "let", "of", "package", 
+        "private", "proc", "rec", "record", "repeat", "skip", "times", "type", 
+        "until", "var", "when", "while"};
 
     public Controlador(Scanner scanner, Writer2 writerHTML) {
         this.scanner = scanner;
@@ -15,7 +18,7 @@ public class Controlador {
     }
 
     public void writeHTML(){
-        currentToken = scanner.scan();
+        Token currentToken = scanner.scan();
         while (currentToken.kind != Token.EOT) {
             switch (currentToken.kind) {
                 case Token.IDENTIFIER:
@@ -31,21 +34,13 @@ public class Controlador {
                     writerHTML.writeComment(currentToken.spelling);
                     break;
                 case Token.EOL:
-                    System.out.print("Salto de linea");
                     writerHTML.writeEndOfLine();
                     break;
                 case Token.TAB:
                     writerHTML.writeTab();
                     break;                
                 default:
-                    //array of reserved words
-                    String[] reservedWords = {"array", "const", "do", "else", "end", "for", "from", "func", "if", "in",
-                    "let", "of", "package", "private", "proc", "rec","record", "repeat", "select", "skip", "then",
-                    "times", "type", "until", "var", "when", "while"};
-                   
-                    
-                     //Valida si es una palabra reservada o no 
-                    if (Arrays.asList(reservedWords).contains(currentToken.spelling)) {
+                    if (Arrays.asList(RESERVED_WORDS).contains(currentToken.spelling)) {
                         writerHTML.writeReservedWord(currentToken.spelling);
                     } else {
                         writerHTML.write(currentToken.spelling);
@@ -57,5 +52,3 @@ public class Controlador {
         writerHTML.TerminarHTML();
     }
 }
-
-
