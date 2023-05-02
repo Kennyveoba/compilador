@@ -2,6 +2,7 @@
 <Program>
 <IfCommand>
 <BinaryExpression>
+<BinaryExpression>
 <IntegerExpression>
 <IntegerLiteral value="1"/>
 </IntegerExpression>
@@ -10,11 +11,29 @@
 <IntegerLiteral value="1"/>
 </IntegerExpression>
 </BinaryExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+</BinaryExpression>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="puteol"/>
 </LongIdentifierSimple>
 <EmptyActualParameterSequence/>
+</CallCommand>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'x'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
 </CallCommand>
 <CallCommand>
 <LongIdentifierSimple>
@@ -22,5 +41,6 @@
 </LongIdentifierSimple>
 <EmptyActualParameterSequence/>
 </CallCommand>
+</SequentialCommand>
 </IfCommand>
 </Program>

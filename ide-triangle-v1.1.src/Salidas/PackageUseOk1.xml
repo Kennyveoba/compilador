@@ -1,8 +1,19 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<PackageDeclaration>
+<Identifier value="myP"/>
+<VarDeclaration>
+<Identifier value="a"/>
+<SimpleTypeDenoter>
+<LongIdentifierSimple>
+<Identifier value="Integer"/>
+</LongIdentifierSimple>
+</SimpleTypeDenoter>
+</VarDeclaration>
+</PackageDeclaration>
 <LetCommand>
 <VarDeclaration>
-<Identifier value="begin"/>
+<Identifier value="b"/>
 <SimpleTypeDenoter>
 <LongIdentifierSimple>
 <Identifier value="Integer"/>
@@ -10,21 +21,23 @@
 </SimpleTypeDenoter>
 </VarDeclaration>
 <SequentialCommand>
-<SequentialCommand>
-<CallCommand>
-<LongIdentifierSimple>
-<Identifier value="getint"/>
-</LongIdentifierSimple>
-<SingleActualParameterSequence>
-<VarActualParameter>
+<AssignCommand>
 <SimpleVname>
 <LongIdentifierSimple>
-<Identifier value="begin"/>
+<Identifier value="b"/>
 </LongIdentifierSimple>
 </SimpleVname>
-</VarActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierComplex>
+<PackageIdentifier>
+<Identifier value="myP"/>
+</PackageIdentifier>
+<Identifier value="a"/>
+</LongIdentifierComplex>
+</SimpleVname>
+</VnameExpression>
+</AssignCommand>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="putint"/>
@@ -34,19 +47,12 @@
 <VnameExpression>
 <SimpleVname>
 <LongIdentifierSimple>
-<Identifier value="begin"/>
+<Identifier value="b"/>
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
-</CallCommand>
-</SequentialCommand>
-<CallCommand>
-<LongIdentifierSimple>
-<Identifier value="puteol"/>
-</LongIdentifierSimple>
-<EmptyActualParameterSequence/>
 </CallCommand>
 </SequentialCommand>
 </LetCommand>

@@ -23,7 +23,7 @@ public final class Scanner {
   private char currentChar;
   private StringBuffer currentSpelling;
   private boolean currentlyScanningToken;
-  private boolean writingHTML;
+  private boolean Detenerse;
 
   private boolean isLetter(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
@@ -49,7 +49,7 @@ public final class Scanner {
     sourceFile = source;
     currentChar = sourceFile.getSource();
     debug = false;
-    writingHTML = false;
+    Detenerse = false;
   }
 
   public void enableDebugging() {
@@ -209,9 +209,9 @@ public final class Scanner {
       takeIt();
       if (currentChar == '\n') {
         takeIt();
-        return Token.EOL;
+        return Token.FIN;
       } else
-        return Token.EOL;
+        return Token.FIN;
     
     case SourceFile.EOT:
       return Token.EOT;
@@ -227,14 +227,17 @@ public final class Scanner {
     SourcePosition pos;
     int kind;
 
-    if(!writingHTML){
-    currentlyScanningToken = false;
-    while (currentChar == '!'
-           || currentChar == ' '
-           || currentChar == '\n'
-           || currentChar == '\r'
-           || currentChar == '\t')
-      scanSeparator();
+    if (!Detenerse) {
+        currentlyScanningToken = false;
+        while (true) {
+            if (currentChar == '!') {
+                scanSeparator();
+            } else if (Character.isWhitespace(currentChar)) {
+                scanSeparator();
+            } else {
+                break;
+            }
+        }
     }
     currentlyScanningToken = true;
     currentSpelling = new StringBuffer("");
@@ -245,12 +248,14 @@ public final class Scanner {
 
     pos.finish = sourceFile.getCurrentLine();
     tok = new Token(kind, currentSpelling.toString(), pos);
-    if (debug)
-      System.out.println(tok);
+    if (debug) {
+        System.out.println(tok);
+    }
     return tok;
-  }
+}
 
-    public void setWritingHTML(boolean writingHTML) {
-        this.writingHTML = writingHTML;
+
+    public void setWritingHTML(boolean Detenerse) {
+        this.Detenerse = Detenerse;
     }
 }

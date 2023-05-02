@@ -2,9 +2,9 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public class UntilLoop extends Command {
+public class UntilCommand extends Command {
 
-    public UntilLoop(Expression eAST, Command cAST, SourcePosition thePosition) {
+    public UntilCommand(Expression eAST, Command cAST, SourcePosition thePosition) {
         super(thePosition);
         E = eAST;
         C = cAST;

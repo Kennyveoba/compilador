@@ -128,31 +128,12 @@ public interface Visitor {
 
 
 
-    public Object visitUntilLoop(UntilLoop aThis, Object o);
+    public Object visitUntilCommand(UntilCommand aThis, Object o);
 
     public Object visitRepeatTimes(RepeatTimes aThis, Object o);
 
-    public Object visitDoWhileLoop(DoWhileCommand aThis, Object o);
+    public Object visitDoWhileCommand(DoWhileCommand aThis, Object o);
 
-    public Object visitDoUntilLoop(DoUntilCommand aThis, Object o);
-
-
-  //SelectCommand visitor
-  public Object visitSelectCommand(SelectCommand aThis, Object o);
-  //public Object visitCase(Case c, Object o);
-
-  //SequentialCase visitor
-  public Object visitSequentialCase(SequentialCase aThis, Object o);
-
-  //SingleCase visitor
-  public Object visitSingleCase(SingleCase aThis, Object o);
-
-  //CaseRange visitor
-  public Object visitCaseRange(CaseRange aThis, Object o);
-
-  //CaseLiteral visitor
-  public Object visitCaseLiteral(CaseLiteral aThis, Object o);
-
-  
+    public Object visitDoUntilCommand(DoUntilCommand aThis, Object o);
 
 }

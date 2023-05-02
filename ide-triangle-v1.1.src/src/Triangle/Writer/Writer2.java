@@ -6,31 +6,22 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class WriterHTML {
+public class Writer2 {
     private FileWriter fileWriter;
 
-    public WriterHTML(String fileName){
+    public Writer2(String fileName){
         try {
-            //create folder if not exists
-            File dir = new File("output" + File.separator);
-            dir.mkdirs();
             
-            File htmlFile = new File(dir,fileName.concat(".html"));
+            File carpeta = new File("SalidasHTML" + File.separator);
+            carpeta.mkdirs();
+            File htmlFile = new File(carpeta,fileName.concat(".html"));
             //create html file
             fileWriter = new FileWriter(htmlFile);
-            
-            //write html start
-            writeHTML("<!DOCTYPE html>");
-            writeHTML("\n");
-            writeHTML("<html>");
-            writeHTML("\n");
-            
-            writeHTML("<p style=\"font-family: monospace; font-size:160%;\">");
+            writeHTML("<p style=\"font-family: monospace; font-size: 1em;\">");
+        
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }
 
     public void writeHTML(String html) throws IOException {
@@ -38,68 +29,62 @@ public class WriterHTML {
         fileWriter.flush();
     }
 
-    //finish html file
-    public void finishHTML(){
+    public void TerminarHTML(){
         try {
             writeHTML("</p>");
             writeHTML("\n");
             writeHTML("</html>");
             fileWriter.close();
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    //Write a reserved word bold
+   
     public void writeReservedWord(String word){
         try {
             writeHTML("<b> " + word + " </b>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    //Write identifiers, operators and separators black normal
     public void writeNormal(String word){
         try {
             writeHTML("<span style=\"color:black\">" + word + "</span>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    //Write a comment green
     public void writeComment(String word){
         try {
             writeHTML("<span style=\"color:green\">" + word + "</span><br>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    //Write literals and numbers blue normal
-    public void writeBlue(String word){
+    public void writeColor(String word){
         try {
             writeHTML("<span style=\"color:blue\">" + word + "</span>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    //Write a end of line
     public void writeEndOfLine(){
         try {
             writeHTML("<br>");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    //Write a tab
     public void writeTab(){
         try {
-            writeHTML("&nbsp;&nbsp;&nbsp;&nbsp;");
+            writeHTML("&nbsp;&nbsp;&nbsp;");
         } catch (IOException ex) {
-            Logger.getLogger(WriterHTML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

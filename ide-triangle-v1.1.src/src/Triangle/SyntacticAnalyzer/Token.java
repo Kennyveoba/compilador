@@ -12,12 +12,6 @@
  * of the authors.
  */
 
- /*
-  * Modified by: Sebastián Chavez{
-    add the new token for the new reserved words
-  }
-
-  */
  package Triangle.SyntacticAnalyzer;
 
  public final class Token extends Object {
@@ -60,119 +54,120 @@
      return "Kind=" + kind + ", spelling=" + spelling +
          ", position=" + position;
    }
- 
-   // Token classes...
+    
+   // Se a�adio las nuevas palabras reservadas y tokens tambien se elimino Begin
+   // Kenny Vega 
  
    public static final int
  
-   // literals, identifiers, operators...
-   INTLITERAL = 0,
-       CHARLITERAL = 1,
-       IDENTIFIER = 2,
-       OPERATOR = 3,
- 
-       // reserved words - must be in alphabetical order...
-       ARRAY = 4,
-       CONST = 5,
-       DO = 6,
-       ELSE = 7,
-       END = 8,
-       FOR = 9,
-       FROM = 10,
-       FUNC = 11,
-       IF = 12,
-       IN = 13,
-       LET = 14,
-       OF = 15,
-       PACKAGE = 16,
-       PRIVATE = 17,
-       PROC = 18,
-       REC = 19,
-       RECORD = 20,       
-       REPEAT = 21,
-       SKIP = 22,
-       THEN = 23,
-       TIMES = 24,
-       TYPE = 25,
-       UNTIL = 26,
-       VAR = 27,
-       WHILE = 28,
- 
-       // punctuation...
-       DOLLAR = 29,
-       BAR = 30,
-       DOTDOT = 31,
-       DOT = 32,
-       COLON = 33,
-       SEMICOLON = 34,
-       COMMA = 35,
-       BECOMES = 36,
-       IS = 37,
- 
-       // brackets...
-       LPAREN = 38,
-       RPAREN = 39,
-       LBRACKET = 40,
-       RBRACKET = 41,
-       LCURLY = 42,
-       RCURLY = 43,
- 
-       // special tokens...
-       EOT = 44,
-       ERROR = 45,
-       COMMENT = 46,
-       EOL = 47,
-       TAB = 48;
+    // literals, identifiers, operators...
+    INTLITERAL = 0,
+    CHARLITERAL = 1,
+    IDENTIFIER = 2,
+    OPERATOR = 3,
+
+    // reserved words - must be in alphabetical order...
+    ARRAY = 4,
+    CONST = 5,
+    DO = 6,
+    ELSE = 7,
+    END = 8,
+    FOR = 9,
+    FROM = 10,
+    FUNC = 11,
+    IF = 12,
+    IN = 13,
+    LET = 14,
+    OF = 15,
+    PACKAGE = 16,
+    PRIVATE = 17,
+    PROC = 18,
+    REC = 19,
+    RECORD = 20,       
+    REPEAT = 21,
+    SKIP = 22,
+    THEN = 23,
+    TIMES = 24,
+    TYPE = 25,
+    UNTIL = 26,
+    VAR = 27,
+    WHILE = 28,
+
+    // punctuation...
+    DOLLAR = 29,
+    BAR = 30,
+    DOTDOT = 31,
+    DOT = 32,
+    COLON = 33,
+    SEMICOLON = 34,
+    COMMA = 35,
+    BECOMES = 36,
+    IS = 37,
+
+    // brackets...
+    LPAREN = 38,
+    RPAREN = 39,
+    LBRACKET = 40,
+    RBRACKET = 41,
+    LCURLY = 42,
+    RCURLY = 43,
+
+    // special tokens...
+    EOT = 44,
+    ERROR = 45,
+    COMMENT = 46,
+    FIN = 47,
+    TAB = 48;
 
  
    private static String[] tokenTable = new String[] {
-       "<int>",
-       "<char>",
-       "<identifier>",
-       "<operator>",
-       "array",
-       "const",
-       "do",
-       "else",
-       "end",
-       "for", // Palabra añadida
-       "from", // Palabra añadida
-       "func",
-       "if",
-       "in",
-       "let",
-       "of",
-       "package", // Palabra añadida
-       "private", // Palabra añadida
-       "proc",
-       "rec", // Palabra añadida
-       "record",       
-       "repeat", // Palabra añadida
-       "skip", // Palabra añadida
-       "then",
-       "times", // Palabra añadida
-       "type",
-       "until", // Palabra añadida
-       "var",
-       "while", // Palabra añadida
-       "$", // Nuevo signo de puntuación
-       "|", // Nuevo signo de puntuación
-       "..", // Nuevo signo de puntuación
-       ".",
-       ":",
-       ";",
-       ",",
-       ":=",
-       "~",
-       "(",
-       ")",
-       "[",
-       "]",
-       "{",
-       "}",
-       "",
-       "<error>",
-       ""
+    "<int>",
+    "<char>",
+    "<identifier>",
+    "<operator>",
+    "array",
+    "const",
+    "do",
+    "else",
+    "end",
+    "for", 
+    "from",
+    "func",
+    "if",
+    "in",
+    "let",
+    "of",
+    "package", 
+    "private", 
+    "proc",
+    "rec", 
+    "record",       
+    "repeat",
+    "skip", 
+    "then",
+    "times",
+    "type",
+    "until", 
+    "var",
+    "while", 
+    "$",
+    "|", 
+    "..", 
+    ".",
+    ":",
+    ";",
+    ",",
+    ":=",
+    "~",
+    "(",
+    ")",
+    "[",
+    "]",
+    "{",
+    "}",
+    "",
+    "<error>",
+    ""
    };
  
    private final static int firstReservedWord = Token.ARRAY,

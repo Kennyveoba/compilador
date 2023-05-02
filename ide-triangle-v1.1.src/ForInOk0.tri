@@ -1,7 +1,0 @@
-package ferks ~
- var n: Identifier end
-
-package ferks ~
- var n: Identifier end
-
-skip

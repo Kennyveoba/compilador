@@ -1,0 +1,109 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<PackageDeclaration>
+<Identifier value="myP"/>
+<VarDeclaration>
+<Identifier value="a"/>
+<SimpleTypeDenoter>
+<LongIdentifierSimple>
+<Identifier value="Integer"/>
+</LongIdentifierSimple>
+</SimpleTypeDenoter>
+</VarDeclaration>
+</PackageDeclaration>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="b"/>
+<SimpleTypeDenoter>
+<LongIdentifierSimple>
+<Identifier value="Integer"/>
+</LongIdentifierSimple>
+</SimpleTypeDenoter>
+</VarDeclaration>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="getint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<VarActualParameter>
+<SimpleVname>
+<LongIdentifierComplex>
+<PackageIdentifier>
+<Identifier value="myP"/>
+</PackageIdentifier>
+<Identifier value="a"/>
+</LongIdentifierComplex>
+</SimpleVname>
+</VarActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="b"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierComplex>
+<PackageIdentifier>
+<Identifier value="myP"/>
+</PackageIdentifier>
+<Identifier value="a"/>
+</LongIdentifierComplex>
+</SimpleVname>
+</VnameExpression>
+</AssignCommand>
+</SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierComplex>
+<PackageIdentifier>
+<Identifier value="myP"/>
+</PackageIdentifier>
+<Identifier value="a"/>
+</LongIdentifierComplex>
+</SimpleVname>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierComplex>
+<PackageIdentifier>
+<Identifier value="myP"/>
+</PackageIdentifier>
+<Identifier value="a"/>
+</LongIdentifierComplex>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+</AssignCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierComplex>
+<PackageIdentifier>
+<Identifier value="myP"/>
+</PackageIdentifier>
+<Identifier value="a"/>
+</LongIdentifierComplex>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</LetCommand>
+</Program>
