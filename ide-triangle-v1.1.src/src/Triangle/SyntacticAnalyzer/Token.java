@@ -13,11 +13,10 @@
  */
 
  /*
-  * Modified by: Sebastián Chavez{
-    add the new token for the new reserved words
-  }
-
-  */
+   Kenny Vega
+   Se a�adieron los nuevos 
+   tokens y palabras reservadas  
+ */
  package Triangle.SyntacticAnalyzer;
 
  public final class Token extends Object {
@@ -65,8 +64,8 @@
  
    public static final int
  
-   // literals, identifiers, operators...
-   INTLITERAL = 0,
+    // literals, identifiers, operators...
+    INTLITERAL = 0,
     CHARLITERAL = 1,
     IDENTIFIER = 2,
     OPERATOR = 3,
@@ -135,29 +134,29 @@
        "do",
        "else",
        "end",
-       "for", // Palabra añadida
-       "from", // Palabra añadida
+       "for",  
+       "from",  
        "func",
        "if",
        "in",
        "let",
        "of",
-       "package", // Palabra añadida
-       "private", // Palabra añadida
+       "package",  
+       "private", 
        "proc",
-       "rec", // Palabra añadida
+       "rec", 
        "record",       
-       "repeat", // Palabra añadida
-       "skip", // Palabra añadida
+       "repeat",
+       "skip", 
        "then",
-       "times", // Palabra añadida
+       "times",
        "type",
-       "until", // Palabra añadida
+       "until", 
        "var",
-       "while", // Palabra añadida
-       "$", // Nuevo signo de puntuación
-       "|", // Nuevo signo de puntuación
-       "..", // Nuevo signo de puntuación
+       "while", 
+       "$", 
+       "|", 
+       "..", 
        ".",
        ":",
        ";",

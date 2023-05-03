@@ -21,7 +21,7 @@ public class Writer2 {
             File carpeta = new File("SalidasHTML" + File.separator);
             carpeta.mkdirs();
             File htmlFile = new File(carpeta,fileName.concat(".html"));
-            //create html file
+       
             fileWriter = new FileWriter(htmlFile);
             writeHTML("<p style=\"font-family: monospace; font-size: 1em;\">");
         

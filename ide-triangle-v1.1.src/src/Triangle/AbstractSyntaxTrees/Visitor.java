@@ -126,7 +126,6 @@ public abstract Object visitLongIdentifierSimple(LongIdentifierSimple ast, Objec
 
 public abstract Object visitLongIdentifierComplex (LongIdentifierComplex ast, Object o);
 
-
 public Object visitUntilCommand(UntilCommand aThis, Object o);
 
 public Object visitRepeatTimes(RepeatTimes aThis, Object o);

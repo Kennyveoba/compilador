@@ -187,35 +187,9 @@ public final class Checker implements Visitor {
   }
 
   public Object visitBinaryExpression(BinaryExpression ast, Object o) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'visitForCommand'");
-    /*
-    TypeDenoter e1Type = (TypeDenoter) ast.E1.visit(this, null);
-    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
-    Declaration binding = (Declaration) ast.O.visit(this, null);
 
-    if (binding == null)
-      reportUndeclared(ast.O);
-    else {
-      if (! (binding instanceof BinaryOperatorDeclaration))
-        reporter.reportError ("\"%\" is not a binary operator",
-                              ast.O.spelling, ast.O.position);
-      BinaryOperatorDeclaration bbinding = (BinaryOperatorDeclaration) binding;
-      if (bbinding.ARG1 == StdEnvironment.anyType) {
-        // this operator must be "=" or "\="
-        if (! e1Type.equals(e2Type))
-          reporter.reportError ("incompatible argument types for \"%\"",
-                                ast.O.spelling, ast.position);
-      } else if (! e1Type.equals(bbinding.ARG1))
-          reporter.reportError ("wrong argument type for \"%\"",
-                                ast.O.spelling, ast.E1.position);
-      else if (! e2Type.equals(bbinding.ARG2))
-          reporter.reportError ("wrong argument type for \"%\"",
-                                ast.O.spelling, ast.E2.position);
-      ast.type = bbinding.RES;
-    }
-    return ast.type;
-    */
+    throw new UnsupportedOperationException("Unimplemented method 'visitForCommand'");
+    
   }
 
   public Object visitCallExpression(CallExpression ast, Object o) {
@@ -1012,22 +986,22 @@ public final class Checker implements Visitor {
  
     @Override
     public Object visitUntilCommand(UntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitDoWhileCommand (DoWhileCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
