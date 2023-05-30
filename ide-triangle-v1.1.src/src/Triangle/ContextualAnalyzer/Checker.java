@@ -175,6 +175,19 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  // for Identifier := Expression .. Expression do Command end
+  public Object visitForCommand(ForCommand ast, Object o) {
+    TypeDenoter e1Type = (TypeDenoter) ast.E1.visit(this, null);
+    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    if (! e1Type.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", ast.E1.position);
+    if (! e2Type.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", ast.E2.position);
+    idTable.openScope();
+    ast.C.visit(this, null);
+    idTable.closeScope();
+    return null;
+  }
 
   // for Identifier  := Expression .. Expression while Expression do Command end
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
@@ -220,8 +233,8 @@ public final class Checker implements Visitor {
     idTable.closeScope();
     return null;
   }
-
-   //___________________Comando_Repeat_________________________________________
+ 
+  //___________________Comando_Repeat_________________________________________
    //   Kenny Vega
    // repeat until Expression do Command end
    // repeat do Command  until Expression end
@@ -263,10 +276,9 @@ public final class Checker implements Visitor {
       return null;
     }
   //____________________________________________________________________________
-  
-  
-  
+
   // Expressions
+
   // Returns the TypeDenoter denoting the type of the expression. Does
   // not use the given object.
 
@@ -434,7 +446,91 @@ public final class Checker implements Visitor {
     idTable.closeScope();
     return null;
   }
+  /*Agregar declaracion RecDeclaration*/
+  
+  public Object visitRecDeclaration(ReDefinition ast, Object o) {
+    SequentialDeclaration seqAST = (SequentialDeclaration) ast.PFS;
+    
+    visitRecDeclarationAux(seqAST); // Inserta todos los identificadores en idTable con el uso de los métodos explicados abajo
+    
+    idTable.openScope(); // segunda mini pasada, procesa los cuerpos y PFS
+    ast.PFS.visit(this, null); // se visitan los cuerpos
+    idTable.closeScope();
+    
+    return null;
+  }
+  
+  private void visitRecDeclarationAux(SequentialDeclaration seqDeclAST){ // revisa si d1 y d2 son proc o func y los inserta en idTable de utilizando entreProc y entreFunc (recorrido a proc func)
+    if(seqDeclAST.D1 instanceof ProcDeclaration){ // si d1 es proc
+      ProcDeclaration procAST = (ProcDeclaration) seqDeclAST.D1;
+      enterProc(procAST); // lo inserta a la tabla
+    }
+    else if (seqDeclAST.D1 instanceof FuncDeclaration){ // si d1 es func 
+      FuncDeclaration funcAST = (FuncDeclaration) seqDeclAST.D1;
+      enterFunc(funcAST); // lo inserta a la tabla
+    }
+    else{
+      visitRecDeclarationAux((SequentialDeclaration) seqDeclAST.D1); // si no cumple ninguna se hace  llamada recursiva pasando d1 como SequentialDeclaration
+    }
+    
+    if(seqDeclAST.D2 instanceof ProcDeclaration){ // si d2 es proc
+      ProcDeclaration procAST = (ProcDeclaration) seqDeclAST.D2;
+      enterProc(procAST); // lo inserta a la tabla
+    }
+    else{
+      FuncDeclaration funcAST = (FuncDeclaration) seqDeclAST.D2;  // si d2 es func 
+      enterFunc(funcAST); // lo inserta a la tabla
+    }
+  }
+  
+  private void enterProc(ProcDeclaration procAST){ //recibe proc y lo guarda en idTable es la primer mini pasada (cuando se hace enter al ast completo)
+    idTable.enter (procAST.I.spelling, procAST);
+    if (procAST.duplicated)
+      reporter.reportError ("identifier \"%\" already declared",
+                            procAST.I.spelling, procAST.position);
+    idTable.openScope();
+    procAST.FPS.visit(this, null);
+    idTable.closeScope();
+  }
+  
+  private void enterFunc(FuncDeclaration funcAST){ // recibe func y lo guarda en idTable es la primer mini pasada (cuando se hace enter al ast completo)
+    funcAST.T = (TypeDenoter)funcAST.T.visit(this, null);
+    idTable.enter (funcAST.I.spelling, funcAST);
+    if (funcAST.duplicated)
+      reporter.reportError ("identifier \"%\" already declared",
+                            funcAST.I.spelling, funcAST.position);
+    idTable.openScope();
+    funcAST.FPS.visit(this, null);
+    idTable.closeScope();
+  }
 
+  
+  
+  /* Agregar declaracion private Dec1 in Dec2 end*/
+  
+  public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+
+    IdEntry beforeD1 = idTable.latestEntry(); /* el Ref1 indicado abajo */
+    ast.D1.visit(this, null);
+
+    IdEntry beforeD2 = idTable.latestEntry(); /* el Ref2 indicado abajo */
+    ast.D2.visit(this, null);
+
+    /* Ref3 corresponde a idTable.latestEntry() en este punto */
+
+    idTable.discardLocal(beforeD1, beforeD2);
+
+    return null;
+  }
+    
+  public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
+    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+    idTable.enter(ast.I.spelling, ast);
+    if (ast.duplicated)
+      reporter.reportError ("identifier \"%\" already declared",
+                            ast.I.spelling, ast.position);
+    return null;
+  }
   
   public Object visitSequentialDeclaration(SequentialDeclaration ast, Object o) {
     ast.D1.visit(this, null);
@@ -464,7 +560,7 @@ public final class Checker implements Visitor {
 
     return null;
   }
-  
+
   // Array Aggregates
 
   // Returns the TypeDenoter for the Array Aggregate. Does not use the
@@ -772,6 +868,7 @@ public final class Checker implements Visitor {
   }
 
   public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
+    
     return ast.I.visit(this, null);
   }
 
@@ -811,7 +908,7 @@ public final class Checker implements Visitor {
     return ast.type;
   }
 
-   public Object visitSimpleVname(SimpleVname ast, Object o) {
+  public Object visitSimpleVname(SimpleVname ast, Object o) {
     ast.variable = false;
     ast.type = StdEnvironment.errorType;
     Declaration binding = (Declaration) ast.I.visit(this, null);
@@ -823,6 +920,9 @@ public final class Checker implements Visitor {
         ast.variable = false;
       } else if (binding instanceof VarDeclaration) {
         ast.type = ((VarDeclaration) binding).T;
+        ast.variable = true;
+      }else if (binding instanceof VariableInitializedDeclaration) {
+        ast.type = ((VariableInitializedDeclaration) binding).E.type;
         ast.variable = true;
       } else if (binding instanceof ConstFormalParameter) {
         ast.type = ((ConstFormalParameter) binding).T;
@@ -1069,10 +1169,12 @@ public final class Checker implements Visitor {
     throw new UnsupportedOperationException("Unimplemented method 'visitPackageIdentifier'");
   }
 
-  @Override
+  
+  
+  /*@Override
   public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
+  } */
 
   @Override
   public Object visitLongIdentifierComplex(LongIdentifierComplex ast, Object o) {
@@ -1089,19 +1191,5 @@ public final class Checker implements Visitor {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
-    @Override
-    public Object visitForCommand(ForCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitRecDeclaration(ReDefinition ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
    
 }
