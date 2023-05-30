@@ -221,45 +221,52 @@ public final class Checker implements Visitor {
     return null;
   }
 
-
-  // repeat until Expression do Command end
-  public Object visitUntilCommand(UntilCommand aThis, Object o) {
-    TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-    if (! eType.equals(StdEnvironment.booleanType))
-      reporter.reportError("Boolean expression expected here", "", aThis.E.position);
-    aThis.C.visit(this, null);
-    return null;
+   //___________________Comando_Repeat_________________________________________
+   //   Kenny Vega
+   // repeat until Expression do Command end
+   // repeat do Command  until Expression end
+   // repeat Expression times do Command end
+   // repeat do Command  while Expression end
+  
+  
+  private void validateExpression(TypeDenoter expressionType, TypeDenoter expectedType, String errorMessage, SourcePosition position) {
+  if (!expressionType.equals(expectedType)) {
+    reporter.reportError(errorMessage, "", position);
+    }
   }
 
-  // repeat do Command  while Expression end
-  public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
-    TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-    if (! eType.equals(StdEnvironment.booleanType))
-      reporter.reportError("Boolean expression expected here", "", aThis.E.position);
-    aThis.C.visit(this, null);
-    return null;
-  }
+    public Object visitUntilCommand(UntilCommand aThis, Object o) {
+      TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+      validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+      aThis.C.visit(this, null);
+      return null;
+    }
 
-  // repeat do Command  until Expression end
-  public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
-    TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-    if (! eType.equals(StdEnvironment.booleanType))
-      reporter.reportError("Boolean expression expected here", "", aThis.E.position);
-    aThis.C.visit(this, null);
-    return null;
-  }
+    public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
+      TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+      validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+      aThis.C.visit(this, null);
+      return null;
+    }
 
-  // repeat Expression times do Command end
-  public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
-    TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-    if (! eType.equals(StdEnvironment.integerType))
-      reporter.reportError("Integer expression expected here", "", aThis.E.position);
-    aThis.C.visit(this, null);
-    return null;
-  }
+    public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
+      TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+      validateExpression(eType, StdEnvironment.integerType, "Integer expression expected here", aThis.E.position);
+      aThis.C.visit(this, null);
+      return null;
+    }
 
+    public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
+      TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+      validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+      aThis.C.visit(this, null);
+      return null;
+    }
+  //____________________________________________________________________________
+  
+  
+  
   // Expressions
-
   // Returns the TypeDenoter denoting the type of the expression. Does
   // not use the given object.
 
