@@ -678,14 +678,15 @@ public class WriterVisitor implements Visitor {
 
          @Override
      public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-        writeLineHTML("<ForWhileCommand>");
-        ast.I.visit(this, null);
-        ast.E1.visit(this, null);
-        ast.E2.visit(this, null);
-        ast.E3.visit(this, null);
-        ast.C.visit(this, null);
-        writeLineHTML("</ForWhileCommand>");
-        return null;
+        //writeLineHTML("<ForWhileCommand>");
+        //ast.I.visit(this, null);
+        //ast.E1.visit(this, null);
+        //ast.E2.visit(this, null);
+        //ast.E3.visit(this, null);
+        //ast.C.visit(this, null);
+        //writeLineHTML("</ForWhileCommand>");
+        //return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
          @Override

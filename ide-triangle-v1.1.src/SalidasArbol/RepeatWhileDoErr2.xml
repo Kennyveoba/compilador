@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<DoWhileCommand>
+<CharacterExpression>
+<CharacterLiteral value="'0'"/>
+</CharacterExpression>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</DoWhileCommand>
+</Program>

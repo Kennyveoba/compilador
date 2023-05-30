@@ -1,0 +1,48 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<DoWhileCommand>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value=">"/>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="b"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</DoWhileCommand>
+</Program>

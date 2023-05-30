@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<WhileCommand>
+<LetExpression>
+<ConstDeclaration>
+<Identifier value="x"/>
+<IntegerExpression>
+<IntegerLiteral value="20"/>
+</IntegerExpression>
+</ConstDeclaration>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</BinaryExpression>
+</LetExpression>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</WhileCommand>
+</Program>

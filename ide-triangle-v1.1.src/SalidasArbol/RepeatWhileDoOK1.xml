@@ -1,0 +1,76 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<SequentialDeclaration>
+<ConstDeclaration>
+<Identifier value="b"/>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+</ConstDeclaration>
+<ConstDeclaration>
+<Identifier value="a"/>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+</ConstDeclaration>
+</SequentialDeclaration>
+<DoWhileCommand>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value=">"/>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="b"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="-"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+</AssignCommand>
+</SequentialCommand>
+</DoWhileCommand>
+</LetCommand>
+</Program>

@@ -125,6 +125,8 @@ public final class Checker implements Visitor {
 
   public Object visitCallCommand(CallCommand ast, Object o) {
 
+    /*ast.I.visit(this, null);
+    ast.APS.visit(this, null);*/
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
       reportUndeclared(ast.I.getSimpleIdentifier());
@@ -173,6 +175,89 @@ public final class Checker implements Visitor {
     return null;
   }
 
+
+  // for Identifier  := Expression .. Expression while Expression do Command end
+  public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+    TypeDenoter e1Type = (TypeDenoter) ast.E1.visit(this, null);
+    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    TypeDenoter e3Type = (TypeDenoter) ast.E3.visit(this, null);
+    if (! e1Type.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", ast.E1.position);
+    if (! e2Type.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", ast.E2.position);
+    if (! e3Type.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", ast.E3.position);
+    idTable.openScope();
+    ast.C.visit(this, null);
+    idTable.closeScope();
+    return null;
+  }
+
+  // for Identifier  := Expression .. Expression until Expression do Command end
+  public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
+    TypeDenoter e1Type = (TypeDenoter) ast.E1.visit(this, null);
+    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    TypeDenoter e3Type = (TypeDenoter) ast.E3.visit(this, null);
+    if (! e1Type.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", ast.E1.position);
+    if (! e2Type.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", ast.E2.position);
+    if (! e3Type.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", ast.E3.position);
+    idTable.openScope();
+    ast.C.visit(this, null);
+    idTable.closeScope();
+    return null;
+  }
+
+  // for Identifier in Expression do Command end
+  public Object visitForInCommand(ForInCommand ast, Object o) {
+    TypeDenoter eType = (TypeDenoter) ast.E1.visit(this, null);
+    if (! eType.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", ast.E1.position);
+    idTable.openScope();
+    ast.C.visit(this, null);
+    idTable.closeScope();
+    return null;
+  }
+
+
+  // repeat until Expression do Command end
+  public Object visitUntilCommand(UntilCommand aThis, Object o) {
+    TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+    if (! eType.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", aThis.E.position);
+    aThis.C.visit(this, null);
+    return null;
+  }
+
+  // repeat do Command  while Expression end
+  public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
+    TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+    if (! eType.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", aThis.E.position);
+    aThis.C.visit(this, null);
+    return null;
+  }
+
+  // repeat do Command  until Expression end
+  public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
+    TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+    if (! eType.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", aThis.E.position);
+    aThis.C.visit(this, null);
+    return null;
+  }
+
+  // repeat Expression times do Command end
+  public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
+    TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+    if (! eType.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", aThis.E.position);
+    aThis.C.visit(this, null);
+    return null;
+  }
+
   // Expressions
 
   // Returns the TypeDenoter denoting the type of the expression. Does
@@ -186,9 +271,32 @@ public final class Checker implements Visitor {
     return ast.type;
   }
 
-  public Object visitBinaryExpression(BinaryExpression ast, Object o) {
+  public Object visitBinaryExpression(BinaryExpression ast, Object o) {  
+    TypeDenoter e1Type = (TypeDenoter) ast.E1.visit(this, null);
+    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    Declaration binding = (Declaration) ast.O.visit(this, null);
 
-    throw new UnsupportedOperationException("Unimplemented method 'visitForCommand'");
+    if (binding == null)
+      reportUndeclared(ast.O);
+    else {
+      if (! (binding instanceof BinaryOperatorDeclaration))
+        reporter.reportError ("\"%\" is not a binary operator",
+                              ast.O.spelling, ast.O.position);
+      BinaryOperatorDeclaration bbinding = (BinaryOperatorDeclaration) binding;
+      if (bbinding.ARG1 == StdEnvironment.anyType) {
+        // this operator must be "=" or "\="
+        if (! e1Type.equals(e2Type))
+          reporter.reportError ("incompatible argument types for \"%\"",
+                                ast.O.spelling, ast.position);
+      } else if (! e1Type.equals(bbinding.ARG1))
+          reporter.reportError ("wrong argument type for \"%\"",
+                                ast.O.spelling, ast.E1.position);
+      else if (! e2Type.equals(bbinding.ARG2))
+          reporter.reportError ("wrong argument type for \"%\"",
+                                ast.O.spelling, ast.E2.position);
+      ast.type = bbinding.RES;
+    }
+    return ast.type;
     
   }
 
@@ -320,6 +428,7 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  
   public Object visitSequentialDeclaration(SequentialDeclaration ast, Object o) {
     ast.D1.visit(this, null);
     ast.D2.visit(this, null);
@@ -348,7 +457,7 @@ public final class Checker implements Visitor {
 
     return null;
   }
-
+  
   // Array Aggregates
 
   // Returns the TypeDenoter for the Array Aggregate. Does not use the
@@ -655,6 +764,10 @@ public final class Checker implements Visitor {
     return binding;
   }
 
+  public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
+    return ast.I.visit(this, null);
+  }
+
   // Value-or-variable names
 
   // Determines the address of a named object (constant or variable).
@@ -691,7 +804,7 @@ public final class Checker implements Visitor {
     return ast.type;
   }
 
-  public Object visitSimpleVname(SimpleVname ast, Object o) {
+   public Object visitSimpleVname(SimpleVname ast, Object o) {
     ast.variable = false;
     ast.type = StdEnvironment.errorType;
     Declaration binding = (Declaration) ast.I.visit(this, null);
@@ -739,6 +852,7 @@ public final class Checker implements Visitor {
     ast.C.visit(this, null);
     return null;
   }
+  
 
   // Checks whether the source program, represented by its AST, satisfies the
   // language's scope rules and type rules.
@@ -934,39 +1048,43 @@ public final class Checker implements Visitor {
     StdEnvironment.unequalDecl = declareStdBinaryOp("\\=", StdEnvironment.anyType, StdEnvironment.anyType, StdEnvironment.booleanType);
 
   }
+
+  //Commands to be implemented
+
+
+  public Object visitPackageDeclaration(PackageDeclaration aThis, Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitPackageDeclaration'");
+  }
+
+  public Object visitPackageIdentifier(PackageIdentifier packageIdentifier, Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'visitPackageIdentifier'");
+  }
+
+  @Override
+  public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  @Override
+  public Object visitLongIdentifierComplex(LongIdentifierComplex ast, Object o) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  @Override
+  public Object visitSinglePackageDeclaration(SinglePackage aThis, Object o) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  @Override
+  public Object visitSequentialPackageDeclaration(SequentialPackage aThis, Object o) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
     @Override
     public Object visitForCommand(ForCommand ast, Object o) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'visitForCommand'");
-    }
-    public Object visitPackageDeclaration(PackageDeclaration aThis, Object o) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'visitPackageDeclaration'");
-    }
-
-
-    @Override
-    public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'visitForWhileCommand'");
-    }
-
-
-    @Override
-    public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'visitForUntilCommand'");
-    }
-
-
-    @Override
-    public Object visitForInCommand(ForInCommand ast, Object o) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'visitForInCommand'");
-    }
-    public Object visitPackageIdentifier(PackageIdentifier packageIdentifier, Object o) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'visitPackageIdentifier'");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -978,52 +1096,5 @@ public final class Checker implements Visitor {
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-  @Override
-    public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
- 
-    @Override
-    public Object visitUntilCommand(UntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitDoWhileCommand (DoWhileCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitLongIdentifierComplex(LongIdentifierComplex ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-    @Override
-    public Object visitSinglePackageDeclaration(SinglePackage aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitSequentialPackageDeclaration(SequentialPackage aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
    
 }
