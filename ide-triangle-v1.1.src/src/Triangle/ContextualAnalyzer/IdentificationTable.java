@@ -104,6 +104,7 @@ public final class IdentificationTable {
 
     return attr;
   }
+  
   /* Para privateDeclaration*/
   public void discardLocal (IdEntry beforeD1, IdEntry beforeD2) {
 
@@ -121,8 +122,6 @@ public final class IdentificationTable {
 
     return this.latest;
   }
-
-
 
 
 }

@@ -8,6 +8,7 @@
 </IntegerExpression>
 </InitializedVariableDeclaration>
 <ForCommand>
+<ForVarDeclaration>
 <Identifier value="i"/>
 <VnameExpression>
 <SimpleVname>
@@ -16,6 +17,7 @@
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
+</ForVarDeclaration>
 <IntegerExpression>
 <IntegerLiteral value="10"/>
 </IntegerExpression>

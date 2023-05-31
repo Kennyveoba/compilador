@@ -8,10 +8,12 @@
 </IntegerExpression>
 </InitializedVariableDeclaration>
 <ForCommand>
+<ForVarDeclaration>
 <Identifier value="i"/>
 <IntegerExpression>
 <IntegerLiteral value="1"/>
 </IntegerExpression>
+</ForVarDeclaration>
 <VnameExpression>
 <SimpleVname>
 <LongIdentifierSimple>

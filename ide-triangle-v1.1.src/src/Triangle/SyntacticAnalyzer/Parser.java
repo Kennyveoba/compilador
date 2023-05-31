@@ -42,6 +42,7 @@ import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;
 import Triangle.AbstractSyntaxTrees.ForInCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
+import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
@@ -506,6 +507,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         Identifier iAST = parseIdentifier();
         accept(Token.BECOMES);
         Expression eAST = parseExpression();
+        ForVarDeclaration prueba = new ForVarDeclaration(iAST, eAST, commandPos);
         accept(Token.DOTDOT);
         Expression e1AST = parseExpression();
         
@@ -514,7 +516,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             Command cAST = parseCommand();
             accept(Token.END);
             finish(commandPos);
-            commandAST = new ForCommand(iAST, eAST, e1AST, cAST, commandPos);
+            commandAST = new ForCommand(prueba, e1AST, cAST, commandPos);
         }
         else if (currentToken.kind == Token.WHILE) {
          
@@ -524,7 +526,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             Command cAST = parseCommand();
             accept(Token.END);
             finish(commandPos);
-            commandAST = new ForWhileCommand(iAST, eAST, e1AST, e2AST, cAST, commandPos);
+            commandAST = new ForWhileCommand(prueba, e1AST , e2AST, cAST, commandPos);
         }
         else if (currentToken.kind == Token.UNTIL) {
            
@@ -534,7 +536,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             Command cAST = parseCommand();
             accept(Token.END);
             finish(commandPos);
-            commandAST = new ForUntilCommand(iAST, eAST, e1AST, e2AST, cAST, commandPos);
+            commandAST = new ForUntilCommand(prueba, e1AST, e2AST, cAST, commandPos);
         }
         else{
          syntacticError("'do, while or until' expected here ", currentToken.spelling); 

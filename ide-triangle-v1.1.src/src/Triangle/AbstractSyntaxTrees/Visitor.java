@@ -52,9 +52,9 @@ public abstract Object visitSequentialDeclaration(SequentialDeclaration ast, Obj
 public abstract Object visitTypeDeclaration(TypeDeclaration ast, Object o);
 public abstract Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object o);
 public abstract Object visitVarDeclaration(VarDeclaration ast, Object o);
-public abstract Object visitRecDeclaration(ReDefinition ast, Object o); // se agreg�
-public abstract Object visitPrivateDeclaration(PrivateDeclaration ast, Object o); // se agreg�
-public abstract Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o); // se agreg�
+public abstract Object visitRecDeclaration(ReDefinition ast, Object o);  
+public abstract Object visitPrivateDeclaration(PrivateDeclaration ast, Object o); 
+public abstract Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o);  
 
 // Array Aggregates
 public abstract Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object o);
@@ -134,5 +134,8 @@ public Object visitDoWhileCommand(DoWhileCommand aThis, Object o);
 
 public Object visitDoUntilCommand(DoUntilCommand aThis, Object o);
 
+public Object visitBodySingle(BodySingle aThis, Object o);
+
+public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o);
 
 }
