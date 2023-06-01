@@ -1,25 +1,35 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
 <BodySingle>
-<DoWhileCommand>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
+<LetCommand>
+<RECDeclaration>
+<SequentialDeclaration>
+<ProcDeclaration>
 <Identifier value="a"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<Operator value=">"/>
-<VnameExpression>
-<SimpleVname>
+<EmptyFormalParameterSequence/>
+<CallCommand>
 <LongIdentifierSimple>
-<Identifier value="b"/>
+<Identifier value="put"/>
 </LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-</BinaryExpression>
-<SequentialCommand>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'Z'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</ProcDeclaration>
+<FuncDeclaration>
+<Identifier value="m"/>
+<EmptyFormalParameterSequence/>
+<IntTypeDenoter/>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+</FuncDeclaration>
+</SequentialDeclaration>
+</RECDeclaration>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="putint"/>
@@ -32,19 +42,6 @@
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-<CallCommand>
-<LongIdentifierSimple>
-<Identifier value="putint"/>
-</LongIdentifierSimple>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="2"/>
-</IntegerExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-</SequentialCommand>
-</DoWhileCommand>
+</LetCommand>
 </BodySingle>
 </Program>

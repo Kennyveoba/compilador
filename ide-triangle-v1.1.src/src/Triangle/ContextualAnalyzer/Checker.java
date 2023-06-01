@@ -22,6 +22,7 @@ import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
 import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;
+import Triangle.AbstractSyntaxTrees.BodyComplex;
 import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
@@ -43,6 +44,7 @@ import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;
+import Triangle.AbstractSyntaxTrees.ForControl;
 import Triangle.AbstractSyntaxTrees.ForInCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
@@ -110,10 +112,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class Checker implements Visitor {
-
-   // Commands
-    
+public final class Checker implements Visitor {  
    //___________________Comando_Repeat__________________________________________
    //   Kenny Vega
    // repeat until Expression do Command end
@@ -121,63 +120,68 @@ public final class Checker implements Visitor {
    // repeat Expression times do Command end
    // repeat do Command  while Expression end
   
-  
-  private void validateExpression(TypeDenoter expressionType, TypeDenoter expectedType, String errorMessage, SourcePosition position) {
-  if (!expressionType.equals(expectedType)) {
-    reporter.reportError(errorMessage, "", position);
+    private void validateExpression(TypeDenoter expressionType, TypeDenoter expectedType, String errorMessage, SourcePosition position) {
+        if (!expressionType.equals(expectedType)) {
+          reporter.reportError(errorMessage, "", position);
+        }
     }
-  }
 
     public Object visitUntilCommand(UntilCommand aThis, Object o) {
-      TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-      validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
-      aThis.C.visit(this, null);
-      return null;
+        TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+        validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+        aThis.C.visit(this, null);
+        return null;
     }
 
     public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
-      TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-      validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
-      aThis.C.visit(this, null);
-      return null;
+        TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+        validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+        aThis.C.visit(this, null);
+        return null;
     }
 
     public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
-      TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-      validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
-      aThis.C.visit(this, null);
-      return null;
+        TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+        validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+        aThis.C.visit(this, null);
+        return null;
     }
     
     public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
-      TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-      validateExpression(eType, StdEnvironment.integerType, "Integer expression expected here", aThis.E.position);
-      aThis.C.visit(this, null);
-      return null;
+        TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
+        validateExpression(eType, StdEnvironment.integerType, "Integer expression expected here", aThis.E.position);
+        aThis.C.visit(this, null);
+        return null;
     }
+    //___________________________Comando For______________________________________
+    //  Sahid Rojas
     
-  //___________________________Comando For______________________________________
-  //  Sahid Rojas
-    
+    private void checkIntegerExpression(TypeDenoter expressionType, SourcePosition position) {
+        if (!expressionType.equals(StdEnvironment.integerType)) {
+            reporter.reportError("Integer expression expected here", "", position);
+        }
+    }
+
+    private void checkBooleanExpression(TypeDenoter expressionType, SourcePosition position) {
+        if (!expressionType.equals(StdEnvironment.booleanType)) {
+            reporter.reportError("Boolean expression expected here", "", position);
+        }
+    }
+
     public Object visitForCommand(ForCommand ast, Object o) {
         ForVarDeclaration declaration = (ForVarDeclaration) ast.D;
         TypeDenoter Type1 = (TypeDenoter) declaration.E1.visit(this, null);
         TypeDenoter Type2 = (TypeDenoter) ast.E2.visit(this, null);
 
-        if (!Type1.equals(StdEnvironment.integerType)) {
-            reporter.reportError("Integer expression expected here", "", declaration.E1.position);
-        }
-
-        if (!Type2.equals(StdEnvironment.integerType)) {
-            reporter.reportError("Integer expression expected here", "", ast.E2.position);
-        }
+        checkIntegerExpression(Type1, declaration.E1.position);
+        checkIntegerExpression(Type2, ast.E2.position);
 
         idTable.openScope();
         ast.D.visit(this, null);
         ast.C.visit(this, null);
         idTable.closeScope();
 
-    return null;
+        return null;
     }
 
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
@@ -186,17 +190,9 @@ public final class Checker implements Visitor {
         TypeDenoter Type2 = (TypeDenoter) ast.E2.visit(this, null);
         TypeDenoter Type3 = (TypeDenoter) ast.E3.visit(this, null);
 
-        if (!Type1.equals(StdEnvironment.integerType)) {
-            reporter.reportError("Integer expression expected here", "", declaration.E1.position);
-        }
-
-        if (!Type2.equals(StdEnvironment.integerType)) {
-            reporter.reportError("Integer expression expected here", "", ast.E2.position);
-        }
-
-        if (!Type3.equals(StdEnvironment.booleanType)) {
-            reporter.reportError("Boolean expression expected here", "", ast.E3.position);
-        }
+        checkIntegerExpression(Type1, declaration.E1.position);
+        checkIntegerExpression(Type2, ast.E2.position);
+        checkBooleanExpression(Type3, ast.E3.position);
 
         idTable.openScope();
         ast.D.visit(this, null);
@@ -212,17 +208,9 @@ public final class Checker implements Visitor {
         TypeDenoter Type2 = (TypeDenoter) ast.E2.visit(this, null);
         TypeDenoter Type3 = (TypeDenoter) ast.E3.visit(this, null);
 
-        if (!Type1.equals(StdEnvironment.integerType)) {
-            reporter.reportError("Integer expression expected here", "", declaration.E1.position);
-        }
-
-        if (!Type2.equals(StdEnvironment.integerType)) {
-            reporter.reportError("Integer expression expected here", "", ast.E2.position);
-        }
-
-        if (!Type3.equals(StdEnvironment.booleanType)) {
-            reporter.reportError("Boolean expression expected here", "", ast.E3.position);
-        }
+        checkIntegerExpression(Type1, declaration.E1.position);
+        checkIntegerExpression(Type2, ast.E2.position);
+        checkBooleanExpression(Type3, ast.E3.position);
 
         idTable.openScope();
         ast.D.visit(this, null);
@@ -232,9 +220,38 @@ public final class Checker implements Visitor {
         return null;
     }
 
-//______________________________________________________________________________
+    public Object visitForControl(ForControl ast, Object o) {
+        ast.T = (TypeDenoter) ast.E.visit(this, null);
+        return ast.T;
+    }
+    
+    
+    public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
+        TypeDenoter eType = (TypeDenoter) aThis.E1.visit(this, null);
+        idTable.enter(aThis.I.spelling, aThis);
+        if (aThis.duplicated)
+          reporter.reportError("identifier \"%\" already declared",
+              aThis.I.spelling, aThis.position);
+        return null;
+    }
+  
+  //______________________________________________________________________________
+    
+    
+    
+    public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
+        ast.T = (TypeDenoter) ast.E.visit(this, null);
+        idTable.enter(ast.I.spelling, ast);
+        if (ast.duplicated)
+          reporter.reportError("identifier \"%\" already declared",
+              ast.I.spelling, ast.position);
 
+        return null;
+    }
+    
+  // Commands
   // Always returns null. Does not use the given object.
+
   public Object visitAssignCommand(AssignCommand ast, Object o) {
     TypeDenoter vType = (TypeDenoter) ast.V.visit(this, null);
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
@@ -246,7 +263,7 @@ public final class Checker implements Visitor {
   }
 
   public Object visitCallCommand(CallCommand ast, Object o) {
-      
+ 
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
       reportUndeclared(ast.I.getSimpleIdentifier());
@@ -295,6 +312,8 @@ public final class Checker implements Visitor {
     return null;
   }
 
+    
+
   // Expressions
 
   // Returns the TypeDenoter denoting the type of the expression. Does
@@ -308,42 +327,40 @@ public final class Checker implements Visitor {
     return ast.type;
   }
 
-  
-  // Kenny Vega
-  public Object visitBinaryExpression(BinaryExpression ast, Object o) {
-    TypeDenoter Type1 = (TypeDenoter) ast.E1.visit(this, null);
-    TypeDenoter Type2 = (TypeDenoter) ast.E2.visit(this, null);
-    Declaration declaration = (Declaration) ast.O.visit(this, null);
+    // Kenny Vega
+    public Object visitBinaryExpression(BinaryExpression ast, Object o) {
+        TypeDenoter Type1 = (TypeDenoter) ast.E1.visit(this, null);
+        TypeDenoter Type2 = (TypeDenoter) ast.E2.visit(this, null);
+        Declaration declaration = (Declaration) ast.O.visit(this, null);
 
-    if (declaration == null) {
-        reportUndeclared(ast.O); // Informar si el operador no está declarado
-        return null;
-    }
+        if (declaration == null) {
+            reportUndeclared(ast.O); // Informar si el operador no está declarado
+            return null;
+        }
 
-    if (!(declaration instanceof BinaryOperatorDeclaration)) {
-        reporter.reportError("\"%\" is not a binary operator", // Informar si el operador no es binario
-            ast.O.spelling, ast.O.position);
-        return null;
-    }
+        if (!(declaration instanceof BinaryOperatorDeclaration)) {
+            reporter.reportError("\"%\" is not a binary operator", // Informar si el operador no es binario
+                ast.O.spelling, ast.O.position);
+            return null;
+        }
 
-    BinaryOperatorDeclaration bbinding = (BinaryOperatorDeclaration) declaration;
+        BinaryOperatorDeclaration bbinding = (BinaryOperatorDeclaration) declaration;
 
-    if (bbinding.ARG1 != StdEnvironment.anyType && !Type1.equals(bbinding.ARG1)) {
-        reporter.reportError("wrong argument type for \"%\"", // Informar si el primer argumento no es del tipo esperado
-            ast.O.spelling, ast.E1.position);
-        return null;
-    }
+        if (bbinding.ARG1 != StdEnvironment.anyType && !Type1.equals(bbinding.ARG1)) {
+            reporter.reportError("wrong argument type for \"%\"", // Informar si el primer argumento no es del tipo esperado
+                ast.O.spelling, ast.E1.position);
+            return null;
+        }
 
-    if (!Type2.equals(bbinding.ARG2)) {
-        reporter.reportError("wrong argument type for \"%\"", // Informar si el segundo argumento no es del tipo esperado
-            ast.O.spelling, ast.E2.position);
-        return null;
-    }
+        if (!Type2.equals(bbinding.ARG2)) {
+            reporter.reportError("wrong argument type for \"%\"", // Informar si el segundo argumento no es del tipo esperado
+                ast.O.spelling, ast.E2.position);
+            return null;
+        }
 
-    ast.type = bbinding.RES; // Asignar el tipo de resultado del operador a la expresión
-    return ast.type;
-}
-
+        ast.type = bbinding.RES; // Asignar el tipo de resultado del operador a la expresión
+        return ast.type;
+  }
 
   public Object visitCallExpression(CallExpression ast, Object o) {
     Declaration binding = (Declaration) ast.I.visit(this, null);
@@ -472,84 +489,81 @@ public final class Checker implements Visitor {
     idTable.closeScope();
     return null;
   }
-
+  
+  
     // Kenny Vega
     public Object visitRecDeclaration(ReDefinition ast, Object o) {
-    SequentialDeclaration seqAST = (SequentialDeclaration) ast.PFS;
+        SequentialDeclaration RecDecla = (SequentialDeclaration) ast.PFS;
 
-    // Procesar D1
-    if (seqAST.D1 instanceof ProcDeclaration) {
-        // Si D1 es una declaración de procedimiento
-        ProcDeclaration procAST = (ProcDeclaration) seqAST.D1;
-        idTable.enter(procAST.I.spelling, procAST); // Insertar en la tabla de símbolos
-        if (procAST.duplicated) {
-            reporter.reportError("identifier \"%\" already declared", procAST.I.spelling, procAST.position);
+        // Procesar D1
+        if (RecDecla.D1 instanceof ProcDeclaration) {
+            // Si D1 es una declaración de procedimiento
+            ProcDeclaration procAST = (ProcDeclaration) RecDecla.D1;
+            idTable.enter(procAST.I.spelling, procAST); // Insertar en la tabla de símbolos
+            if (procAST.duplicated) {
+                reporter.reportError("identifier \"%\" already declared", procAST.I.spelling, procAST.position);
+            }
+            idTable.openScope();
+            procAST.FPS.visit(this, null); // Visitar los parámetros formales
+            idTable.closeScope();
+        } else if (RecDecla.D1 instanceof FuncDeclaration) {
+            // Si D1 es una declaración de función
+            FuncDeclaration funcAST = (FuncDeclaration) RecDecla.D1;
+            funcAST.T = (TypeDenoter) funcAST.T.visit(this, null); // Visitar el tipo de retorno
+            idTable.enter(funcAST.I.spelling, funcAST); // Insertar en la tabla de símbolos
+            if (funcAST.duplicated) {
+                reporter.reportError("identifier \"%\" already declared", funcAST.I.spelling, funcAST.position);
+            }
+            idTable.openScope();
+            funcAST.FPS.visit(this, null); // Visitar los parámetros formales
+            idTable.closeScope();
+        } else {
+            // Si D1 no es ni procedimiento ni función, se realiza una llamada recursiva
+            visitRecDeclaration((ReDefinition) RecDecla.D1, null);
         }
-        idTable.openScope();
-        procAST.FPS.visit(this, null); // Visitar los parámetros formales
-        idTable.closeScope();
-    } else if (seqAST.D1 instanceof FuncDeclaration) {
-        // Si D1 es una declaración de función
-        FuncDeclaration funcAST = (FuncDeclaration) seqAST.D1;
-        funcAST.T = (TypeDenoter) funcAST.T.visit(this, null); // Visitar el tipo de retorno
-        idTable.enter(funcAST.I.spelling, funcAST); // Insertar en la tabla de símbolos
-        if (funcAST.duplicated) {
-            reporter.reportError("identifier \"%\" already declared", funcAST.I.spelling, funcAST.position);
+
+        // Procesar D2
+        if (RecDecla.D2 instanceof ProcDeclaration) {
+            // Si D2 es una declaración de procedimiento
+            ProcDeclaration procAST = (ProcDeclaration) RecDecla.D2;
+            idTable.enter(procAST.I.spelling, procAST); // Insertar en la tabla de símbolos
+            if (procAST.duplicated) {
+                reporter.reportError("identifier \"%\" already declared", procAST.I.spelling, procAST.position);
+            }
+            idTable.openScope();
+            procAST.FPS.visit(this, null); // Visitar los parámetros formales
+            idTable.closeScope();
+        } else {
+            // Si D2 es una declaración de función
+            FuncDeclaration funcAST = (FuncDeclaration) RecDecla.D2;
+            funcAST.T = (TypeDenoter) funcAST.T.visit(this, null); // Visitar el tipo de retorno
+            idTable.enter(funcAST.I.spelling, funcAST); // Insertar en la tabla de símbolos
+            if (funcAST.duplicated) {
+                reporter.reportError("identifier \"%\" already declared", funcAST.I.spelling, funcAST.position);
+            }
+            idTable.openScope();
+            funcAST.FPS.visit(this, null); // Visitar los parámetros formales
+            idTable.closeScope();
         }
-        idTable.openScope();
-        funcAST.FPS.visit(this, null); // Visitar los parámetros formales
-        idTable.closeScope();
-    } else {
-        // Si D1 no es ni procedimiento ni función, se realiza una llamada recursiva
-        visitRecDeclaration((ReDefinition) seqAST.D1, null);
+        return null;
+    }
+    
+    // Sahid Rojas
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        // Guardar la entrada más reciente antes de visitar ast.D1
+        IdEntry entry = idTable.latestEntry();
+        ast.D1.visit(this, null);
+
+        // Guardar la entrada más reciente antes de visitar ast.D2
+        IdEntry entry2 = idTable.latestEntry();
+        ast.D2.visit(this, null);
+
+        // Descartar las entradas locales antes de beforeD1 y beforeD2
+        idTable.discardLocal(entry, entry2);
+
+        return null;
     }
 
-    // Procesar D2
-    if (seqAST.D2 instanceof ProcDeclaration) {
-        // Si D2 es una declaración de procedimiento
-        ProcDeclaration procAST = (ProcDeclaration) seqAST.D2;
-        idTable.enter(procAST.I.spelling, procAST); // Insertar en la tabla de símbolos
-        if (procAST.duplicated) {
-            reporter.reportError("identifier \"%\" already declared", procAST.I.spelling, procAST.position);
-        }
-        idTable.openScope();
-        procAST.FPS.visit(this, null); // Visitar los parámetros formales
-        idTable.closeScope();
-    } else {
-        // Si D2 es una declaración de función
-        FuncDeclaration funcAST = (FuncDeclaration) seqAST.D2;
-        funcAST.T = (TypeDenoter) funcAST.T.visit(this, null); // Visitar el tipo de retorno
-        idTable.enter(funcAST.I.spelling, funcAST); // Insertar en la tabla de símbolos
-        if (funcAST.duplicated) {
-            reporter.reportError("identifier \"%\" already declared", funcAST.I.spelling, funcAST.position);
-        }
-        idTable.openScope();
-        funcAST.FPS.visit(this, null); // Visitar los parámetros formales
-        idTable.closeScope();
-    }
-
-    return null;
-}
-
-
-  
-  // Sahid Rojas
-   
-
-  public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-
-    IdEntry beforeD1 = idTable.latestEntry(); /* el Ref1 indicado abajo */
-    ast.D1.visit(this, null);
-
-    IdEntry beforeD2 = idTable.latestEntry(); /* el Ref2 indicado abajo */
-    ast.D2.visit(this, null);
-
-    /* Ref3 corresponde a idTable.latestEntry() en este punto */
-
-    idTable.discardLocal(beforeD1, beforeD2);
-
-    return null;
-  }
   
 
   public Object visitSequentialDeclaration(SequentialDeclaration ast, Object o) {
@@ -580,24 +594,7 @@ public final class Checker implements Visitor {
 
     return null;
   }
-
-  public Object visitForVarDeclaration(ForVarDeclaration ast, Object o) {
-    TypeDenoter eType = (TypeDenoter) ast.E1.visit(this, null);
-    idTable.enter(ast.I.spelling, ast);
-    if (ast.duplicated)
-      reporter.reportError("identifier \"%\" already declared",
-          ast.I.spelling, ast.position);
-    return null;
-  }
-
-  public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
-    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-    idTable.enter(ast.I.spelling, ast);
-    if (ast.duplicated)
-      reporter.reportError("identifier \"%\" already declared",
-          ast.I.spelling, ast.position);
-    return null;
-  }
+  
 
   // Array Aggregates
 
@@ -952,25 +949,30 @@ public final class Checker implements Visitor {
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
       reportUndeclared(ast.I.getSimpleIdentifier());
-    else
-      if (binding instanceof ConstDeclaration) {
-        ast.type = ((ConstDeclaration) binding).E.type;
-        ast.variable = false;
-      } else if (binding instanceof VarDeclaration) {
-        ast.type = ((VarDeclaration) binding).T;
-        ast.variable = true;
-      }else if (binding instanceof VariableInitializedDeclaration) {
-        ast.type = ((VariableInitializedDeclaration) binding).E.type;
-        ast.variable = true;
-      } else if (binding instanceof ConstFormalParameter) {
-        ast.type = ((ConstFormalParameter) binding).T;
-        ast.variable = false;
-      } else if (binding instanceof VarFormalParameter) {
-        ast.type = ((VarFormalParameter) binding).T;
-        ast.variable = true;
-      } else
-        reporter.reportError ("\"%\" is not a const or var identifier",
-                              ast.I.getSimpleIdentifier().spelling, ast.I.position);
+    else if (binding instanceof ConstDeclaration) {
+      ast.type = ((ConstDeclaration) binding).E.type;
+      ast.variable = false;
+    } else if (binding instanceof VarDeclaration) {
+      ast.type = ((VarDeclaration) binding).T;
+      ast.variable = true;
+    } else if (binding instanceof ConstFormalParameter) {
+      ast.type = ((ConstFormalParameter) binding).T;
+      ast.variable = false;
+    } else if (binding instanceof VarFormalParameter) {
+      ast.type = ((VarFormalParameter) binding).T;
+      ast.variable = true;
+    } else if (binding instanceof ForVarDeclaration) {
+      ast.type = ((ForVarDeclaration) binding).E1.type;
+      ast.variable = false;
+    } else if (binding instanceof VariableInitializedDeclaration) {
+      ast.type = ((VariableInitializedDeclaration) binding).E.type;
+      ast.variable = true;
+    } else if (binding instanceof ForControl) {
+      ast.type = ((ForControl) binding).T;
+      ast.variable = false;
+    } else
+      reporter.reportError("\"%\" is not a const or var identifier",
+          ast.I.getSimpleIdentifier().spelling, ast.I.position);
     return ast.type;
   }
 
@@ -994,15 +996,13 @@ public final class Checker implements Visitor {
   // Programs
 
   public Object visitProgram(Program ast, Object o) {
-    ast.C.visit(this, null);
+    ast.B.visit(this, null);
     return null;
   }
 
   public Object visitBodySingle(BodySingle ast, Object o) {
-
     return ast.C.visit(this, null);
   }
-
   // Checks whether the source program, represented by its AST, satisfies the
   // language's scope rules and type rules.
   // Also decorates the AST as follows:
@@ -1210,8 +1210,6 @@ public final class Checker implements Visitor {
 
   }
 
-  // Commands to be implemented
-
   public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'visitPackageDeclaration'");
@@ -1222,28 +1220,29 @@ public final class Checker implements Visitor {
     throw new UnsupportedOperationException("Unimplemented method 'visitPackageIdentifier'");
   }
 
-
   @Override
   public Object visitLongIdentifierComplex(LongIdentifierComplex ast, Object o) {
     throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
-                                                                  
   }
 
   @Override
   public Object visitSinglePackageDeclaration(SinglePackage ast, Object o) {
     throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
-                                                                    
   }
 
   @Override
   public Object visitSequentialPackageDeclaration(SequentialPackage ast, Object o) {
     throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
-                                                                    
-  }
+  }  
 
     @Override
     public Object visitForInCommand(ForInCommand ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Object visitBodyComplex(BodyComplex aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+ 
 }

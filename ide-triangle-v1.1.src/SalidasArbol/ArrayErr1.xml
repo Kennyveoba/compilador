@@ -3,21 +3,34 @@
 <LetCommand>
 <RECDeclaration>
 <SequentialDeclaration>
-<SequentialDeclaration>
-<ProcDeclaration>
-<Identifier value="Ping"/>
+<FuncDeclaration>
+<Identifier value="f"/>
 <SingleFormalParameterSequence>
 <ConstFormalParameter>
-<Identifier value="x"/>
+<Identifier value="a"/>
 <IntTypeDenoter/>
 </ConstFormalParameter>
 </SingleFormalParameterSequence>
-<IfCommand>
+<IntTypeDenoter/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</FuncDeclaration>
+<FuncDeclaration>
+<Identifier value="g"/>
+<SingleFormalParameterSequence>
+<ConstFormalParameter>
+<Identifier value="b"/>
+<IntTypeDenoter/>
+</ConstFormalParameter>
+</SingleFormalParameterSequence>
+<IntTypeDenoter/>
+<IfExpression>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
 <LongIdentifierSimple>
-<Identifier value="x"/>
+<Identifier value="b"/>
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
@@ -26,22 +39,9 @@
 <IntegerLiteral value="0"/>
 </IntegerExpression>
 </BinaryExpression>
-<SequentialCommand>
-<CallCommand>
+<CallExpression>
 <LongIdentifierSimple>
-<Identifier value="Impr"/>
-</LongIdentifierSimple>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<CharacterExpression>
-<CharacterLiteral value="'I'"/>
-</CharacterExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-<CallCommand>
-<LongIdentifierSimple>
-<Identifier value="Pong"/>
+<Identifier value="f"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
@@ -49,7 +49,7 @@
 <VnameExpression>
 <SimpleVname>
 <LongIdentifierSimple>
-<Identifier value="x"/>
+<Identifier value="b"/>
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
@@ -60,109 +60,32 @@
 </BinaryExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
-</CallCommand>
-</SequentialCommand>
-<EmptyCommand/>
-</IfCommand>
-</ProcDeclaration>
-<ProcDeclaration>
-<Identifier value="Pong"/>
-<SingleFormalParameterSequence>
-<ConstFormalParameter>
-<Identifier value="a"/>
-<IntTypeDenoter/>
-</ConstFormalParameter>
-</SingleFormalParameterSequence>
-<IfCommand>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="x"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<Operator value=">"/>
+</CallExpression>
 <IntegerExpression>
 <IntegerLiteral value="0"/>
 </IntegerExpression>
-</BinaryExpression>
-<SequentialCommand>
-<CallCommand>
-<LongIdentifierSimple>
-<Identifier value="Impr"/>
-</LongIdentifierSimple>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<CharacterExpression>
-<CharacterLiteral value="'0'"/>
-</CharacterExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-<CallCommand>
-<LongIdentifierSimple>
-<Identifier value="Ping"/>
-</LongIdentifierSimple>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="a"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<Operator value="-"/>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
-</BinaryExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-</SequentialCommand>
-<EmptyCommand/>
-</IfCommand>
-</ProcDeclaration>
-</SequentialDeclaration>
-<ProcDeclaration>
-<Identifier value="Impr"/>
-<SingleFormalParameterSequence>
-<ConstFormalParameter>
-<Identifier value="c"/>
-<CharTypeDenoter/>
-</ConstFormalParameter>
-</SingleFormalParameterSequence>
-<CallCommand>
-<LongIdentifierSimple>
-<Identifier value="put"/>
-</LongIdentifierSimple>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="c"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-</ProcDeclaration>
+</IfExpression>
+</FuncDeclaration>
 </SequentialDeclaration>
 </RECDeclaration>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="Ping"/>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CallExpression>
+<LongIdentifierSimple>
+<Identifier value="f"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
 <IntegerExpression>
-<IntegerLiteral value="4"/>
+<IntegerLiteral value="10"/>
 </IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>

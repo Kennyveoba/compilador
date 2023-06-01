@@ -2,38 +2,20 @@
 <Program>
 <BodySingle>
 <LetCommand>
-<InitializedVariableDeclaration>
-<Identifier value="k"/>
-<IntegerExpression>
-<IntegerLiteral value="10"/>
-</IntegerExpression>
-</InitializedVariableDeclaration>
-<ForCommand>
-<ForVarDeclaration>
-<Identifier value="i"/>
+<PrivateDeclaration>
+<ConstDeclaration>
+<Identifier value="a"/>
 <IntegerExpression>
 <IntegerLiteral value="1"/>
 </IntegerExpression>
-</ForVarDeclaration>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="k"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<SequentialCommand>
-<AssignCommand>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="k"/>
-</LongIdentifierSimple>
-</SimpleVname>
+</ConstDeclaration>
+<ConstDeclaration>
+<Identifier value="b"/>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
 <LongIdentifierSimple>
-<Identifier value="k"/>
+<Identifier value="a"/>
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
@@ -42,7 +24,8 @@
 <IntegerLiteral value="1"/>
 </IntegerExpression>
 </BinaryExpression>
-</AssignCommand>
+</ConstDeclaration>
+</PrivateDeclaration>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="putint"/>
@@ -52,15 +35,13 @@
 <VnameExpression>
 <SimpleVname>
 <LongIdentifierSimple>
-<Identifier value="i"/>
+<Identifier value="b"/>
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-</SequentialCommand>
-</ForCommand>
 </LetCommand>
 </BodySingle>
 </Program>

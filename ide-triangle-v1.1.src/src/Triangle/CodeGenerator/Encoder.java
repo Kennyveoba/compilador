@@ -30,6 +30,7 @@ import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
 import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;
+import Triangle.AbstractSyntaxTrees.BodyComplex;
 import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
@@ -50,6 +51,7 @@ import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;
+import Triangle.AbstractSyntaxTrees.ForControl;
 import Triangle.AbstractSyntaxTrees.ForInCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
@@ -735,8 +737,7 @@ public final class Encoder implements Visitor {
 
   // Programs
   public Object visitProgram(Program ast, Object o) {
-    ast.P.visit(this, null);
-    ast.C.visit(this, null);
+    ast.B.visit(this, null);
     return null;
   }
 
@@ -1111,6 +1112,15 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object visitForControl(ForControl v, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitBodyComplex(BodyComplex aThis, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

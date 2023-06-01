@@ -1,11 +1,14 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <SequentialCommand>
 <ForCommand>
+<ForVarDeclaration>
 <Identifier value="i"/>
 <IntegerExpression>
 <IntegerLiteral value="1"/>
 </IntegerExpression>
+</ForVarDeclaration>
 <IntegerExpression>
 <IntegerLiteral value="10"/>
 </IntegerExpression>
@@ -43,4 +46,5 @@
 </SingleActualParameterSequence>
 </CallCommand>
 </SequentialCommand>
+</BodySingle>
 </Program>

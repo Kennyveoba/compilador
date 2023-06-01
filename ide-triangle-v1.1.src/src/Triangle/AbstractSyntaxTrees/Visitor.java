@@ -29,6 +29,7 @@ public abstract Object visitForCommand(ForCommand ast, Object o);
 public abstract Object visitForWhileCommand(ForWhileCommand ast, Object o);
 public abstract Object visitForUntilCommand(ForUntilCommand ast, Object o);
 public abstract Object visitForInCommand(ForInCommand ast, Object o);
+public abstract Object visitForControl(ForControl v, Object o);
 
 // Expressions
 public abstract Object visitArrayExpression(ArrayExpression ast, Object o);
@@ -135,6 +136,8 @@ public Object visitDoWhileCommand(DoWhileCommand aThis, Object o);
 public Object visitDoUntilCommand(DoUntilCommand aThis, Object o);
 
 public Object visitBodySingle(BodySingle aThis, Object o);
+
+public Object visitBodyComplex(BodyComplex aThis, Object o);
 
 public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o);
 
