@@ -1,6 +1,5 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<BodySingle>
 <LetCommand>
 <SequentialDeclaration>
 <ConstDeclaration>
@@ -9,12 +8,10 @@
 <IntegerLiteral value="10"/>
 </IntegerExpression>
 </ConstDeclaration>
-<InitializedVariableDeclaration>
+<VarDeclaration>
 <Identifier value="a"/>
-<IntegerExpression>
-<IntegerLiteral value="15"/>
-</IntegerExpression>
-</InitializedVariableDeclaration>
+<IntTypeDenoter/>
+</VarDeclaration>
 </SequentialDeclaration>
 <DoWhileCommand>
 <BinaryExpression>
@@ -74,5 +71,4 @@
 </SequentialCommand>
 </DoWhileCommand>
 </LetCommand>
-</BodySingle>
 </Program>

@@ -21,9 +21,7 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration; 
-import Triangle.AbstractSyntaxTrees.BodyComplex;
-import Triangle.AbstractSyntaxTrees.BodySingle;
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -242,6 +240,8 @@ public final class Checker implements Visitor {
               aThis.I.spelling, aThis.position);
         return null;
     }
+    
+    
   
   //______________________________________________________________________________
     
@@ -291,7 +291,7 @@ public final class Checker implements Visitor {
 
   public Object visitIfCommand(IfCommand ast, Object o) {
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-    if (!eType.equals(StdEnvironment.booleanType))
+    if (! eType.equals(StdEnvironment.booleanType))
       reporter.reportError("Boolean expression expected here", "", ast.E.position);
     ast.C1.visit(this, null);
     ast.C2.visit(this, null);
@@ -337,38 +337,37 @@ public final class Checker implements Visitor {
 
     // Kenny Vega
     public Object visitBinaryExpression(BinaryExpression ast, Object o) {
-        TypeDenoter Type1 = (TypeDenoter) ast.E1.visit(this, null);
-        TypeDenoter Type2 = (TypeDenoter) ast.E2.visit(this, null);
-        Declaration declaration = (Declaration) ast.O.visit(this, null);
+    TypeDenoter e1Type = (TypeDenoter) ast.E1.visit(this, null);
+    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    Declaration Dec = (Declaration) ast.O.visit(this, null);
 
-        if (declaration == null) {
-            reportUndeclared(ast.O); // Informar si el operador no está declarado
-            return null;
-        }
+    if (Dec == null) {
+        reportUndeclared(ast.O);
+        return null;
+    }
 
-        if (!(declaration instanceof BinaryOperatorDeclaration)) {
-            reporter.reportError("\"%\" is not a binary operator", // Informar si el operador no es binario
-                ast.O.spelling, ast.O.position);
-            return null;
-        }
+    if (!(Dec instanceof BinaryOperatorDeclaration)) {
+        reporter.reportError("\"%\" is not a binary operator", ast.O.spelling, ast.O.position);
+        return null;
+    }
 
-        BinaryOperatorDeclaration bbinding = (BinaryOperatorDeclaration) declaration;
+    BinaryOperatorDeclaration bbinding = (BinaryOperatorDeclaration) Dec;
+    checkBinaryOperatorArguments(ast, bbinding, e1Type, e2Type);
+    ast.type = bbinding.RES;
+    return ast.type;
+}
 
-        if (bbinding.ARG1 != StdEnvironment.anyType && !Type1.equals(bbinding.ARG1)) {
-            reporter.reportError("wrong argument type for \"%\"", // Informar si el primer argumento no es del tipo esperado
-                ast.O.spelling, ast.E1.position);
-            return null;
-        }
+    private void checkBinaryOperatorArguments(BinaryExpression ast, BinaryOperatorDeclaration Dec, TypeDenoter e1Type, TypeDenoter e2Type) {
+        if (Dec.ARG1 == StdEnvironment.anyType) {
+            // This operator must be "=" or "\="
+            if (!e1Type.equals(e2Type))
+                reporter.reportError("Incompatible argument types for \"%\"", ast.O.spelling, ast.position);
+        } else if (!e1Type.equals(Dec.ARG1))
+            reporter.reportError("Wrong argument type for \"%\"", ast.O.spelling, ast.E1.position);
+        else if (!e2Type.equals(Dec.ARG2))
+            reporter.reportError("Wrong argument type for \"%\"", ast.O.spelling, ast.E2.position);
+    }
 
-        if (!Type2.equals(bbinding.ARG2)) {
-            reporter.reportError("wrong argument type for \"%\"", // Informar si el segundo argumento no es del tipo esperado
-                ast.O.spelling, ast.E2.position);
-            return null;
-        }
-
-        ast.type = bbinding.RES; // Asignar el tipo de resultado del operador a la expresión
-        return ast.type;
-  }
 
   public Object visitCallExpression(CallExpression ast, Object o) {
     Declaration binding = (Declaration) ast.I.visit(this, null);
@@ -1004,7 +1003,7 @@ public final class Checker implements Visitor {
   // Programs
 
   public Object visitProgram(Program ast, Object o) {
-    ast.B.visit(this, null);
+    ast.C.visit(this, null);
     return null;
   }
  
@@ -1244,15 +1243,5 @@ public final class Checker implements Visitor {
     public Object visitForInCommand(ForInCommand ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public Object visitBodyComplex(BodyComplex aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Object visitBodySingle(BodySingle ast, Object o) {
-    return ast.C.visit(this, null);
-    }
-
  
 }

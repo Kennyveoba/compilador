@@ -11,9 +11,7 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration; 
-import Triangle.AbstractSyntaxTrees.BodyComplex;
-import Triangle.AbstractSyntaxTrees.BodySingle;
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -638,7 +636,11 @@ public class WriterVisitor implements Visitor {
          @Override
     public Object visitProgram(Program ast, Object obj) {
         writeLineHTML("<Program>");
-        ast.B.visit(this, null);
+        if (ast.P != null){
+             ast.P.visit(this, null);
+        }   
+        //ast.P.visit(this, null);
+        ast.C.visit(this, null);
         writeLineHTML("</Program>");
         return null;
     }
@@ -835,18 +837,6 @@ public class WriterVisitor implements Visitor {
     public Object visitForControl(ForControl v, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public Object visitBodyComplex(BodyComplex aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitBodySingle(BodySingle aThis, Object o) {
-        writeLineHTML("<BodySingle>");        
-        aThis.C.visit(this, null);
-        writeLineHTML("</BodySingle>");
-        return null;
-    }
+ 
  
 }

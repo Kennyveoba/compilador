@@ -2,72 +2,74 @@
 <Program>
 <LetCommand>
 <InitializedVariableDeclaration>
-<Identifier value="k"/>
+<Identifier value="x"/>
 <IntegerExpression>
 <IntegerLiteral value="1"/>
 </IntegerExpression>
 </InitializedVariableDeclaration>
-<ForUntilCommand>
-<ForVarDeclaration>
-<Identifier value="i"/>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="k"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-</ForVarDeclaration>
-<IntegerExpression>
-<IntegerLiteral value="10"/>
-</IntegerExpression>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="i"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<Operator value=">"/>
-<IntegerExpression>
-<IntegerLiteral value="3"/>
-</IntegerExpression>
-</BinaryExpression>
 <SequentialCommand>
-<AssignCommand>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="k"/>
-</LongIdentifierSimple>
-</SimpleVname>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="k"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<Operator value="+"/>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
-</BinaryExpression>
-</AssignCommand>
+<SequentialCommand>
+<SequentialCommand>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="putint"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="21"/>
 </IntegerExpression>
+</BinaryExpression>
+</AssignCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
 </SequentialCommand>
-</ForUntilCommand>
 </LetCommand>
 </Program>

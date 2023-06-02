@@ -138,8 +138,4 @@ public Object visitDoUntilCommand(DoUntilCommand aThis, Object o);
 
 public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o);
 
-public Object visitBodyComplex(BodyComplex aThis, Object o);
-
-public Object visitBodySingle(BodySingle aThis, Object o);
-
 }
