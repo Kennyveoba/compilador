@@ -1,0 +1,71 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="k"/>
+<BoolTypeDenoter/>
+</VarDeclaration>
+<ForUntilCommand>
+<ForVarDeclaration>
+<Identifier value="i"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ForVarDeclaration>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="k"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value=">"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</BinaryExpression>
+<SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="k"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="k"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+</AssignCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</ForUntilCommand>
+</LetCommand>
+</Program>

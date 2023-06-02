@@ -44,7 +44,7 @@ import Triangle.AbstractSyntaxTrees.IntTypeDenoter;
 import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
-import Triangle.AbstractSyntaxTrees.LetExpression; 
+import Triangle.AbstractSyntaxTrees.LetExpression;
 import Triangle.AbstractSyntaxTrees.LongIdentifierComplex;
 import Triangle.AbstractSyntaxTrees.LongIdentifierSimple;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
@@ -53,7 +53,6 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
-import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.PackageIdentifier;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
@@ -86,7 +85,6 @@ import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.VariableInitializedDeclaration;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
-import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 
 import java.io.FileWriter;
@@ -162,7 +160,6 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</WhileCommand>");
         return null;
     }
-
 
     // Expressions
          @Override
@@ -337,7 +334,6 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</VarDeclaration>");
         return null;
     }
-
 
     // Array Aggregates
          @Override
@@ -822,7 +818,6 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
- 
     @Override
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
         writeLineHTML("<ForVarDeclaration>");

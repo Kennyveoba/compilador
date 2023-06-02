@@ -1,0 +1,118 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="a"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="getint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<VarActualParameter>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VarActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<IfCommand>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value=">"/>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</BinaryExpression>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'2'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<IfCommand>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="="/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'1'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<IfCommand>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="="/>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</BinaryExpression>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'0'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'n'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</IfCommand>
+</IfCommand>
+</IfCommand>
+</SequentialCommand>
+</LetCommand>
+</Program>

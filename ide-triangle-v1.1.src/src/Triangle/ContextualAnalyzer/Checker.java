@@ -107,6 +107,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  
 
 public final class Checker implements Visitor {  
+    
    //___________________Comando_Repeat__________________________________________
    //   Kenny Vega
    // repeat untilA Expression do Command end
@@ -224,7 +225,7 @@ public final class Checker implements Visitor {
 
         return null;
     }
-
+ 
     
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
         TypeDenoter eType = (TypeDenoter) aThis.E1.visit(this, null);
@@ -234,7 +235,7 @@ public final class Checker implements Visitor {
               aThis.I.spelling, aThis.position);
         return null;
     }
-    
+   
   
   //______________________________________________________________________________
     
@@ -311,8 +312,6 @@ public final class Checker implements Visitor {
     return null;
   }
 
-    
-
   // Expressions
 
   // Returns the TypeDenoter denoting the type of the expression. Does
@@ -328,8 +327,8 @@ public final class Checker implements Visitor {
 
     // Kenny Vega
     public Object visitBinaryExpression(BinaryExpression ast, Object o) {
-    TypeDenoter e1Type = (TypeDenoter) ast.E1.visit(this, null);
-    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    TypeDenoter Type1 = (TypeDenoter) ast.E1.visit(this, null);
+    TypeDenoter Tipe2 = (TypeDenoter) ast.E2.visit(this, null);
     Declaration Dec = (Declaration) ast.O.visit(this, null);
 
     if (Dec == null) {
@@ -343,18 +342,19 @@ public final class Checker implements Visitor {
     }
 
     BinaryOperatorDeclaration bbinding = (BinaryOperatorDeclaration) Dec;
-    checkBinaryOperatorArguments(ast, bbinding, e1Type, e2Type);
+    checkBinaryOperatorArguments(ast, bbinding, Type1, Tipe2);
     ast.type = bbinding.RES;
     return ast.type;
 }
 
-    private void checkBinaryOperatorArguments(BinaryExpression ast, BinaryOperatorDeclaration Dec, TypeDenoter e1Type, TypeDenoter e2Type) {
+    private void checkBinaryOperatorArguments(BinaryExpression ast, BinaryOperatorDeclaration Dec, TypeDenoter Tipe1, TypeDenoter Tipe2) {
         if (Dec.ARG1 == StdEnvironment.anyType) {
-            if (!e1Type.equals(e2Type))
+            // This operator must be "=" or "\="
+            if (!Tipe1.equals(Tipe2))
                 reporter.reportError("Incompatible argument types for \"%\"", ast.O.spelling, ast.position);
-        } else if (!e1Type.equals(Dec.ARG1))
+        } else if (!Tipe1.equals(Dec.ARG1))
             reporter.reportError("Wrong argument type for \"%\"", ast.O.spelling, ast.E1.position);
-        else if (!e2Type.equals(Dec.ARG2))
+        else if (!Tipe2.equals(Dec.ARG2))
             reporter.reportError("Wrong argument type for \"%\"", ast.O.spelling, ast.E2.position);
     }
 

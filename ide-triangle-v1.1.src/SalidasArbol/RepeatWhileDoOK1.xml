@@ -8,12 +8,10 @@
 <IntegerLiteral value="10"/>
 </IntegerExpression>
 </ConstDeclaration>
-<InitializedVariableDeclaration>
+<VarDeclaration>
 <Identifier value="a"/>
-<IntegerExpression>
-<IntegerLiteral value="15"/>
-</IntegerExpression>
-</InitializedVariableDeclaration>
+<IntTypeDenoter/>
+</VarDeclaration>
 </SequentialDeclaration>
 <DoWhileCommand>
 <BinaryExpression>

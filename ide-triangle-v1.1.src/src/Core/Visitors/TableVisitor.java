@@ -43,8 +43,7 @@ import Triangle.AbstractSyntaxTrees.IntTypeDenoter;
 import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
-import Triangle.AbstractSyntaxTrees.LetExpression;
-import Triangle.AbstractSyntaxTrees.LongIdentifier;
+import Triangle.AbstractSyntaxTrees.LetExpression; 
 import Triangle.AbstractSyntaxTrees.LongIdentifierComplex;
 import Triangle.AbstractSyntaxTrees.LongIdentifierSimple;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
@@ -52,8 +51,7 @@ import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
 import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.Operator;
-import Triangle.AbstractSyntaxTrees.PackageDeclaration;
+import Triangle.AbstractSyntaxTrees.Operator; 
 import Triangle.AbstractSyntaxTrees.PackageIdentifier;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
@@ -725,4 +723,5 @@ public class TableVisitor implements Visitor {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  
+  
 }
