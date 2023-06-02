@@ -41,8 +41,7 @@ import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.ForCommand;
-import Triangle.AbstractSyntaxTrees.ForAux;
+import Triangle.AbstractSyntaxTrees.ForCommand; 
 import Triangle.AbstractSyntaxTrees.ForInCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
@@ -158,7 +157,7 @@ public final class Checker implements Visitor {
     //  Sahid Rojas
     
     
-  private void checkIntegerExpression(TypeDenoter expressionType, SourcePosition position) {
+    private void checkIntegerExpression(TypeDenoter expressionType, SourcePosition position) {
         if (!expressionType.equals(StdEnvironment.integerType)) {
             reporter.reportError("Integer expression expected here", "", position);
         }
@@ -226,11 +225,6 @@ public final class Checker implements Visitor {
         return null;
     }
 
-    public Object visitForAux(ForAux ast, Object o) {
-        ast.T = (TypeDenoter) ast.E.visit(this, null);
-        return ast.T;
-    }
-    
     
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
         TypeDenoter eType = (TypeDenoter) aThis.E1.visit(this, null);
@@ -241,11 +235,8 @@ public final class Checker implements Visitor {
         return null;
     }
     
-    
   
   //______________________________________________________________________________
-    
-    
     
     public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
         ast.T = (TypeDenoter) ast.E.visit(this, null);
@@ -359,7 +350,6 @@ public final class Checker implements Visitor {
 
     private void checkBinaryOperatorArguments(BinaryExpression ast, BinaryOperatorDeclaration Dec, TypeDenoter e1Type, TypeDenoter e2Type) {
         if (Dec.ARG1 == StdEnvironment.anyType) {
-            // This operator must be "=" or "\="
             if (!e1Type.equals(e2Type))
                 reporter.reportError("Incompatible argument types for \"%\"", ast.O.spelling, ast.position);
         } else if (!e1Type.equals(Dec.ARG1))
@@ -974,9 +964,6 @@ public final class Checker implements Visitor {
     } else if (binding instanceof VariableInitializedDeclaration) {
       ast.type = ((VariableInitializedDeclaration) binding).E.type;
       ast.variable = true;
-    } else if (binding instanceof ForAux) {
-      ast.type = ((ForAux) binding).T;
-      ast.variable = false;
     } else
       reporter.reportError("\"%\" is not a const or var identifier",
           ast.I.getSimpleIdentifier().spelling, ast.I.position);
