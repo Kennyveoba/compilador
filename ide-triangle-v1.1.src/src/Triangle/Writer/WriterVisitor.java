@@ -11,7 +11,7 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration; 
 import Triangle.AbstractSyntaxTrees.BodyComplex;
 import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
@@ -822,14 +822,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
-    @Override
-    public Object visitBodySingle(BodySingle aThis, Object o) {
-        writeLineHTML("<BodySingle>");        
-        aThis.C.visit(this, null);
-        writeLineHTML("</BodySingle>");
-        return null;
-    }
-
+ 
     @Override
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
         writeLineHTML("<ForVarDeclaration>");
@@ -848,4 +841,12 @@ public class WriterVisitor implements Visitor {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Object visitBodySingle(BodySingle aThis, Object o) {
+        writeLineHTML("<BodySingle>");        
+        aThis.C.visit(this, null);
+        writeLineHTML("</BodySingle>");
+        return null;
+    }
+ 
 }

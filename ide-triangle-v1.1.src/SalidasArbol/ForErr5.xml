@@ -10,6 +10,21 @@
 <IntegerExpression>
 <IntegerLiteral value="10"/>
 </IntegerExpression>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="getint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<VarActualParameter>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VarActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="putint"/>
@@ -26,5 +41,6 @@
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
+</SequentialCommand>
 </ForCommand>
 </Program>

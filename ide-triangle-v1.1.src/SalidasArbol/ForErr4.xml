@@ -12,7 +12,7 @@
 </IntegerExpression>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="putint"/>
+<Identifier value="put"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>

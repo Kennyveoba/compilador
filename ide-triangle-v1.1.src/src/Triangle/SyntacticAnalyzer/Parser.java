@@ -21,9 +21,9 @@ import Triangle.AbstractSyntaxTrees.ArrayAggregate;
 import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
-import Triangle.AbstractSyntaxTrees.BinaryExpression;
+import Triangle.AbstractSyntaxTrees.BinaryExpression; 
 import Triangle.AbstractSyntaxTrees.BodyComplex;
-import Triangle.AbstractSyntaxTrees.BodyProgram;
+import Triangle.AbstractSyntaxTrees.BodyProgram; 
 import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -172,6 +172,7 @@ public class Parser {
   public Program parseProgram() {
 
     Program programAST = null;
+    
     BodyProgram body = null;
 
     previousTokenPosition.start = 0;
@@ -198,11 +199,11 @@ public class Parser {
           }
 
       }
-      Command cmdAST = parseCommand();
+      Command cAST = parseCommand();
       if (pkgCounter == 0)
-          body = new BodySingle(cmdAST, previousTokenPosition);
+          body = new BodySingle(cAST, previousTokenPosition);
       else
-          body = new BodyComplex(pkgDeclarationAST, cmdAST, previousTokenPosition);
+          body = new BodyComplex(pkgDeclarationAST, cAST, previousTokenPosition);
 
       programAST = new Program(body, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {

@@ -21,7 +21,7 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration; 
 import Triangle.AbstractSyntaxTrees.BodyComplex;
 import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
@@ -61,8 +61,7 @@ import Triangle.AbstractSyntaxTrees.IntTypeDenoter;
 import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
-import Triangle.AbstractSyntaxTrees.LetExpression;
-import Triangle.AbstractSyntaxTrees.LongIdentifier;
+import Triangle.AbstractSyntaxTrees.LetExpression; 
 import Triangle.AbstractSyntaxTrees.LongIdentifierComplex;
 import Triangle.AbstractSyntaxTrees.LongIdentifierSimple;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
@@ -107,15 +106,13 @@ import Triangle.AbstractSyntaxTrees.VariableInitializedDeclaration;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
-import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.SyntacticAnalyzer.SourcePosition;
-import java.util.HashSet;
-import java.util.Set;
+ 
 
 public final class Checker implements Visitor {  
    //___________________Comando_Repeat__________________________________________
    //   Kenny Vega
-   // repeat until Expression do Command end
+   // repeat untilA Expression do Command end
    // repeat do Command  until Expression end
    // repeat Expression times do Command end
    // repeat do Command  while Expression end
@@ -128,35 +125,42 @@ public final class Checker implements Visitor {
 
     public Object visitUntilCommand(UntilCommand aThis, Object o) {
         TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-        validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+        validateExpression(eType, StdEnvironment.booleanType, 
+                "Boolean expression expected here", aThis.E.position);
         aThis.C.visit(this, null);
         return null;
     }
 
     public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
         TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-        validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+        validateExpression(eType, StdEnvironment.booleanType, 
+                "Boolean expression expected here", aThis.E.position);
         aThis.C.visit(this, null);
         return null;
     }
 
     public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
         TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-        validateExpression(eType, StdEnvironment.booleanType, "Boolean expression expected here", aThis.E.position);
+        validateExpression(eType, StdEnvironment.booleanType, 
+                "Boolean expression expected here", aThis.E.position);
         aThis.C.visit(this, null);
         return null;
     }
     
     public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
         TypeDenoter eType = (TypeDenoter) aThis.E.visit(this, null);
-        validateExpression(eType, StdEnvironment.integerType, "Integer expression expected here", aThis.E.position);
+        validateExpression(eType, StdEnvironment.integerType, 
+                "Integer expression expected here", aThis.E.position);
         aThis.C.visit(this, null);
         return null;
     }
+    
+    
     //___________________________Comando For______________________________________
     //  Sahid Rojas
     
-    private void checkIntegerExpression(TypeDenoter expressionType, SourcePosition position) {
+    
+  private void checkIntegerExpression(TypeDenoter expressionType, SourcePosition position) {
         if (!expressionType.equals(StdEnvironment.integerType)) {
             reporter.reportError("Integer expression expected here", "", position);
         }
@@ -188,8 +192,11 @@ public final class Checker implements Visitor {
         ForVarDeclaration declaration = (ForVarDeclaration) ast.D;
         TypeDenoter Type1 = (TypeDenoter) declaration.E1.visit(this, null);
         TypeDenoter Type2 = (TypeDenoter) ast.E2.visit(this, null);
+        ast.D.visit(this, null);
+        idTable.openScope();
         TypeDenoter Type3 = (TypeDenoter) ast.E3.visit(this, null);
-
+        idTable.closeScope();
+    
         checkIntegerExpression(Type1, declaration.E1.position);
         checkIntegerExpression(Type2, ast.E2.position);
         checkBooleanExpression(Type3, ast.E3.position);
@@ -206,6 +213,7 @@ public final class Checker implements Visitor {
         ForVarDeclaration declaration = (ForVarDeclaration) ast.D;
         TypeDenoter Type1 = (TypeDenoter) declaration.E1.visit(this, null);
         TypeDenoter Type2 = (TypeDenoter) ast.E2.visit(this, null);
+        ast.D.visit(this, null);
         TypeDenoter Type3 = (TypeDenoter) ast.E3.visit(this, null);
 
         checkIntegerExpression(Type1, declaration.E1.position);
@@ -999,10 +1007,7 @@ public final class Checker implements Visitor {
     ast.B.visit(this, null);
     return null;
   }
-
-  public Object visitBodySingle(BodySingle ast, Object o) {
-    return ast.C.visit(this, null);
-  }
+ 
   // Checks whether the source program, represented by its AST, satisfies the
   // language's scope rules and type rules.
   // Also decorates the AST as follows:
@@ -1244,5 +1249,10 @@ public final class Checker implements Visitor {
     public Object visitBodyComplex(BodyComplex aThis, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public Object visitBodySingle(BodySingle ast, Object o) {
+    return ast.C.visit(this, null);
+    }
+
  
 }

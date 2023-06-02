@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<ForCommand>
+<ForUntilCommand>
 <ForVarDeclaration>
 <Identifier value="i"/>
 <IntegerExpression>
@@ -10,9 +10,22 @@
 <IntegerExpression>
 <IntegerLiteral value="10"/>
 </IntegerExpression>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value=">"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</BinaryExpression>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="putint"/>
+<Identifier value="put"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
@@ -26,5 +39,5 @@
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-</ForCommand>
+</ForUntilCommand>
 </Program>

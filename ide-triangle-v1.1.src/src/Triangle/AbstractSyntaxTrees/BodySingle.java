@@ -7,7 +7,6 @@ public class BodySingle extends BodyProgram {
     public BodySingle(Command cAST, SourcePosition thePosition) {
         super(thePosition);
         C = cAST;
-        //TODO Auto-generated constructor stub
     }
 
     @Override
