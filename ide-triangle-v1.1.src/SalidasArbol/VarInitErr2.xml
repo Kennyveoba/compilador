@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<InitializedVariableDeclaration>
+<Identifier value="x"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</InitializedVariableDeclaration>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="true"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</AssignCommand>
+</LetCommand>
+</Program>

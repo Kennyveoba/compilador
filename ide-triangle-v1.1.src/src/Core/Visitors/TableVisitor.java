@@ -29,7 +29,7 @@ import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;
-import Triangle.AbstractSyntaxTrees.ForControl;
+import Triangle.AbstractSyntaxTrees.ForAux;
 import Triangle.AbstractSyntaxTrees.ForInCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
@@ -86,14 +86,12 @@ import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.VariableInitializedDeclaration;
 import Triangle.AbstractSyntaxTrees.Visitor;
-import Triangle.AbstractSyntaxTrees.VnameExpression;
-import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.VnameExpression; 
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.CodeGenerator.Field;
 import Triangle.CodeGenerator.KnownAddress;
 import Triangle.CodeGenerator.KnownRoutine;
-import Triangle.CodeGenerator.KnownValue;
-import Triangle.CodeGenerator.TypeRepresentation;
+import Triangle.CodeGenerator.KnownValue; 
 import Triangle.CodeGenerator.UnknownAddress;
 import Triangle.CodeGenerator.UnknownRoutine;
 import Triangle.CodeGenerator.UnknownValue;
@@ -729,7 +727,7 @@ public class TableVisitor implements Visitor {
     }
 
     @Override
-    public Object visitForControl(ForControl v, Object o) {
+    public Object visitForAux(ForAux v, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  

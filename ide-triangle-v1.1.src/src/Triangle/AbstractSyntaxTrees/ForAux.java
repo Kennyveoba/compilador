@@ -6,9 +6,9 @@
 package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
-public class ForControl extends Declaration{
+public class ForAux extends Declaration{
 
-    public ForControl(Identifier iAST, Expression eAST, SourcePosition thePosition) {
+    public ForAux(Identifier iAST, Expression eAST, SourcePosition thePosition) {
         super(thePosition);
         I = iAST;
         E = eAST;
@@ -17,7 +17,7 @@ public class ForControl extends Declaration{
 
     @Override
     public Object visit(Visitor v, Object o) {
-        return v.visitForControl(this, o);
+        return v.visitForAux(this, o);
     }
     
     

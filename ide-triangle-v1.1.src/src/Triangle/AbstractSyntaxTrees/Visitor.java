@@ -30,7 +30,7 @@ public abstract Object visitForCommand(ForCommand ast, Object o);
 public abstract Object visitForWhileCommand(ForWhileCommand ast, Object o);
 public abstract Object visitForUntilCommand(ForUntilCommand ast, Object o);
 public abstract Object visitForInCommand(ForInCommand ast, Object o);
-public abstract Object visitForControl(ForControl v, Object o);
+public abstract Object visitForAux(ForAux v, Object o);
 
 // Expressions
 public abstract Object visitArrayExpression(ArrayExpression ast, Object o);

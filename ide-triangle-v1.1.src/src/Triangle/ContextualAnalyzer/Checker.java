@@ -42,7 +42,7 @@ import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;
-import Triangle.AbstractSyntaxTrees.ForControl;
+import Triangle.AbstractSyntaxTrees.ForAux;
 import Triangle.AbstractSyntaxTrees.ForInCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
@@ -226,7 +226,7 @@ public final class Checker implements Visitor {
         return null;
     }
 
-    public Object visitForControl(ForControl ast, Object o) {
+    public Object visitForAux(ForAux ast, Object o) {
         ast.T = (TypeDenoter) ast.E.visit(this, null);
         return ast.T;
     }
@@ -974,8 +974,8 @@ public final class Checker implements Visitor {
     } else if (binding instanceof VariableInitializedDeclaration) {
       ast.type = ((VariableInitializedDeclaration) binding).E.type;
       ast.variable = true;
-    } else if (binding instanceof ForControl) {
-      ast.type = ((ForControl) binding).T;
+    } else if (binding instanceof ForAux) {
+      ast.type = ((ForAux) binding).T;
       ast.variable = false;
     } else
       reporter.reportError("\"%\" is not a const or var identifier",
