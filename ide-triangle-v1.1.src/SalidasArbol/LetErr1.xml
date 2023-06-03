@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<ConstDeclaration>
+<Identifier value="a"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstDeclaration>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="getint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<VarActualParameter>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VarActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</LetCommand>
+</Program>

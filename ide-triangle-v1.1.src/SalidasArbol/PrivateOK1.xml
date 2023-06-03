@@ -1,0 +1,92 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<PrivateDeclaration>
+<SequentialDeclaration>
+<InitializedVariableDeclaration>
+<Identifier value="a"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</InitializedVariableDeclaration>
+<ConstDeclaration>
+<Identifier value="b"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstDeclaration>
+</SequentialDeclaration>
+<SequentialDeclaration>
+<ProcDeclaration>
+<Identifier value="P"/>
+<EmptyFormalParameterSequence/>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</ProcDeclaration>
+<FuncDeclaration>
+<Identifier value="m"/>
+<EmptyFormalParameterSequence/>
+<IntTypeDenoter/>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="b"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</BinaryExpression>
+</FuncDeclaration>
+</SequentialDeclaration>
+</PrivateDeclaration>
+<SequentialCommand>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="P"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CallExpression>
+<LongIdentifierSimple>
+<Identifier value="m"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</LetCommand>
+</Program>

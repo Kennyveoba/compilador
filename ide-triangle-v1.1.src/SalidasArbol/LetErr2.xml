@@ -1,6 +1,5 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<BodySingle>
 <LetCommand>
 <ConstDeclaration>
 <Identifier value="a"/>
@@ -47,5 +46,4 @@
 </CallCommand>
 </SequentialCommand>
 </LetCommand>
-</BodySingle>
 </Program>

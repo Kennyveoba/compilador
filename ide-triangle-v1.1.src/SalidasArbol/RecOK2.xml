@@ -1,0 +1,66 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<RECDeclaration>
+<SequentialDeclaration>
+<SequentialDeclaration>
+<ProcDeclaration>
+<Identifier value="a"/>
+<EmptyFormalParameterSequence/>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'Z'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</ProcDeclaration>
+<FuncDeclaration>
+<Identifier value="b"/>
+<EmptyFormalParameterSequence/>
+<IntTypeDenoter/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</FuncDeclaration>
+</SequentialDeclaration>
+<ProcDeclaration>
+<Identifier value="c"/>
+<EmptyFormalParameterSequence/>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CallExpression>
+<LongIdentifierSimple>
+<Identifier value="b"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</ProcDeclaration>
+</SequentialDeclaration>
+</RECDeclaration>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</LetCommand>
+</Program>

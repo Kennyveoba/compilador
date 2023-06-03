@@ -1,0 +1,114 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<RECDeclaration>
+<SequentialDeclaration>
+<FuncDeclaration>
+<Identifier value="f"/>
+<SingleFormalParameterSequence>
+<ConstFormalParameter>
+<Identifier value="a"/>
+<IntTypeDenoter/>
+</ConstFormalParameter>
+</SingleFormalParameterSequence>
+<IntTypeDenoter/>
+<IfExpression>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value=">"/>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</BinaryExpression>
+<CallExpression>
+<LongIdentifierSimple>
+<Identifier value="g"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="-"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallExpression>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</IfExpression>
+</FuncDeclaration>
+<FuncDeclaration>
+<Identifier value="g"/>
+<SingleFormalParameterSequence>
+<ConstFormalParameter>
+<Identifier value="b"/>
+<BoolTypeDenoter/>
+</ConstFormalParameter>
+</SingleFormalParameterSequence>
+<IntTypeDenoter/>
+<IfExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="b"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<CallExpression>
+<LongIdentifierSimple>
+<Identifier value="f"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallExpression>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</IfExpression>
+</FuncDeclaration>
+</SequentialDeclaration>
+</RECDeclaration>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CallExpression>
+<LongIdentifierSimple>
+<Identifier value="f"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</LetCommand>
+</Program>

@@ -1,6 +1,5 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<BodySingle>
 <LetCommand>
 <VarDeclaration>
 <Identifier value="x"/>
@@ -72,5 +71,4 @@
 </DoUntilCommand>
 </SequentialCommand>
 </LetCommand>
-</BodySingle>
 </Program>

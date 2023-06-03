@@ -13,11 +13,10 @@
  */
 
  /*
-  * Modified by: Sebastián Chavez{
-    add the new token for the new reserved words
-  }
-
-  */
+   Kenny Vega
+   Se a�adieron los nuevos 
+   tokens y palabras reservadas  
+ */
  package Triangle.SyntacticAnalyzer;
 
  public final class Token extends Object {
@@ -65,66 +64,64 @@
  
    public static final int
  
-   // literals, identifiers, operators...
-   INTLITERAL = 0,
-       CHARLITERAL = 1,
-       IDENTIFIER = 2,
-       OPERATOR = 3,
- 
-       // reserved words - must be in alphabetical order...
-       ARRAY = 4,
-       CONST = 5,
-       DO = 6,
-       ELSE = 7,
-       END = 8,
-       FOR = 9,
-       FROM = 10,
-       FUNC = 11,
-       IF = 12,
-       IN = 13,
-       LET = 14,
-       OF = 15,
-       PACKAGE = 16,
-       PRIVATE = 17,
-       PROC = 18,
-       REC = 19,
-       RECORD = 20,       
-       REPEAT = 21,
-       SELECT = 22,
-       SKIP = 23,
-       THEN = 24,
-       TIMES = 25,
-       TYPE = 26,
-       UNTIL = 27,
-       VAR = 28,
-       WHEN = 29,
-       WHILE = 30,
- 
-       // punctuation...
-       DOLLAR = 31,
-       PIPELINE = 32,
-       DOTDOT = 33,
-       DOT = 34,
-       COLON = 35,
-       SEMICOLON = 36,
-       COMMA = 37,
-       BECOMES = 38,
-       IS = 39,
- 
-       // brackets...
-       LPAREN = 40,
-       RPAREN = 41,
-       LBRACKET = 42,
-       RBRACKET = 43,
-       LCURLY = 44,
-       RCURLY = 45,
- 
-       // special tokens...
-       EOT = 46,
-       ERROR = 47,
-       COMMENT = 48,
-       EOL = 49,
-       TAB = 50;
+    // literals, identifiers, operators...
+    INTLITERAL = 0,
+    CHARLITERAL = 1,
+    IDENTIFIER = 2,
+    OPERATOR = 3,
+
+    // reserved words - must be in alphabetical order...
+    ARRAY = 4,
+    CONST = 5,
+    DO = 6,
+    ELSE = 7,
+    END = 8,
+    FOR = 9,
+    FROM = 10,
+    FUNC = 11,
+    IF = 12,
+    IN = 13,
+    LET = 14,
+    OF = 15,
+    PACKAGE = 16,
+    PRIVATE = 17,
+    PROC = 18,
+    REC = 19,
+    RECORD = 20,       
+    REPEAT = 21,
+    SKIP = 22,
+    THEN = 23,
+    TIMES = 24,
+    TYPE = 25,
+    UNTIL = 26,
+    VAR = 27,
+    WHILE = 28,
+
+    // punctuation...
+    DOLLAR = 29,
+    BAR = 30,
+    DOTDOT = 31,
+    DOT = 32,
+    COLON = 33,
+    SEMICOLON = 34,
+    COMMA = 35,
+    BECOMES = 36,
+    IS = 37,
+
+    // brackets...
+    LPAREN = 38,
+    RPAREN = 39,
+    LBRACKET = 40,
+    RBRACKET = 41,
+    LCURLY = 42,
+    RCURLY = 43,
+
+    // special tokens...
+    EOT = 44,
+    ERROR = 45,
+    COMMENT = 46,
+    EOL = 47,
+    TAB = 48;
 
  
    private static String[] tokenTable = new String[] {
@@ -137,31 +134,29 @@
        "do",
        "else",
        "end",
-       "for", // Palabra añadida
-       "from", // Palabra añadida
+       "for",  
+       "from",  
        "func",
        "if",
        "in",
        "let",
        "of",
-       "package", // Palabra añadida
-       "private", // Palabra añadida
+       "package",  
+       "private", 
        "proc",
-       "rec", // Palabra añadida
+       "rec", 
        "record",       
-       "repeat", // Palabra añadida
-       "select", // Palabra añadida
-       "skip", // Palabra añadida
+       "repeat",
+       "skip", 
        "then",
-       "times", // Palabra añadida
+       "times",
        "type",
-       "until", // Palabra añadida
+       "until", 
        "var",
-       "when", // Palabra añadida
-       "while", // Palabra añadida
-       "$", // Nuevo signo de puntuación
-       "|", // Nuevo signo de puntuación
-       "..", // Nuevo signo de puntuación
+       "while", 
+       "$", 
+       "|", 
+       "..", 
        ".",
        ":",
        ";",

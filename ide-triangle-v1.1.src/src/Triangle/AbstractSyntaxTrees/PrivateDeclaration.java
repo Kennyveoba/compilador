@@ -7,10 +7,6 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-/**
- *
- * @author muril
- */
 public class PrivateDeclaration extends Declaration{
     
     public PrivateDeclaration (Declaration d1AST, Declaration d2AST, SourcePosition thePosition){
