@@ -115,7 +115,8 @@ public final class Checker implements Visitor {
    // repeat Expression times do Command end
    // repeat do Command  while Expression end
   
-    private void validateExpression(TypeDenoter expressionType, TypeDenoter expectedType, String errorMessage, SourcePosition position) {
+    private void validateExpression(TypeDenoter expressionType, TypeDenoter 
+            expectedType, String errorMessage, SourcePosition position) {
         if (!expressionType.equals(expectedType)) {
           reporter.reportError(errorMessage, "", position);
         }
@@ -158,15 +159,19 @@ public final class Checker implements Visitor {
     //  Kenny Vega
     
     
-    private void checkIntegerExpression(TypeDenoter expressionType, SourcePosition position) {
+    private void checkIntegerExpression(TypeDenoter expressionType, 
+            SourcePosition position) {
         if (!expressionType.equals(StdEnvironment.integerType)) {
-            reporter.reportError("Integer expression expected here", "", position);
+            reporter.reportError("Integer expression expected here", 
+                    "", position);
         }
     }
 
-    private void checkBooleanExpression(TypeDenoter expressionType, SourcePosition position) {
+    private void checkBooleanExpression(TypeDenoter expressionType, 
+            SourcePosition position) {
         if (!expressionType.equals(StdEnvironment.booleanType)) {
-            reporter.reportError("Boolean expression expected here", "", position);
+            reporter.reportError("Boolean expression expected here", 
+                    "", position);
         }
     }
 
@@ -239,7 +244,8 @@ public final class Checker implements Visitor {
   
   //______________________________________________________________________________
     
-    public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
+    public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration 
+            ast, Object o) {
         ast.T = (TypeDenoter) ast.E.visit(this, null);
         idTable.enter(ast.I.spelling, ast);
         
@@ -336,7 +342,8 @@ public final class Checker implements Visitor {
     }
 
     if (!(Dec instanceof BinaryOperatorDeclaration)) {
-        reporter.reportError("\"%\" is not a binary operator", ast.O.spelling, ast.O.position);
+        reporter.reportError("\"%\" is not a binary operator", ast.O.spelling, 
+                ast.O.position);
         return null;
     }
 
@@ -346,7 +353,8 @@ public final class Checker implements Visitor {
     return ast.type;
 }
 
-    private void checkBinaryOperatorArguments(BinaryExpression ast, BinaryOperatorDeclaration Dec, TypeDenoter Tipe1, TypeDenoter Tipe2) {
+    private void checkBinaryOperatorArguments(BinaryExpression ast, 
+            BinaryOperatorDeclaration Dec, TypeDenoter Tipe1, TypeDenoter Tipe2) {
         if (Dec.ARG1 == StdEnvironment.anyType) {
             // This operator must be "=" or "\="
             if (!Tipe1.equals(Tipe2))
@@ -921,7 +929,6 @@ public final class Checker implements Visitor {
   }
 
   public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
-
     return ast.I.visit(this, null);
   }
 
