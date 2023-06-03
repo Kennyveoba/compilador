@@ -1,9 +1,3 @@
-/*
-  Kenny Vega
-
-  Se agregaron las nuevas opereciones y comandos 
-*/
-
 package Triangle.Writer;
 
 import Triangle.AbstractSyntaxTrees.AnyTypeDenoter;
@@ -11,25 +5,34 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;
+import Triangle.AbstractSyntaxTrees.BodyComplex;
+import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
+import Triangle.AbstractSyntaxTrees.CaseLiteral;
+import Triangle.AbstractSyntaxTrees.CaseLiteralChar;
+import Triangle.AbstractSyntaxTrees.CaseLiteralInteger;
+import Triangle.AbstractSyntaxTrees.CaseRange;
+import Triangle.AbstractSyntaxTrees.CaseRangeComplex;
+import Triangle.AbstractSyntaxTrees.CaseRangeSimple;
 import Triangle.AbstractSyntaxTrees.CharTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
-import Triangle.AbstractSyntaxTrees.DoUntilCommand;
-import Triangle.AbstractSyntaxTrees.DoWhileCommand;
+import Triangle.AbstractSyntaxTrees.DoUntilLoop;
+import Triangle.AbstractSyntaxTrees.DoWhileLoop;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
-import Triangle.AbstractSyntaxTrees.ForCommand; 
+import Triangle.AbstractSyntaxTrees.ForCommand;
+import Triangle.AbstractSyntaxTrees.ForControl;
 import Triangle.AbstractSyntaxTrees.ForInCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
@@ -45,6 +48,7 @@ import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
 import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.LongIdentifier;
 import Triangle.AbstractSyntaxTrees.LongIdentifierComplex;
 import Triangle.AbstractSyntaxTrees.LongIdentifierSimple;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
@@ -53,16 +57,21 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.PackageIdentifier;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
 import Triangle.AbstractSyntaxTrees.Program;
-import Triangle.AbstractSyntaxTrees.ReDefinition;
+import Triangle.AbstractSyntaxTrees.RECDeclaration;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
 import Triangle.AbstractSyntaxTrees.RepeatTimes;
+import Triangle.AbstractSyntaxTrees.SelectCommandComplex;
+import Triangle.AbstractSyntaxTrees.SelectCommandSimple;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialCommand;
 import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialPackage;
@@ -70,6 +79,8 @@ import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
 import Triangle.AbstractSyntaxTrees.SimpleVname;
 import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.SingleCase;
+import Triangle.AbstractSyntaxTrees.SingleCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.SinglePackage;
@@ -78,7 +89,7 @@ import Triangle.AbstractSyntaxTrees.SubscriptVname;
 import Triangle.AbstractSyntaxTrees.TypeDeclaration;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
 import Triangle.AbstractSyntaxTrees.UnaryOperatorDeclaration;
-import Triangle.AbstractSyntaxTrees.UntilCommand;
+import Triangle.AbstractSyntaxTrees.UntilLoop;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
@@ -86,6 +97,7 @@ import Triangle.AbstractSyntaxTrees.VariableInitializedDeclaration;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.WhileLoop;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -160,6 +172,7 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</WhileCommand>");
         return null;
     }
+
 
     // Expressions
          @Override
@@ -334,6 +347,7 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</VarDeclaration>");
         return null;
     }
+
 
     // Array Aggregates
          @Override
@@ -599,6 +613,7 @@ public class WriterVisitor implements Visitor {
     }
 
 
+    // Value-or-variable names
          @Override
      public Object visitDotVname(DotVname ast, Object obj) {
         writeLineHTML("<DotVname>");
@@ -628,13 +643,11 @@ public class WriterVisitor implements Visitor {
 
     // Programs
          @Override
-    public Object visitProgram(Program ast, Object obj) {
+     public Object visitProgram(Program ast, Object obj) {
         writeLineHTML("<Program>");
-        if (ast.P != null){
-             ast.P.visit(this, null);
-        }   
-        //ast.P.visit(this, null);
-        ast.C.visit(this, null);
+        //compere p is null
+       
+        ast.B.visit(this, null);
         writeLineHTML("</Program>");
         return null;
     }
@@ -649,6 +662,9 @@ public class WriterVisitor implements Visitor {
         }
     }
 
+    /*
+     * Convert the characters "<" & "<=" to their equivalents in html
+     */
     private String transformOperator(String operator) {
         if (operator.compareTo("<") == 0)
             return "&lt;";
@@ -671,6 +687,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
+    
          @Override
      public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
         writeLineHTML("<ForWhileCommand>");
@@ -682,6 +699,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
+    
          @Override
      public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
         writeLineHTML("<ForUntilCommand>");
@@ -693,11 +711,12 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
+    
          @Override
      public Object visitForInCommand(ForInCommand ast, Object o) {
         writeLineHTML("<ForInCommand>");
-        ast.I.visit(this, null);
-        ast.E1.visit(this, null);
+        ast.IEI.I.visit(this, null);
+        ast.IEI.E.visit(this, null);
         ast.C.visit(this, null);
         writeLineHTML("</ForInCommand>");
         return null;
@@ -705,7 +724,7 @@ public class WriterVisitor implements Visitor {
 
     
          @Override
-     public Object visitRecDeclaration(ReDefinition ast, Object o) {
+     public Object visitRecDeclaration(RECDeclaration ast, Object o) {
         writeLineHTML("<RECDeclaration>");
         ast.PFS.visit(this, null);
         writeLineHTML("</RECDeclaration>");
@@ -732,7 +751,23 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
-     
+    @Override
+    public Object visitBodySingle(BodySingle aThis, Object o) {
+        writeLineHTML("<BodySingle>");        
+        aThis.C.visit(this, null);
+        writeLineHTML("</BodySingle>");
+        return null;
+    }
+
+    @Override
+    public Object visitBodyComplex(BodyComplex aThis, Object o) {
+        writeLineHTML("<BodyComplex>");      
+        aThis.P.visit(this, null);  
+        aThis.C.visit(this, null);        
+        writeLineHTML("</BodyComplex>");
+        return null;
+    }
+
     @Override
     public Object visitSinglePackageDeclaration(SinglePackage aThis, Object o) {
         writeLineHTML("<PackageDeclaration>");
@@ -759,7 +794,8 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("<PackageIdentifier value=\"" + packageIdentifier.spelling + "\"/>");
         return null;
     }
-         
+
+    
          @Override
      public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
         writeLineHTML("<LongIdentifierSimple>");
@@ -778,17 +814,29 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</LongIdentifierComplex>");
         return null;
     }
-   
+
     
-     @Override
-     public Object visitUntilCommand(UntilCommand aThis, Object o) {
-        writeLineHTML("<UntilCommand>");
+          @Override
+     public Object visitWhileLoop(WhileLoop aThis, Object o) {
+        writeLineHTML("<WhileLoop>");
         aThis.E.visit(this, null);
         aThis.C.visit(this, null);
-        writeLineHTML("</UntilCommand>");
+        writeLineHTML("</WhileLoop>");
         return null;
     }
-  
+
+    
+    
+     @Override
+     public Object visitUntilLoop(UntilLoop aThis, Object o) {
+        writeLineHTML("<UntilLoop>");
+        aThis.E.visit(this, null);
+        aThis.C.visit(this, null);
+        writeLineHTML("</UntilLoop>");
+        return null;
+    }
+
+    
          @Override
      public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
         writeLineHTML("<RepeatTimes>");
@@ -800,21 +848,111 @@ public class WriterVisitor implements Visitor {
 
     
          @Override
-     public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
-        writeLineHTML("<DoWhileCommand>");
+     public Object visitDoWhileLoop(DoWhileLoop aThis, Object o) {
+        writeLineHTML("<DoWhileLoop>");
         aThis.E.visit(this, null);
         aThis.C.visit(this, null);
-        writeLineHTML("</DoWhileCommand>");
+        writeLineHTML("</DoWhileLoop>");
         return null;
     }
 
     
          @Override
-     public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
-        writeLineHTML("<DoUntilCommand>");
+     public Object visitDoUntilLoop(DoUntilLoop aThis, Object o) {
+        writeLineHTML("<DoUntilLoop>");
         aThis.E.visit(this, null);
         aThis.C.visit(this, null);
-        writeLineHTML("</DoUntilCommand>");
+        writeLineHTML("</DoUntilLoop>");
+        return null;
+    }
+
+    
+         @Override
+     public Object visitSelectCommandSimple(SelectCommandSimple aThis, Object o) {
+        writeLineHTML("<SelectCommand>");
+        aThis.E.visit(this, null);
+        aThis.C.visit(this, null);
+        writeLineHTML("</SelectCommand>");
+        return null;
+    }
+
+    @Override
+    public Object visitSelectCommandComplex(SelectCommandComplex aThis, Object o) {
+        writeLineHTML("<SelectCommand>");
+        aThis.E.visit(this, null);
+        aThis.C.visit(this, null);
+        aThis.elseCommand.visit(this, null);            
+        writeLineHTML("</SelectCommand>");
+        return null;
+   }
+
+    @Override
+    public Object visitSequentialCase(SequentialCase aThis, Object o) {
+        writeLineHTML("<SequentialCase>");
+        aThis.Case1.visit(this, null);
+        aThis.Case2.visit(this, null);
+        writeLineHTML("</SequentialCase>");
+        return null;
+    }
+
+    @Override
+    public Object visitSingleCase(SingleCase aThis, Object o) {
+        writeLineHTML("<Case>");
+        aThis.caseLiterals.visit(this, null);
+        aThis.commandAST.visit(this, null);
+        writeLineHTML("</Case>");
+        return null;
+    }
+
+
+    @Override
+    public Object visitSequentialCaseLiterals(SequentialCaseLiterals aThis, Object o) {
+        writeLineHTML("<SequentialCaseLiterals>");
+        aThis.caseLiteral1.visit(this, null);
+        aThis.caseLiteral2.visit(this, null);
+        writeLineHTML("</SequentialCaseLiterals>");
+        return null;
+    }
+
+    @Override
+    public Object visitSingleCaseLiterals(SingleCaseLiterals aThis, Object o) {
+        writeLineHTML("<SingleCaseLiterals>");
+        aThis.caseRange.visit(this, null);
+        writeLineHTML("</SingleCaseLiterals>");
+        return null;
+
+    }
+
+    @Override
+    public Object visitCaseRangeSimple(CaseRangeSimple aThis, Object o) {
+        writeLineHTML("<CaseRangeSimple>");
+        aThis.caseLiteral1.visit(this, null);
+        writeLineHTML("</CaseRangeSimple>");
+        return null;
+    }
+
+    @Override
+    public Object visitCaseRangeComplex(CaseRangeComplex aThis, Object o) {
+        writeLineHTML("<CaseRangeComplex>");
+        aThis.caseLiteral1.visit(this, null);
+        aThis.caseLiteral2.visit(this, null);
+        writeLineHTML("</CaseRangeComplex>");
+        return null;
+    }
+
+    @Override
+    public Object visitCaseLiteralInteger(CaseLiteralInteger aThis, Object o) {
+        writeLineHTML("<CaseLiteralInteger>");
+        aThis.literal.visit(this, null);
+        writeLineHTML("</CaseLiteralInteger>");
+        return null;
+    }
+
+    @Override
+    public Object visitCaseLiteralChar(CaseLiteralChar aThis, Object o) {
+        writeLineHTML("<CaseLiteralChar>");
+        aThis.literal.visit(this, null);
+        writeLineHTML("</CaseLiteralChar>");
         return null;
     }
 
@@ -826,5 +964,16 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</ForVarDeclaration>");
         return null;
     }
+
+    @Override
+    public Object visitForControl(ForControl v, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
  
+
+
+
+   
+
 }

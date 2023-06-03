@@ -15,88 +15,7 @@
 package Triangle.SyntacticAnalyzer;
 
 import Triangle.ErrorReporter;
-import Triangle.AbstractSyntaxTrees.ActualParameter;
-import Triangle.AbstractSyntaxTrees.ActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.ArrayAggregate;
-import Triangle.AbstractSyntaxTrees.ArrayExpression;
-import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
-import Triangle.AbstractSyntaxTrees.AssignCommand;
-import Triangle.AbstractSyntaxTrees.BinaryExpression;  
-import Triangle.AbstractSyntaxTrees.CallCommand;
-import Triangle.AbstractSyntaxTrees.CallExpression;
-import Triangle.AbstractSyntaxTrees.CharacterExpression;
-import Triangle.AbstractSyntaxTrees.CharacterLiteral;
-import Triangle.AbstractSyntaxTrees.Command;
-import Triangle.AbstractSyntaxTrees.ConstActualParameter;
-import Triangle.AbstractSyntaxTrees.ConstDeclaration;
-import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
-import Triangle.AbstractSyntaxTrees.Declaration;
-import Triangle.AbstractSyntaxTrees.DoUntilCommand;
-import Triangle.AbstractSyntaxTrees.DoWhileCommand;
-import Triangle.AbstractSyntaxTrees.DotVname;
-import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.EmptyCommand;
-import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.Expression;
-import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.ForCommand;
-import Triangle.AbstractSyntaxTrees.ForUntilCommand;
-import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
-import Triangle.AbstractSyntaxTrees.ForWhileCommand;
-import Triangle.AbstractSyntaxTrees.FormalParameter;
-import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.FuncActualParameter;
-import Triangle.AbstractSyntaxTrees.FuncDeclaration;
-import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
-import Triangle.AbstractSyntaxTrees.Identifier;
-import Triangle.AbstractSyntaxTrees.IfCommand;
-import Triangle.AbstractSyntaxTrees.IfExpression;
-import Triangle.AbstractSyntaxTrees.IntegerExpression;
-import Triangle.AbstractSyntaxTrees.IntegerLiteral;
-import Triangle.AbstractSyntaxTrees.LetCommand;
-import Triangle.AbstractSyntaxTrees.LetExpression;
-import Triangle.AbstractSyntaxTrees.LongIdentifier;
-import Triangle.AbstractSyntaxTrees.LongIdentifierComplex;
-import Triangle.AbstractSyntaxTrees.LongIdentifierSimple;
-import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
-import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.Operator;
-import Triangle.AbstractSyntaxTrees.PackageDeclaration;
-import Triangle.AbstractSyntaxTrees.PackageIdentifier;
-import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
-import Triangle.AbstractSyntaxTrees.ProcActualParameter;
-import Triangle.AbstractSyntaxTrees.ProcDeclaration;
-import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
-import Triangle.AbstractSyntaxTrees.Program;
-import Triangle.AbstractSyntaxTrees.ReDefinition;
-import Triangle.AbstractSyntaxTrees.RecordAggregate;
-import Triangle.AbstractSyntaxTrees.RecordExpression;
-import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SequentialCommand;
-import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
-import Triangle.AbstractSyntaxTrees.SequentialPackage;
-import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SimpleVname;
-import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
-import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.SinglePackage;
-import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.SubscriptVname;
-import Triangle.AbstractSyntaxTrees.TypeDeclaration;
-import Triangle.AbstractSyntaxTrees.TypeDenoter;
-import Triangle.AbstractSyntaxTrees.UnaryExpression;
-import Triangle.AbstractSyntaxTrees.VarActualParameter;
-import Triangle.AbstractSyntaxTrees.VarDeclaration;
-import Triangle.AbstractSyntaxTrees.VarFormalParameter;
-import Triangle.AbstractSyntaxTrees.VariableInitializedDeclaration;
-import Triangle.AbstractSyntaxTrees.Vname;
-import Triangle.AbstractSyntaxTrees.VnameExpression;
-import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.*;
 
 public class Parser {
 
@@ -158,48 +77,59 @@ public class Parser {
   //
   ///////////////////////////////////////////////////////////////////////////////
 
-  /* 
-  Modificar Program:
-    Program ::= Package-Declaration * Command
-  Sahid Rojas
+  /* Modificar Program:
+        Program ::= Package-Declaration * Command
+        Maynor Martinez
   */
   public Program parseProgram() {
 
     Program programAST = null;
+
+    BodyProgram body = null;
 
     previousTokenPosition.start = 0;
     previousTokenPosition.finish = 0;
     currentToken = lexicalAnalyser.scan();
     
     try {
-        // CHANGES MADE TO SUPPORT PACKAGES
-      int pkgCounter = 0;
-      PackageDeclaration pkgDeclarationAST = null;
-      PackageDeclaration tempPkgDeclaration = null;
+      int packageCounter = 0;
+      PackageDeclaration packageDeclarationAST = null;
+      PackageDeclaration tempPackageDeclaration = null;
       while(currentToken.kind == Token.PACKAGE){
-          tempPkgDeclaration = parsePackageDeclaration();
+          tempPackageDeclaration = parsePackageDeclaration();
           if(currentToken.kind != Token.END){
-              syntacticError("Expected 'end' at the conclusion of package declaration, but found ",
+              syntacticError("end expected at the end of package declaration ",
                       currentToken.spelling);
           }else{
               acceptIt();
-              pkgCounter++;
-              if (pkgCounter == 1)
-                  pkgDeclarationAST = tempPkgDeclaration;
+              packageCounter++;
+              if (packageCounter == 1)
+                  packageDeclarationAST = tempPackageDeclaration;
               else
-                  pkgDeclarationAST = new SequentialPackage(pkgDeclarationAST, tempPkgDeclaration, previousTokenPosition);
+                  packageDeclarationAST = new SequentialPackage(packageDeclarationAST, tempPackageDeclaration, previousTokenPosition);
           }
 
       }
-      Command cmdAST = parseCommand();
-      programAST = new Program(pkgDeclarationAST, cmdAST, previousTokenPosition);
+      Command cAST = parseCommand();
+      if (packageCounter == 0)
+          body = new BodySingle(cAST, previousTokenPosition);
+      else
+          body = new BodyComplex(packageDeclarationAST, cAST, previousTokenPosition);
+
+      programAST = new Program(body, previousTokenPosition);
+      //programAST = new Program(packageDeclarationAST, cAST, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {
-        syntacticError("\"%\" is not a valid token after the end of the program",
+        syntacticError("\"%\" not expected after end of program",
             currentToken.spelling);
       }
+
+      
+
+
+
   }
-  catch (SyntaxError e) { return null; }
-  return programAST;
+  catch (SyntaxError s) { return null; }
+    return programAST;
   }
 
 
@@ -210,99 +140,79 @@ public class Parser {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/* 
-  Agregar:
-  PackageDeclaration ::= "package" Package-Identifier "~" 
-           Declaration "end"
-   
-  Sahid Rojas
+/* Agregar:
+        PackageDeclaration ::= "package" Package-Identifier "~" 
+                                         Declaration "end"
+        Maynor Martinez
   */
-  //ESTE METODO AGREGAR AL PARSE EL PACKAGE DECLARATION 
-PackageDeclaration parsePackageDeclaration() throws SyntaxError {
-    PackageDeclaration packageDeclaration = null;
-    SourcePosition packageDeclarationPos = new SourcePosition();
-    start(packageDeclarationPos);
-    // Parse the 'package' keyword and the package identifier
-    accept(Token.PACKAGE);
-    PackageIdentifier packageIdentifier = parsePackageIdentifier();
-     // Parse the 'is' keyword and the declaration
-    accept(Token.IS);
-    Declaration declaration = parseDeclaration();
-    // Finish parsing and create the AST node
-    finish(packageDeclarationPos);
-    packageDeclaration = new SinglePackage(packageIdentifier, declaration, packageDeclarationPos);
-    // Return the AST node
-    return packageDeclaration;
+PackageDeclaration parsePackageDeclaration() throws SyntaxError {  
+  PackageDeclaration pacDecAST = null;
+  SourcePosition pacDecPos = new SourcePosition();
+  start(pacDecPos);
+  accept(Token.PACKAGE);
+  PackageIdentifier pacIDAST = parsePackageIdentifier();
+  accept(Token.IS);
+  Declaration dAST = parseDeclaration();
+ 
+  finish(pacDecPos);
+  pacDecAST = new SinglePackage(pacIDAST, dAST, pacDecPos);
+  return pacDecAST;
 }
 
 /* Agregar:
-   Package-Identifier ::= Identifier
-   Sahid Rojas
-*/
+        Package-Identifier ::= Identifier
+        Maynor Martinez
+    */
 PackageIdentifier parsePackageIdentifier() throws SyntaxError {
-    PackageIdentifier packageId = null;
-    SourcePosition packageIdPos = new SourcePosition();
-    start(packageIdPos);
-    // Check if the current token is an identifier
-    if (currentToken.kind == Token.IDENTIFIER) {
-        // Save the position of the previous token
-        previousTokenPosition = currentToken.position;
-        // Save the spelling of the current token
-        String spelling = currentToken.spelling;
-         // Create a new PackageIdentifier object with the spelling and position
-        packageId = new PackageIdentifier(spelling, previousTokenPosition);
-        // Scan the next token
-        currentToken = lexicalAnalyser.scan();
-    } else {
-        // If the current token is not an identifier, throw a syntax error
-        packageId = null;
-        syntacticError("Expected a Package-identifier here", currentToken.spelling);
-    }
-    // Set the finish position of the package identifier
-    finish(packageIdPos);
-    // Return the PackageIdentifier object
-    return packageId;
+  PackageIdentifier pacIDAST = null;
+  SourcePosition pacIDPos = new SourcePosition();
+  start(pacIDPos);
+  if (currentToken.kind == Token.IDENTIFIER) {
+    previousTokenPosition = currentToken.position;
+    String spelling = currentToken.spelling;
+    pacIDAST = new PackageIdentifier(spelling, previousTokenPosition);
+    currentToken = lexicalAnalyser.scan();
+  } else {
+    pacIDAST = null;
+    syntacticError("a Package-identifier expected here", currentToken.spelling);
+  }
+  finish(pacIDPos);
+  return pacIDAST;
 }
 
-
-/*
- Agregar:
- parseLongIdentifier Long-Identifier ::= [ Package-Identifier "$" ] Identifier
- Sahid Rojas
-
-*/
-// This method parses a Long Identifier from the source code
+//parseLongIdentifier Long-Identifier ::= [ Package-Identifier "$" ] Identifier
+//Maynor Martinez
 LongIdentifier parseLongIdentifier() throws SyntaxError {
-  LongIdentifier longIdentifier = null; // This will store the resulting LongIdentifier object
-  SourcePosition longIdentifierPos = new SourcePosition(); // This will store the position of the LongIdentifier
-  start(longIdentifierPos); // Start measuring the position of the LongIdentifier
-  PackageIdentifier packageIdentifierAST = null; // This will store the PackageIdentifier object, if any
-  Identifier tempIdentifierAST = null; // This will store the first Identifier object before the $
-  Identifier idAST = null; // This will store the second Identifier object after the $
+  LongIdentifier LI = null;
+  SourcePosition LIpos = new SourcePosition();
+  start(LIpos);
+  PackageIdentifier pacIDAST = null;
+  Identifier tempAST = null;
+  Identifier idAST = null;
+  if (currentToken.kind == Token.IDENTIFIER) {
+    previousTokenPosition = currentToken.position;
+    String spelling = currentToken.spelling;
+    tempAST = new Identifier(spelling, previousTokenPosition); // Create the Identifier before the $ in the LongIdentifier
+    currentToken = lexicalAnalyser.scan();
 
-  if (currentToken.kind == Token.IDENTIFIER) { // If the current token is an Identifier
-    previousTokenPosition = currentToken.position; // Store the position of the previous token
-    String spelling = currentToken.spelling; // Get the spelling of the current token
-    tempIdentifierAST = new Identifier(spelling, previousTokenPosition); // Create an Identifier object with the spelling and position
-    currentToken = lexicalAnalyser.scan(); // Move to the next token
+    if (currentToken.kind == Token.DOLLAR) {
+      acceptIt();        
+      idAST = parseIdentifier();
+      pacIDAST = new PackageIdentifier(tempAST); // Create the PackageIdentifier with the Identifier before the $ 
+      finish(LIpos);
+      LI = new LongIdentifierComplex(pacIDAST, idAST, LIpos);
+    } else{ //This case is when is a longIdentifierSimple
+      finish(LIpos);
+      LI = new LongIdentifierSimple(tempAST, LIpos);
+      return LI;
 
-    if (currentToken.kind == Token.DOLLAR) { // If the current token is a dollar sign ($)
-      acceptIt(); // Move to the next token
-      idAST = parseIdentifier(); // Parse the second Identifier
-      packageIdentifierAST = new PackageIdentifier(tempIdentifierAST); // Create a PackageIdentifier with the first Identifier
-      finish(longIdentifierPos); // Finish measuring the position of the LongIdentifier
-      longIdentifier = new LongIdentifierComplex(packageIdentifierAST, idAST, longIdentifierPos); // Create a LongIdentifierComplex object with the PackageIdentifier and second Identifier
-    } else{ // If the current token is not a dollar sign ($), it means it's a LongIdentifierSimple
-      finish(longIdentifierPos); // Finish measuring the position of the LongIdentifier
-      longIdentifier = new LongIdentifierSimple(tempIdentifierAST, longIdentifierPos); // Create a LongIdentifierSimple object with the first Identifier
-      return longIdentifier;
     }
-  } else { // If the current token is not an Identifier
-    longIdentifier = null;
-    syntacticError("Expecting identifier here", "$"); // Report a syntax error with the expected token
+  } else {
+    LI = null;
+    syntacticError("identifier expected here", "$");
   }
   
-  return longIdentifier; // Return the resulting LongIdentifier object
+  return LI;
 }
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -382,40 +292,6 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
     }
     return O;
   }
-  
-  // Kenny Vega
-  //Secuencial command del if
-  // ("|" Expression "then" Command)*
-  //     "else" Command "end"         (Resto del if) 
-    Command parseRestoDelIf() throws SyntaxError {
-    Command commandAST = null; // in case there's a syntactic error
-
-    SourcePosition commandPos = new SourcePosition();
-    start(commandPos);
-    if (currentToken.kind == Token.BAR) {
-        acceptIt();
-        Expression eAST = parseExpression();
-        // Verificar si se encuentra la palabra clave "then" despuÈs de la expresiÛn
-        accept(Token.THEN);
-        Command c1AST = parseCommand();
-        Command c2AST = parseRestoDelIf();
-        finish(commandPos);
-        return new IfCommand(eAST, c1AST,c2AST, commandPos);
-        
-    }
-    else if(currentToken.kind == Token.ELSE){
-        acceptIt();
-        commandAST = parseCommand();
-        accept(Token.END);
-        finish(commandPos);
-        return commandAST;
-    }
-    else{
-        // Si no se encuentra la palabra clave "ELSE o | ", se ha producido un error sint·ctico
-        syntacticError("ERROR: 'else or | ' expected here ", currentToken.spelling); 
-   }
-    return commandAST;
-  }
 
   ///////////////////////////////////////////////////////////////////////////////
   //
@@ -443,13 +319,13 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
 
   /*
-        Se elimino las siguientes reglas:
+        Eliminar:
         ::= (vacio)
         | "begin" Command "end"
         | "let" Declaration "in" single-Command
         | "if" Expression "then" single-Command "else" single-Command
         | "while" Expression "do" single-Command
-        Sahid Rojas Chacon , Kenny Vega
+        Maynor Martinez, Cesar Jimenez, Fernanda Murillo y Sebastian Chaves
    */
 
   Command parseSingleCommand() throws SyntaxError {
@@ -466,10 +342,8 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         LongIdentifier longI = parseLongIdentifier();
 
         /*
-        Anadir: 
-        LongIdentifier 
-        parse | V-name ":=" Expression
-        Sahid Rojas
+        * add: LongIdentifier in the case of a call expression
+        * Maynor Mart√≠nez
         */
         if (currentToken.kind == Token.LPAREN) {
           acceptIt();
@@ -479,7 +353,8 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
           commandAST = new CallCommand(longI, apsAST, commandPos); // We modify this line to a longIdentifier the position 1 of the command
 
         } else {
-      
+          //parse | V-name ":=" Expression
+          //Maynor Mart√≠nez
           Vname vAST = parseRestOfVname(longI);
           accept(Token.BECOMES);
           Expression eAST = parseExpression();
@@ -488,131 +363,169 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         }
       }
       break;
-    
-    // Agregado:
-    //| "for" Identifier ":=" Expression ".." Expression
-    //    "do" Command "end"
-    //| "for" Identifier ":=" Expression ".." Expression
-    //    "while" Expression "do" Command "end"
-    //| "for" Identifier ":=" Expression ".." Expression
-    //    "until" Expression "do" Command "end"
-    //Kenny Vega
-   
+    // parse | "for" Identifier ":=" Expression ".." Expression "do" Command "end"
+    //       | "for" Identifier ":=" Expression ".." Expression "while" Expression "do" Command "end
+    //       | "for" Identifier ":=" Expression ".." Expression "until" Expression "do" Command "end
+    //       | "for" Identifier "in" Expression "do" Command "end"
+    // C√©sar Jim√©nez
     case Token.FOR:
-    { 
+      {
         acceptIt();
         Identifier iAST = parseIdentifier();
-        accept(Token.BECOMES);
-        Expression eAST = parseExpression();
-        ForVarDeclaration prueba = new ForVarDeclaration(iAST, eAST, commandPos);
-        accept(Token.DOTDOT);
-        Expression e1AST = parseExpression();
-        
-        if (currentToken.kind == Token.DO) {
-            acceptIt();
-            Command cAST = parseCommand();
-            accept(Token.END);
-            finish(commandPos);
-            commandAST = new ForCommand(prueba, e1AST, cAST, commandPos);
+        SourcePosition declarationPos = new SourcePosition();
+        switch (currentToken.kind) {
+            case Token.BECOMES:
+                {
+                    acceptIt();
+                    Expression e1AST = parseExpression();
+                    ForVarDeclaration fvdAST = new ForVarDeclaration(iAST, e1AST, commandPos);
+                    accept(Token.DOTDOT);
+                    Expression e2AST = parseExpression();
+                    switch (currentToken.kind) {
+                        case Token.DO:
+                        {
+                            acceptIt();
+                            Command cAST = parseCommand();
+                            accept(Token.END);
+                            finish(commandPos);
+                            commandAST = new ForCommand(fvdAST, e2AST, cAST, commandPos);
+                            break;
+                        }
+                        case Token.WHILE:
+                        {
+                            acceptIt();
+                            Expression e3AST = parseExpression();
+                            accept(Token.DO);
+                            Command cAST = parseCommand();
+                            accept(Token.END);
+                            finish(commandPos);
+                            commandAST = new ForWhileCommand(fvdAST, e2AST, e3AST, cAST, commandPos);
+                            break;
+                        }
+                        case Token.UNTIL:
+                        {
+                            acceptIt();
+                            Expression e3AST = parseExpression();
+                            accept(Token.DO);
+                            Command cAST = parseCommand();
+                            accept(Token.END);
+                            finish(commandPos);
+                            commandAST = new ForUntilCommand(fvdAST, e2AST, e3AST, cAST, commandPos);
+                            break;
+                        }
+                        default:
+                            syntacticError("\"%\" and error ocurr in for command, cannot start a command",
+                                    currentToken.spelling);
+                            break;
+                    }       break;
+                }
+            case Token.IN:
+                {
+                    acceptIt();
+                    Expression e1AST = parseExpression();
+                    accept(Token.DO);
+                    Command cAST = parseCommand();
+                    accept(Token.END);
+                    finish(commandPos);
+                    ForControl ieiAST = new ForControl(iAST,e1AST,declarationPos);
+                    commandAST = new ForInCommand(ieiAST,cAST, commandPos);
+                    break;
+                }
+            default:
+                syntacticError("\"%\" cannot start a command",
+                        currentToken.spelling);
+                break;
         }
-        else if (currentToken.kind == Token.WHILE) {
-         
-            acceptIt();
-            Expression e2AST = parseExpression();
-            accept(Token.DO);
-            Command cAST = parseCommand();
-            accept(Token.END);
-            finish(commandPos);
-            commandAST = new ForWhileCommand(prueba, e1AST , e2AST, cAST, commandPos);
-        }
-        else if (currentToken.kind == Token.UNTIL) {
-           
-            acceptIt();
-            Expression e2AST = parseExpression();
-            accept(Token.DO);
-            Command cAST = parseCommand();
-            accept(Token.END);
-            finish(commandPos);
-            commandAST = new ForUntilCommand(prueba, e1AST, e2AST, cAST, commandPos);
-        }
-        else{
-         syntacticError("'do, while or until' expected here ", currentToken.spelling); 
-        }
-    }
-    break;
+      }
+        break;
 
-    //Adicion de:
-    //| "repeat" "while" Expression "do" Command "end"
-    //| "repeat" "until" Expression "do" Command "end"
-    //| "repeat" "do" Command "while" Expression "end"
-    //| "repeat" "do" Command "until" Expression "end"
-    //| "repeat" Expression "times" "do" Command "end"
-    // Kenny Vega
-    case Token.REPEAT:
-    {
-       acceptIt();
-       
-        if (currentToken.kind == Token.WHILE) {
-            acceptIt();
-          
-            Expression eAST = parseExpression();
-            accept(Token.DO);
-            Command cAST = parseCommand();
-            accept(Token.END);
-            finish(commandPos);
-            commandAST = new DoWhileCommand(cAST, eAST, commandPos);
-        }
-        else if (currentToken.kind == Token.UNTIL) {
-            acceptIt();
-            Expression eAST = parseExpression();
-            accept(Token.DO);
-            Command cAST = parseCommand();
-            accept(Token.END);
-            finish(commandPos);
-            commandAST = new DoUntilCommand(cAST, eAST, commandPos);
-        }
-        else if (currentToken.kind == Token.DO) {
+      /*----------------------------------------------------------------------
+       Nuevas Reglas:
+        | "repeat" "while" Expression "do" Command "end"
+        | "repeat" "until" Expression "do" Command "end"
+        | "repeat" "do" Command "while" Expression "end"
+        | "repeat" "do" Command "until" Expression "end"
+        | "repeat" Expression "times" "do" Command "end"
+      ----------------------------------------------------------------------
+      //Sebastian Chaves
+      */
+
+      case Token.REPEAT: {
+        acceptIt();
+        switch (currentToken.kind) {
+
+          case Token.DO: {
             acceptIt();
             Command cAST = parseCommand();
-            if (currentToken.kind == Token.WHILE) {
+            switch (currentToken.kind) {
+              case Token.WHILE: {
                 acceptIt();
                 Expression eAST = parseExpression();
                 accept(Token.END);
                 finish(commandPos);
-                commandAST = new DoUntilCommand(cAST, eAST, commandPos);
-            } else if (currentToken.kind == Token.UNTIL) {
+                commandAST = new DoWhileLoop(cAST, eAST, commandPos);
+              }
+                break;
+              case Token.UNTIL: {
                 acceptIt();
                 Expression eAST = parseExpression();
                 accept(Token.END);
                 finish(commandPos);
-                commandAST = new DoUntilCommand(cAST, eAST, commandPos);
+                commandAST = new DoUntilLoop(cAST, eAST, commandPos);
+              }
+                break;
+              default:
+                syntacticError("\"%\" cannot start a DO loop",
+                    currentToken.spelling);
+                break;
             }
-        }
-        else{ 
-    
+          }
+            break;
+          case Token.WHILE: {
+            acceptIt();
             Expression eAST = parseExpression();
-            if (currentToken.kind == Token.TIMES) {
-                acceptIt();
-                accept(Token.DO);
-                Command cAST = parseCommand();
-       
-                accept(Token.END);
-                finish(commandPos);
-                commandAST = new WhileCommand(eAST, cAST, commandPos);
-            }
-            else{
-                //Caso de error
-                syntacticError("ERROR: 'times' expected here ", currentToken.spelling); 
-            }
-        }
-     }
-    break;
+            accept(Token.DO);
+            Command cAST = parseCommand();
+            accept(Token.END);
+            finish(commandPos);
+            commandAST = new WhileLoop(eAST, cAST, commandPos);
+          }
+            break;
+          case Token.UNTIL: {
+            acceptIt();
+            Expression eAST = parseExpression();
+            accept(Token.DO);
+            Command cAST = parseCommand();
+            accept(Token.END);
+            finish(commandPos);
+            commandAST = new UntilLoop(eAST, cAST, commandPos);
+          }
+            break;
 
-      
-        //Agregar:
-        //| "let" Declaration "in" Command "end"
-        //Kenny Vega
-     
+          case Token.IDENTIFIER: {
+            Expression eAST = parseExpression();
+            accept(Token.TIMES);
+            accept(Token.DO);
+            Command cAST = parseCommand();
+            accept(Token.END);
+            finish(commandPos);
+            commandAST = new RepeatTimes(eAST, cAST, commandPos);
+          }
+            break;
+
+          default:
+            syntacticError("\"%\" cannot start a loop",
+                currentToken.spelling);
+            break;
+        }
+      }
+        break;
+
+      /*
+        Agregar:
+        | "let" Declaration "in" Command "end"
+        Fernanda Murillo
+      */
       case Token.LET: {
         acceptIt();
         Declaration dAST = parseDeclaration();
@@ -624,33 +537,66 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
       }
       break;
       
-      
-      
-     //Kenny Vega
-      //| "if" Expression "then" Command + RESTO DEL IF ("|" Expression "then" Command)*
-     //                                                    "else" Command "end"
-     case Token.IF:
-    {
+     /*
+        Agregar:
+        | "if" Expression "then" Command ("|" Expression "then" Command)*
+          "else" Command "end"
+        Fernanda Murillo
+      */
+      case Token.IF: {
         acceptIt();
         Expression eAST = parseExpression();
+        accept(Token.THEN);
+        Command c1AST = parseCommand();
+        Command c2AST = parsePipelineCommand(); 
+        accept(Token.END);
+        finish(commandPos);
+        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+      }
+        break;
 
-        // Verificar si se encuentra la palabra clave "then" despuÈs de la expresiÛn
-        if (currentToken.kind == Token.THEN) {
-            accept(Token.THEN);
-            Command c1AST = parseCommand();
-            finish(commandPos);
-            commandAST = new IfCommand(eAST, c1AST, parseRestoDelIf(), commandPos);
-        } else {
-            // Si no se encuentra la palabra clave "then", se ha producido un error sint·ctico
-            syntacticError("ERROR: 'then' expected here ", currentToken.spelling); 
-        }
-    }
-    break;
+    
+    /*
+      Agregar:
+      | "select" Expression "from" Cases ["else" Command] "end"
 
-     /* Se agrego el skip:
-            
-        Kenny Vega
-     */
+      Cases ::= Case+
+      Case ::= "when" Case-Literals "then" Command
+      Case-Literals ::= Case-Range ("|" Case-Range)*
+      Case-Range ::= Case-Literal [".." Case-Literal]
+      Case-Literal ::= Integer-Literal | Character-Literal
+      Maynor Mart√≠nez
+    */
+    case Token.SELECT:
+      acceptIt();
+      Expression eAST = parseExpression();
+      accept(Token.FROM);
+      Case caseAST = parseSingleCase();
+      
+      while (currentToken.kind == Token.WHEN) {
+        SingleCase singleCase2AST = parseSingleCase();
+        finish(commandPos);
+        caseAST = new SequentialCase(caseAST, singleCase2AST, caseAST.position);
+      }
+
+      //This is to get de deafault value
+      if (currentToken.kind == Token.ELSE) {
+        acceptIt();
+        Command cAST2 = parseCommand();
+        accept(Token.END);
+        finish(commandPos);
+        commandAST = new SelectCommandComplex(eAST, caseAST, cAST2, commandPos);
+      } else {
+        accept(Token.END);
+        finish(commandPos);
+        commandAST = new SelectCommandSimple(eAST, caseAST, commandPos);
+      }
+      break;
+
+      /* Agregar:
+            Skip
+        Fernanda Murillo
+        */
     case Token.SKIP:
       acceptIt();
       finish(commandPos);
@@ -667,7 +613,44 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
     return commandAST;
   }
   
+  // This method is about the pipe command
+  //Fernada Murillo
   
+  Command parsePipelineCommand() throws SyntaxError {
+    Command commandAST = null; // in case there's a syntactic error
+
+    SourcePosition commandPos = new SourcePosition();
+    start(commandPos);
+    
+    switch(currentToken.kind){
+        
+      case Token.ELSE:
+        {
+          acceptIt();
+          Command elseAST = parseCommand();          
+          finish(commandPos);
+          commandAST = elseAST;
+        }
+        break;
+        
+      case Token.PIPELINE:
+        {
+          acceptIt();
+          Expression eAST = parseExpression();
+          accept(Token.THEN);
+          Command cAST = parseCommand();
+          finish(commandPos);
+          commandAST = new IfCommand(eAST, cAST, parsePipelineCommand(), commandPos);
+        }
+        
+        break;
+        default:
+        syntacticError("\"pipeline\" statement was expected, \"%\" was found",
+          currentToken.spelling);
+        break;
+    }
+    return commandAST;
+  }
 
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -770,15 +753,14 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
       }
         break;
       /*
-       AÒadir: 
-        LongIdentifier
-        Sahid Rojas
+       * add: LongIdentifier in the case of a call expression
+       * Maynor Mart√≠nez
        */
       case Token.IDENTIFIER: {
         Identifier iAST = null;
         LongIdentifier longI = parseLongIdentifier();
 
-        
+        //This if is to check if the longIdentifier is a longIdentifierComplex or a longIdentifierSimple and save the simpleIdentifier in iAST
         iAST = longI.getSimpleIdentifier();
 
         if (currentToken.kind == Token.LPAREN) {
@@ -786,7 +768,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
           ActualParameterSequence apsAST = parseActualParameterSequence();
           accept(Token.RPAREN);
           finish(expressionPos);
-          LongIdentifier longIAST = new LongIdentifierSimple(iAST, expressionPos);  
+          LongIdentifier longIAST = new LongIdentifierSimple(iAST, expressionPos); // We create a longIdentifierSimple with the identifier
           expressionAST = new CallExpression(longIAST, apsAST, expressionPos);
 
         } else {
@@ -843,7 +825,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
 
   ArrayAggregate parseArrayAggregate() throws SyntaxError {
-    ArrayAggregate aggregateAST = null; 
+    ArrayAggregate aggregateAST = null; // in case there's a syntactic error
 
     SourcePosition aggregatePos = new SourcePosition();
     start(aggregatePos);
@@ -861,6 +843,111 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
     return aggregateAST;
   }
 
+  ///////////////////////////////////////////////////////////////////////////////
+  //
+  // Select Cases Methods
+  //
+  ///////////////////////////////////////////////////////////////////////////////
+  
+
+  /*
+   * Cases ::= Case+
+    Case ::= "when" Case-Literals "then" Command
+    Case-Literals ::= Case-Range ("|" Case-Range)*
+    Case-Range ::= Case-Literal [".." Case-Literal]
+    Case-Literal ::= Integer-Literal | Character-Literal
+
+    Maynor Mart√≠nez
+
+   */
+
+
+
+  //parseSingleCase "when" Case-Literals "then" Command
+  SingleCase parseSingleCase() throws SyntaxError {
+    SingleCase singleCaseAST = null; // in case there's a syntactic error
+
+    SourcePosition singleCasePos = new SourcePosition();
+    start(singleCasePos);
+    accept(Token.WHEN);
+    CaseLiterals caseLiteralsAST = parseCaseLiterals();
+    //CaseRange caseLiteralsAST = parseCaseLiterals();
+    accept(Token.THEN);
+    Command comandAST = parseCommand();
+    finish(singleCasePos);
+    singleCaseAST = new SingleCase(caseLiteralsAST, comandAST, singleCasePos);
+    return singleCaseAST;
+  }
+
+  //parseCaseLiterals CaseLiterals =: CaseRange ("|" CaseRange )*  
+  CaseLiterals parseCaseLiterals() throws SyntaxError {
+    
+
+    SourcePosition caseLiteralsPos = new SourcePosition();
+    CaseLiterals caseLiteralsAST = null; // in case there's a syntactic error
+    
+    start(caseLiteralsPos);
+    
+    CaseRange cAST = parseCaseRange();
+    caseLiteralsAST = new SingleCaseLiterals(cAST, caseLiteralsPos);
+
+    while (currentToken.kind == Token.PIPELINE) {
+      acceptIt();
+      SingleCaseLiterals temp = null;
+      CaseRange cAST2 = parseCaseRange();
+      temp = new SingleCaseLiterals(cAST2, caseLiteralsPos);
+      finish(caseLiteralsPos);
+      caseLiteralsAST = new SequentialCaseLiterals(caseLiteralsAST, temp, caseLiteralsPos);
+    }
+    return caseLiteralsAST;
+  }
+
+  //parseCaseRange caseLiteral [".." caseLiteral]
+  CaseRange parseCaseRange() throws SyntaxError {
+    CaseRange caseRangeAST = null; // in case there's a syntactic error
+
+    SourcePosition caseRangePos = new SourcePosition();
+    start(caseRangePos);
+
+    CaseLiteral cAST = parseCaseLiteral();
+    if (currentToken.kind == Token.DOTDOT) {
+      acceptIt();
+      CaseLiteral cAST2 = parseCaseLiteral();
+      finish(caseRangePos);
+      caseRangeAST = new CaseRangeComplex(cAST, cAST2, caseRangePos);
+    } else {
+      finish(caseRangePos);
+      caseRangeAST = new CaseRangeSimple(cAST,caseRangePos);
+    }
+    return caseRangeAST;
+  }
+
+  //parseCaseLiteral intergerLiteral | characterLiteral
+  CaseLiteral parseCaseLiteral() throws SyntaxError {
+    CaseLiteral caseLiteralAST = null; // in case there's a syntactic error
+
+    SourcePosition caseLiteralPos = new SourcePosition();
+    start(caseLiteralPos);
+
+    switch (currentToken.kind) {
+      case Token.INTLITERAL:
+        IntegerLiteral ilAST = parseIntegerLiteral();
+        finish(caseLiteralPos);
+        caseLiteralAST = new CaseLiteralInteger(ilAST, caseLiteralPos); // Is the same constructor but abstracte
+        break;
+      case Token.CHARLITERAL:
+        CharacterLiteral clAST = parseCharacterLiteral();
+        finish(caseLiteralPos);
+        caseLiteralAST = new CaseLiteralChar(clAST, caseLiteralPos); // Is the same constructor but abstracte
+        break;
+      default:
+        syntacticError("\"%\" cannot start a case literal",
+            currentToken.spelling);
+        break;
+    }
+    return caseLiteralAST;
+  }
+  
 
   ///////////////////////////////////////////////////////////////////////////////
   //
@@ -869,16 +956,17 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   ///////////////////////////////////////////////////////////////////////////////
 
   /*
-    Modificar:
+
     V-name ::= [ Package-Identifier "$" ] Var-name
+
     Var-name ::= Identifier
-            | Var-name "." Identifier
-            | Var-name "[" Expression "]"
-    Sahid Rojas
+    | Var-name "." Identifier
+    | Var-name "[" Expression "]"
+    Maynor Mart√≠nez
    */
 
   Vname parseVname() throws SyntaxError {
-    Vname vnameAST = null; 
+    Vname vnameAST = null; // in case there's a syntactic error
     LongIdentifier iAST = parseLongIdentifier();
     vnameAST = parseRestOfVname(iAST);
     return vnameAST;
@@ -919,11 +1007,12 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
 ///////////////////////////////////////////////////////////////////////////////
   
    /*
-    Modificar:  
+    Modificar Declaration:
     ::= compound-Declaration 
     |   Declaration ";" compound-Declaration
-  
-    Sahid Rojas
+    es decir, ::= compound-Declaration (";" compound-Declaration)*
+
+    Fernanda Murillo
    */
 
   Declaration parseDeclaration() throws SyntaxError {
@@ -934,7 +1023,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
     declarationAST = parseCompoundDeclaration();
     while (currentToken.kind == Token.SEMICOLON) {
       acceptIt();
-      Declaration d2AST = parseCompoundDeclaration();//Aqui cambiamos SingleDeclaration por el CompoudDeclaration
+      Declaration d2AST = parseCompoundDeclaration();
       finish(declarationPos);
       declarationAST = new SequentialDeclaration(declarationAST, d2AST,
           declarationPos);
@@ -965,9 +1054,9 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
       
 
     /*
-       Agregar:
+       add:
         | "var" Identifier ":=" Expression
-        Sahid Rojas
+        Fernadna Murillo
     */
     case Token.VAR:
       {
@@ -991,7 +1080,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             }
             break;
           default:
-            syntacticError("\"%\" Syntax Error:  not a valid declaration",
+            syntacticError("\"%\" is not a valid declaration",
               currentToken.spelling);
             break;              
         }
@@ -999,15 +1088,10 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         break;
 
     /*
-       Modificar
-        Proc-Func
+       Modificar en single_Declaration:
        | "proc" Identifier "(" Formal-Parameter-Sequence ")"
-        
-       | "func" Identifier "(" Formal-Parameter-Sequence ")"
-        ":" Type-denoter "~" Expression
          "~" Command "end"
-        
-        Sahid Rojas
+        Fernadna Murillo
     */
     case Token.PROC:
       {
@@ -1018,7 +1102,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         accept(Token.RPAREN);
         accept(Token.IS);
         Command cAST = parseCommand();
-        accept(Token.END);//Aquie le agregamos el comando END que previamente no estaba
+        accept(Token.END);
         finish(declarationPos);
         declarationAST = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
       }
@@ -1063,12 +1147,12 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
   
   /*
-    Agregar: 
+    add: 
     compound-Declaration
         ::= single-Declaration
         | "rec" Proc-Funcs "end"
         | "private" Declaration "in" Declaration "end"
-    Sahid Rojas
+        Fernadna Murillo
   */
   
   Declaration parseCompoundDeclaration() throws SyntaxError {
@@ -1084,16 +1168,16 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
       case Token.FUNC:
       case Token.TYPE:
         {
-          declarationAST = parseSingleDeclaration();//Aqui usamos el Single Declaration 
+          declarationAST = parseSingleDeclaration();
         }
         break;
       case Token.REC:
         {
           acceptIt();
-          Declaration pfsDeclaration = parseProcFuncsDeclaration();
+          Declaration pfsDeclaration = parse_ProcFuncs_Declaration();
           accept(Token.END);
           finish(declarationPos);
-          declarationAST = new ReDefinition(pfsDeclaration, declarationPos);
+          declarationAST = new RECDeclaration(pfsDeclaration, declarationPos);
         }
         break;
       case Token.PRIVATE:
@@ -1108,7 +1192,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         }
         break;
       default:
-      syntacticError("\"%\" Unable start a compound declaration",
+      syntacticError("\"%\" cannot start a compound declaration",
         currentToken.spelling);
       break;
     }
@@ -1116,16 +1200,16 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
   
   /*
-    Agregar:
+    add:
     ProcFunc
         ::= "proc" Identifier "(" Formal-Parameter-Sequence ")"
              "~" Command "end"
         | "func" Identifier "(" Formal-Parameter-Sequence ")"
              ":" Type-denoter "~" Expression
-     Sahid Rojas
+        Fernadna Murillo
   */
   
-  Declaration parseProcFuncDeclaration() throws SyntaxError{
+  Declaration parse_ProcFunc_Declaration() throws SyntaxError{
     Declaration declarationAST = null; // in case there's a syntactic error
     SourcePosition declarationPos = new SourcePosition();
     
@@ -1139,7 +1223,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
         }
         break;
       default:
-      syntacticError("\"%\" Unable to commence a declaration for either a process or a function.",
+      syntacticError("\"%\" cannot start neither a process nor a function declaration",
         currentToken.spelling);
       break;
     }
@@ -1148,27 +1232,27 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   }
   
   /*
-    Agregar:
+    add:
     ProcFuncs 
         ::= Proc-Func ("|" Proc-Func)+
-     Sahid Rojas
+    Fernadna Murillo
   */
   
-  Declaration parseProcFuncsDeclaration() throws SyntaxError{
+  Declaration parse_ProcFuncs_Declaration() throws SyntaxError{
     Declaration declarationAST = null; // in case there's a syntactic error
     SourcePosition declarationPos = new SourcePosition();
     
     start(declarationPos);
     
-    declarationAST = parseProcFuncDeclaration();
-    accept(Token.BAR);
-    Declaration p2AST = parseProcFuncDeclaration();
+    declarationAST = parse_ProcFunc_Declaration();
+    accept(Token.PIPELINE);
+    Declaration pf2AST = parse_ProcFunc_Declaration();
     
-    declarationAST = new SequentialDeclaration(declarationAST, p2AST, declarationPos);
+    declarationAST = new SequentialDeclaration(declarationAST, pf2AST, declarationPos); // error
     
-    while(currentToken.kind == Token.BAR){
+    while(currentToken.kind == Token.PIPELINE){
       acceptIt();
-      Declaration pfAuxAST = parseProcFuncDeclaration();
+      Declaration pfAuxAST = parse_ProcFunc_Declaration();
       finish(declarationPos);
       declarationAST = new SequentialDeclaration(declarationAST, pfAuxAST, declarationPos);
     }
@@ -1377,13 +1461,11 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
   // TYPE-DENOTERS
   //
   ///////////////////////////////////////////////////////////////////////////////
-  
   /*
-    Modificar
-        Type-denoter ::= Long-Identifier
-            | "array" Integer-Literal "of" Type-denoter
-            | "record" Record-Type-denoter "end"
-      Sahid Rojas
+   Type-denoter ::= Long-Identifier
+| "array" Integer-Literal "of" Type-denoter
+| "record" Record-Type-denoter "end"
+Maynor Martinez
    */
   TypeDenoter parseTypeDenoter() throws SyntaxError {
     TypeDenoter typeAST = null; // in case there's a syntactic error

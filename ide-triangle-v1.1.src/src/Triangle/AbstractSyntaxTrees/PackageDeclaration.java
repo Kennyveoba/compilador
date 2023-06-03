@@ -5,6 +5,11 @@
  */
 package Triangle.AbstractSyntaxTrees;
 
+/**
+ *
+ * @author chacalerks
+ */
+
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
 public abstract class PackageDeclaration extends AST{

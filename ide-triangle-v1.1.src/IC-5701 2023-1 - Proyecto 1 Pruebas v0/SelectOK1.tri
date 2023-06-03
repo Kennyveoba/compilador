@@ -1,0 +1,7 @@
+select 'a' from
+
+  when 'a' then putint (1)
+
+end
+
+! OK

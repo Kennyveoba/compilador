@@ -28,7 +28,7 @@ public class SimpleTypeDenoter extends TypeDenoter {
   }
 
   public boolean equals (Object obj) {
-    return false; 
+    return false; // should not happen
   }
 
   public LongIdentifier I;

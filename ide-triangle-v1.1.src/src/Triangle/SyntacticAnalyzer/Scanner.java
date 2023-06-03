@@ -85,10 +85,6 @@ public final class Scanner {
     }
   }
 
-  /*
-  Se agrego los nuevos tokens 
-  Kenny Vega
-  */
   private int scanToken() {
 
     switch (currentChar) {
@@ -133,14 +129,17 @@ public final class Scanner {
         return Token.CHARLITERAL;
       } else
         return Token.ERROR;
-      
+    /*
+      Add new character literals here
+      Maynor Martinez, César Jiménez, Fernanda Murillo, Sebastian Chavez
+     */
     case '$':
       takeIt();
       return Token.DOLLAR;
     
     case '|':
       takeIt();
-      return Token.BAR;
+      return Token.PIPELINE;
     
     case '.':
       takeIt();
@@ -206,10 +205,13 @@ public final class Scanner {
       takeIt();
       return Token.TAB;
     
-    case '\n':
+    case '\r':
+      takeIt();
+      if (currentChar == '\n') {
         takeIt();
         return Token.EOL;
-
+      } else
+        return Token.EOL;
     
     case SourceFile.EOT:
       return Token.EOT;

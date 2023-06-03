@@ -8,8 +8,8 @@ package Triangle;
 import Triangle.CodeGenerator.Frame;
 import java.awt.event.ActionListener;
 import Triangle.SyntacticAnalyzer.SourceFile;
-import Triangle.Writer.Writer2;
-import Triangle.Writer.Controlador;
+import Triangle.Writer.WriterHTML;
+import Triangle.Writer.WriterHTMLController;
 import Triangle.SyntacticAnalyzer.Scanner;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.SyntacticAnalyzer.Parser;
@@ -53,39 +53,32 @@ public class IDECompiler {
         Scanner scanner = new Scanner(source);
         report = new IDEReporter();
         Parser parser = new Parser(scanner, report);
-        
-        //Kenny Vega 
-        //Escribir salida HTML en otro archivo y
-        //manipular el escáner para la escritura en HTML
-        Writer2 writer = new Writer2(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
+        //html writer
+        WriterHTML writer = new WriterHTML(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
         source = new SourceFile(sourceName);
         Scanner scanner2 = new Scanner(source);
-        
         scanner2.setWritingHTML(true);
-        Controlador Controladores;
-        Controladores = new Controlador(scanner2, writer);
-        Controladores.writeHTML();
+        WriterHTMLController writerController;
+        writerController = new WriterHTMLController(scanner2, writer);
+        writerController.writeHTML();
         scanner2.setWritingHTML(false);
         
         boolean success = false;
         
         rootAST = parser.parseProgram();
         if (report.numErrors == 0) {
-           
+            
             System.out.println("Contextual Analysis ...");
             Checker checker = new Checker(report);
             checker.check(rootAST);
             
-             
-            Writer writerXML = new Writer(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
-        
-            writerXML.write(rootAST);
+            writeXML(rootAST, sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
             if (report.numErrors == 0) {
-               
-                //System.out.println("Code Generation ...");
-                //Encoder encoder = new Encoder(report);
-                //encoder.encodeRun(rootAST, false);
-                
+                /*
+                System.out.println("Code Generation ...");
+                Encoder encoder = new Encoder(report);
+                encoder.encodeRun(rootAST, false);
+                */
                 if (report.numErrors == 0) {
                     //encoder.saveObjectProgram(sourceName.replace(".tri", ".tam"));
                     success = true;
@@ -117,6 +110,12 @@ public class IDECompiler {
         return(rootAST);
     }
 
+    private void writeXML(Program programAST, String sourceName){
+        Writer writerXML = new Writer(sourceName);
+        
+        writerXML.write(programAST);
+        
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Attributes ">

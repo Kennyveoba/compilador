@@ -1,8 +1,3 @@
-/*
-  Kenny Vega 
-  Se modifico para que generara el html en una carpeta respectiva
-*/
-
 package Triangle.Writer;
 
 import Triangle.AbstractSyntaxTrees.Program;
@@ -19,17 +14,20 @@ public class Writer {
         this.fileName = fileName;
     }
 
-    
+    // Draw the AST representing a complete program.
     public void write(Program ast) {
-    
+        // Prepare the file to write
         try {
-            File dir = new File("SalidasArbol" + File.separator);
+            File dir = new File("output" + File.separator);
             dir.mkdirs();
 
             File xmlFile = new File(dir, fileName.concat(".xml"));
+
             FileWriter fileWriter = new FileWriter(xmlFile);
 
+            //HTML header
             fileWriter.write("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
+
             WriterVisitor layout = new WriterVisitor(fileWriter);
             ast.visit(layout, null);
 
