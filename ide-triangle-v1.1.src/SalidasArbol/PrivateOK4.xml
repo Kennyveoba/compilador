@@ -2,17 +2,25 @@
 <Program>
 <BodySingle>
 <LetCommand>
-<PrivateDeclaration>
-<ConstDeclaration>
-<Identifier value="a"/>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
-</ConstDeclaration>
 <SequentialDeclaration>
 <PrivateDeclaration>
+<SequentialDeclaration>
 <ConstDeclaration>
+<Identifier value="a"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</ConstDeclaration>
+<InitializedVariableDeclaration>
 <Identifier value="b"/>
+<IntegerExpression>
+<IntegerLiteral value="15"/>
+</IntegerExpression>
+</InitializedVariableDeclaration>
+</SequentialDeclaration>
+<InitializedVariableDeclaration>
+<Identifier value="c"/>
+<BinaryExpression>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
@@ -21,61 +29,36 @@
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
-<Operator value="+"/>
+<Operator value="*"/>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="b"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+<Operator value="*"/>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="2"/>
 </IntegerExpression>
 </BinaryExpression>
-</ConstDeclaration>
-<ConstDeclaration>
-<Identifier value="c"/>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="b"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<Operator value="+"/>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="a"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-</BinaryExpression>
-</ConstDeclaration>
+</InitializedVariableDeclaration>
 </PrivateDeclaration>
-<ConstDeclaration>
+<InitializedVariableDeclaration>
 <Identifier value="d"/>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="a"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<Operator value="+"/>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="c"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-</BinaryExpression>
-</ConstDeclaration>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</InitializedVariableDeclaration>
 </SequentialDeclaration>
-</PrivateDeclaration>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="putint"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
+<BinaryExpression>
 <VnameExpression>
 <SimpleVname>
 <LongIdentifierSimple>
@@ -83,6 +66,15 @@
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
+<Operator value="+"/>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="d"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>

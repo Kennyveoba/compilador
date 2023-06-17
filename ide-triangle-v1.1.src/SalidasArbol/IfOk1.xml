@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <IfCommand>
 <BinaryExpression>
 <IntegerExpression>
@@ -23,4 +24,5 @@
 <EmptyActualParameterSequence/>
 </CallCommand>
 </IfCommand>
+</BodySingle>
 </Program>

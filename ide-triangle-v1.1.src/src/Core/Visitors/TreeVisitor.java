@@ -400,10 +400,10 @@ public class TreeVisitor implements Visitor {
      */
     public DefaultMutableTreeNode createUnary(String caption, AST child1) {
         DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
-        DefaultMutableTreeNode fdsdf = (DefaultMutableTreeNode)child1.visit(this, null);
-        t.add((DefaultMutableTreeNode)child1.visit(this, null));
-        
-        return(t);
+        //DefaultMutableTreeNode fdsdf = (DefaultMutableTreeNode) child1.visit(this, null);
+        t.add((DefaultMutableTreeNode) child1.visit(this, null));
+
+        return (t);
     }
     
     /**
@@ -415,11 +415,10 @@ public class TreeVisitor implements Visitor {
      */
     public DefaultMutableTreeNode createBinary(String caption, AST child1, AST child2) {
         DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
-        DefaultMutableTreeNode fdsdf = (DefaultMutableTreeNode)child1.visit(this, null);
-        t.add((DefaultMutableTreeNode)child1.visit(this, null));
-        t.add((DefaultMutableTreeNode)child2.visit(this, null));
-        
-        return(t);
+        //t.add((DefaultMutableTreeNode) child1.visit(this, null));             Da error -> (Revisar)
+        t.add((DefaultMutableTreeNode) child2.visit(this, null));
+
+        return (t);
     }
     
     /**

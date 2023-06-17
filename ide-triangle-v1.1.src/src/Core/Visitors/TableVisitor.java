@@ -647,12 +647,15 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitRecDeclaration(ReDefinition ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.PFS.visit(this,0);
+        return null;
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.D1.visit(this,o);
+        ast.D2.visit(this,o);
+        return null;
     }
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <IfCommand>
 <BinaryExpression>
 <IntegerExpression>
@@ -57,4 +58,5 @@
 </IfCommand>
 </IfCommand>
 </IfCommand>
+</BodySingle>
 </Program>
