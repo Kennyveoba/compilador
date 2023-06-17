@@ -1,6 +1,6 @@
 ! let con variable inicializada
 let
-  var n := 1 
+  var n := 50 
 in
 
   putint(n) ! sin error, variable declarada con inicialización e inferencia del tipo

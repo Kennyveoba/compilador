@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <LetCommand>
 <InitializedVariableDeclaration>
 <Identifier value="a"/>
@@ -54,4 +55,5 @@
 </CallCommand>
 </LetCommand>
 </LetCommand>
+</BodySingle>
 </Program>

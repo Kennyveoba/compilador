@@ -12,6 +12,8 @@ import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
 import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
+import Triangle.AbstractSyntaxTrees.BodyComplex;
+import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -629,12 +631,8 @@ public class WriterVisitor implements Visitor {
     // Programs
          @Override
     public Object visitProgram(Program ast, Object obj) {
-        writeLineHTML("<Program>");
-        if (ast.P != null){
-             ast.P.visit(this, null);
-        }   
-        //ast.P.visit(this, null);
-        ast.C.visit(this, null);
+        writeLineHTML("<Program>");       
+        ast.B.visit(this, null);
         writeLineHTML("</Program>");
         return null;
     }
@@ -824,6 +822,23 @@ public class WriterVisitor implements Visitor {
         aThis.I.visit(this, null);
         aThis.E1.visit(this, null);
         writeLineHTML("</ForVarDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitBodySingle(BodySingle aThis, Object o) {
+        writeLineHTML("<BodySingle>");        
+        aThis.C.visit(this, null);
+        writeLineHTML("</BodySingle>");
+        return null;
+    }
+
+    @Override
+    public Object visitBodyComplex(BodyComplex aThis, Object o) {
+        writeLineHTML("<BodyComplex>");      
+        aThis.P.visit(this, null);  
+        aThis.C.visit(this, null);        
+        writeLineHTML("</BodyComplex>");
         return null;
     }
  

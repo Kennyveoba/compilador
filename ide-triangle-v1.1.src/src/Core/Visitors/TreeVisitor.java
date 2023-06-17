@@ -11,6 +11,8 @@ import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
 import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
+import Triangle.AbstractSyntaxTrees.BodyComplex;
+import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -373,7 +375,7 @@ public class TreeVisitor implements Visitor {
     }
     
     public Object visitProgram(Program ast, Object obj) { 
-        return(createUnary("Program", ast.C));
+        return(createUnary("Program", ast.B));
     }
     // </editor-fold>
 
@@ -463,22 +465,25 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitRecDeclaration(ReDefinition ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.PFS.visit(this,0);
+        return null;
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.D1.visit(this,o);
+        ast.D2.visit(this,o);
+        return null;
     }
 
     @Override
     public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createBinary("Initialized Variable Declaration", ast.I, ast.E));
     }
 
     @Override
     public Object visitForCommand(ForCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createTernary("For Command", ast.D, ast.E2, ast.C));
     }
 
     @Override
@@ -512,9 +517,9 @@ public class TreeVisitor implements Visitor {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+  
     public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return createUnary("Long Identifier Simple", ast.I);
     }
 
     @Override
@@ -539,7 +544,17 @@ public class TreeVisitor implements Visitor {
  
     @Override
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createBinary("For Variable Declaration", aThis.I, aThis.E1));
+    }
+
+    @Override
+    public Object visitBodySingle(BodySingle aThis, Object o) {
+        return (createUnary("Body Single", aThis.C));
+    }
+
+    @Override
+    public Object visitBodyComplex(BodyComplex aThis, Object o) {
+        return (createBinary("Body Complex", aThis.P, aThis.C));
     }
  
  

@@ -1,10 +1,12 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <LetCommand>
 <VarDeclaration>
 <Identifier value="a"/>
 <IntTypeDenoter/>
 </VarDeclaration>
+<SequentialCommand>
 <SequentialCommand>
 <SequentialCommand>
 <AssignCommand>
@@ -17,6 +19,27 @@
 <IntegerLiteral value="0"/>
 </IntegerExpression>
 </AssignCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="a"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="9"/>
+</IntegerExpression>
+</BinaryExpression>
+</AssignCommand>
+</SequentialCommand>
 <AssignCommand>
 <SimpleVname>
 <LongIdentifierSimple>
@@ -56,4 +79,5 @@
 </CallCommand>
 </SequentialCommand>
 </LetCommand>
+</BodySingle>
 </Program>

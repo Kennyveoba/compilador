@@ -30,6 +30,8 @@ import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
 import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
+import Triangle.AbstractSyntaxTrees.BodyComplex;
+import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -731,8 +733,7 @@ public final class Encoder implements Visitor {
 
   // Programs
   public Object visitProgram(Program ast, Object o) {
-    ast.P.visit(this, null);
-    ast.C.visit(this, null);
+    ast.B.visit(this, o);
     return null;
   }
 
@@ -1016,14 +1017,21 @@ public final class Encoder implements Visitor {
 
   @Override
   public Object visitForCommand(ForCommand ast, Object o) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'visitForCommand'");
+    return null;
   }
 
-  @Override
-  public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'visitForWhileCommand'");
+  public Object visitForWhileCommand(WhileCommand ast, Object o) {
+    Frame frame = (Frame) o;
+    int jumpAddr, loopAddr;
+
+    jumpAddr = nextInstrAddr;
+    emit(Machine.JUMPop, 0, Machine.CBr, 0);
+    loopAddr = nextInstrAddr;
+    ast.C.visit(this, frame);
+    patch(jumpAddr, nextInstrAddr);
+    ast.E.visit(this, frame);
+    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+    return null;
   }
 
   @Override
@@ -1046,43 +1054,60 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitRecDeclaration(ReDefinition ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Frame frame = (Frame) o;
+        int recAddr = nextInstrAddr;  
+        ast.PFS.visit(this, frame);  
+        nextInstrAddr  = recAddr;  
+        ast.PFS.visit(this, frame);  
+        nextInstrAddr  = recAddr;  
+        ast.PFS.visit(this, frame); 
+        return new Integer(0);  
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Frame frame = (Frame) o;
+        int extraSize1, extraSize2;
+        extraSize1 = ((Integer) ast.D1.visit(this, frame)).intValue(); 
+        Frame frame1 = new Frame (frame, extraSize1);
+        extraSize2 = ((Integer) ast.D2.visit(this, frame1)).intValue(); 
+        return new Integer(extraSize1 + extraSize2);  
     }
 
     @Override
     public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Frame frame = (Frame) o;
+        int extraSize;
+        extraSize = ((Integer) ast.E.visit(this, frame)).intValue(); 
+        ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size); 
+        writeTableDetails(ast);
+        return new Integer(extraSize);
     }
   
 
     @Override
     public Object visitUntilCommand(UntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ast.I.visit(this, o);
     }
 
     @Override
@@ -1102,6 +1127,21 @@ public final class Encoder implements Visitor {
  
     @Override
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+ 
+    public Object visitBodySingle(BodySingle aThis, Object o) {
+        return aThis.C.visit(this, o);
+    }
+
+    @Override
+    public Object visitBodyComplex(BodyComplex aThis, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  

@@ -11,6 +11,8 @@ import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
 import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration; 
+import Triangle.AbstractSyntaxTrees.BodyComplex;
+import Triangle.AbstractSyntaxTrees.BodySingle;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -597,7 +599,7 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Table Creation Methods ">
   // Programs
   public Object visitProgram(Program ast, Object o) { 
-      ast.C.visit(this, null);
+      ast.B.visit(this, null);
       
       return(null);
   }
@@ -655,7 +657,10 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitInitializedVariableDeclaration(VariableInitializedDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.I.visit(this, o);
+        ast.E.visit(this, o);
+        ast.T.visit(this, o);
+        return null;
     }
 
     @Override
@@ -700,7 +705,7 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitLongIdentifierSimple(LongIdentifierSimple ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ast.I.visit(this, o);
     }
 
     @Override
@@ -721,6 +726,18 @@ public class TableVisitor implements Visitor {
     @Override
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitBodySingle(BodySingle aThis, Object o) {
+        return aThis.C.visit(this, null);
+    }
+
+    @Override
+    public Object visitBodyComplex(BodyComplex aThis, Object o) {
+        aThis.P.visit(this, null);
+        aThis.P.visit(null, null);
+        return null;
     }
  
   

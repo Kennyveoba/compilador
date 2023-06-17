@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <ForCommand>
 <ForVarDeclaration>
 <Identifier value="i"/>
@@ -27,4 +28,5 @@
 </SingleActualParameterSequence>
 </CallCommand>
 </ForCommand>
+</BodySingle>
 </Program>

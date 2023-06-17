@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <LetCommand>
 <InitializedVariableDeclaration>
 <Identifier value="k"/>
@@ -57,4 +58,5 @@
 </SequentialCommand>
 </ForCommand>
 </LetCommand>
+</BodySingle>
 </Program>
