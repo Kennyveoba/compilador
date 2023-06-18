@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<BodySingle>
+<DoUntilCommand>
+<BinaryExpression>
+<IntegerExpression>
+<IntegerLiteral value="4"/>
+</IntegerExpression>
+<Operator value="="/>
+<IntegerExpression>
+<IntegerLiteral value="4"/>
+</IntegerExpression>
+</BinaryExpression>
+<SequentialCommand>
+<EmptyCommand/>
+<EmptyCommand/>
+</SequentialCommand>
+</DoUntilCommand>
+</BodySingle>
+</Program>

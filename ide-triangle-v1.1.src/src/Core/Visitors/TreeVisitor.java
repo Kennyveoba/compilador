@@ -401,7 +401,7 @@ public class TreeVisitor implements Visitor {
     public DefaultMutableTreeNode createUnary(String caption, AST child1) {
         DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
         //DefaultMutableTreeNode fdsdf = (DefaultMutableTreeNode) child1.visit(this, null);
-        t.add((DefaultMutableTreeNode) child1.visit(this, null));
+        //t.add((DefaultMutableTreeNode) child1.visit(this, null));
 
         return (t);
     }
@@ -416,7 +416,7 @@ public class TreeVisitor implements Visitor {
     public DefaultMutableTreeNode createBinary(String caption, AST child1, AST child2) {
         DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
         //t.add((DefaultMutableTreeNode) child1.visit(this, null));             Da error -> (Revisar)
-        t.add((DefaultMutableTreeNode) child2.visit(this, null));
+        //t.add((DefaultMutableTreeNode) child2.visit(this, null));
 
         return (t);
     }
@@ -464,15 +464,12 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitRecDeclaration(ReDefinition ast, Object o) {
-        ast.PFS.visit(this,0);
-        return null;
+        return (createUnary("Recursive Declaration", ast.PFS));
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        ast.D1.visit(this,o);
-        ast.D2.visit(this,o);
-        return null;
+        return (createBinary("Private Declaration", ast.D1, ast.D2));
     }
 
     @Override
@@ -487,12 +484,12 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createQuaternary("For While Command", ast.D, ast.E2, ast.E3, ast.C));
     }
 
     @Override
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createQuaternary("For Until Command", ast.D, ast.E2, ast.E3, ast.C));
     }
 
     @Override
@@ -508,12 +505,15 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        aThis.C.visit(this, o);
+        aThis.E.visit(this, o);
+
+        return null;
     }
 
     @Override
     public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createBinary("Do Until Loop", aThis.C, aThis.E));
     }
 
   

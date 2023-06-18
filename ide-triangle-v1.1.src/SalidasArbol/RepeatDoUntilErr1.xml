@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <DoUntilCommand>
 <IntegerExpression>
 <IntegerLiteral value="1"/>
@@ -17,4 +18,5 @@
 </SingleActualParameterSequence>
 </CallCommand>
 </DoUntilCommand>
+</BodySingle>
 </Program>

@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <LetCommand>
 <SequentialDeclaration>
 <FuncDeclaration>
@@ -58,4 +59,5 @@
 </SingleActualParameterSequence>
 </CallCommand>
 </LetCommand>
+</BodySingle>
 </Program>

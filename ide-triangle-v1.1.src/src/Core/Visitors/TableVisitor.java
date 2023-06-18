@@ -668,17 +668,28 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitForCommand(ForCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.D.visit(this, o);
+        ast.E2.visit(this, o);
+        ast.C.visit(this, o);
+        return null;
     }
 
     @Override
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.D.visit(this, o);
+        ast.E2.visit(this, o);
+        ast.E3.visit(this, o);
+        ast.C.visit(this, o);
+        return null;
     }
 
     @Override
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.D.visit(this, o);
+        ast.E2.visit(this, o);
+        ast.E3.visit(this, o);
+        ast.C.visit(this, o);
+        return null;
     }
 
     @Override
@@ -688,7 +699,9 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitUntilCommand(UntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        aThis.E.visit(this, o);
+        aThis.C.visit(this, o);
+        return null;
     }
 
     @Override
@@ -698,12 +711,16 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        aThis.C.visit(this, null);
+        aThis.E.visit(this, null);
+        return null;
     }
 
     @Override
     public Object visitDoUntilCommand(DoUntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        aThis.E.visit(this, null);
+        aThis.C.visit(this, null);
+        return null;
     }
 
     @Override
@@ -728,7 +745,8 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitForVarDeclaration(ForVarDeclaration aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        aThis.I.visit(this, null);
+        return null;
     }
 
     @Override

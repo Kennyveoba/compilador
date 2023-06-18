@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <LetCommand>
 <SequentialDeclaration>
 <ConstDeclaration>
@@ -15,7 +16,7 @@
 </IntegerExpression>
 </InitializedVariableDeclaration>
 </SequentialDeclaration>
-<DoWhileCommand>
+<WhileCommand>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
@@ -71,6 +72,7 @@
 </BinaryExpression>
 </AssignCommand>
 </SequentialCommand>
-</DoWhileCommand>
+</WhileCommand>
 </LetCommand>
+</BodySingle>
 </Program>

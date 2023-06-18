@@ -1,10 +1,11 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <LetCommand>
 <InitializedVariableDeclaration>
 <Identifier value="k"/>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="10"/>
 </IntegerExpression>
 </InitializedVariableDeclaration>
 <ForCommand>
@@ -57,4 +58,5 @@
 </SequentialCommand>
 </ForCommand>
 </LetCommand>
+</BodySingle>
 </Program>

@@ -8,20 +8,32 @@
 </IntegerExpression>
 <Operator value="="/>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="2"/>
 </IntegerExpression>
 </BinaryExpression>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="puteol"/>
+<Identifier value="putint"/>
 </LongIdentifierSimple>
-<EmptyActualParameterSequence/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
 </CallCommand>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="puteol"/>
+<Identifier value="putint"/>
 </LongIdentifierSimple>
-<EmptyActualParameterSequence/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
 </CallCommand>
 </IfCommand>
 </BodySingle>

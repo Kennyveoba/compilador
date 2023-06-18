@@ -78,6 +78,7 @@ import Triangle.AbstractSyntaxTrees.ReDefinition;
 import Triangle.AbstractSyntaxTrees.RecordAggregate;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.RepeatTimes;
 import Triangle.AbstractSyntaxTrees.SequentialCommand;
 import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialPackage;
@@ -93,6 +94,7 @@ import Triangle.AbstractSyntaxTrees.SubscriptVname;
 import Triangle.AbstractSyntaxTrees.TypeDeclaration;
 import Triangle.AbstractSyntaxTrees.TypeDenoter;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
+import Triangle.AbstractSyntaxTrees.UntilCommand;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
@@ -569,7 +571,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             Command cAST = parseCommand();
             accept(Token.END);
             finish(commandPos);
-            commandAST = new DoWhileCommand(cAST, eAST, commandPos);
+            commandAST = new WhileCommand(eAST, cAST, commandPos);
         }
         else if (currentToken.kind == Token.UNTIL) {
             acceptIt();
@@ -578,7 +580,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
             Command cAST = parseCommand();
             accept(Token.END);
             finish(commandPos);
-            commandAST = new DoUntilCommand(cAST, eAST, commandPos);
+            commandAST = new UntilCommand(eAST, cAST, commandPos);
         }
         else if (currentToken.kind == Token.DO) {
             acceptIt();
@@ -588,7 +590,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
                 Expression eAST = parseExpression();
                 accept(Token.END);
                 finish(commandPos);
-                commandAST = new DoUntilCommand(cAST, eAST, commandPos);
+                commandAST = new DoWhileCommand(cAST, eAST, commandPos);
             } else if (currentToken.kind == Token.UNTIL) {
                 acceptIt();
                 Expression eAST = parseExpression();
@@ -607,7 +609,7 @@ LongIdentifier parseLongIdentifier() throws SyntaxError {
        
                 accept(Token.END);
                 finish(commandPos);
-                commandAST = new WhileCommand(eAST, cAST, commandPos);
+                commandAST = new RepeatTimes(eAST, cAST, commandPos);
             }
             else{
                 //Caso de error
