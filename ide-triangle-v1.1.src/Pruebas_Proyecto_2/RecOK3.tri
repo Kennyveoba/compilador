@@ -5,7 +5,7 @@ let
 
   rec
 
-    func f (a : Integer): Integer ~ 1
+    func f (a : Integer): Integer ~ 3
 
     |
 
@@ -15,6 +15,6 @@ let
 
 in
 
-  putint(f(10)) 
+  putint(f(1000)) 
 
 end

@@ -30,7 +30,7 @@
 </IntegerExpression>
 <Operator value="="/>
 <IntegerExpression>
-<IntegerLiteral value="2"/>
+<IntegerLiteral value="3"/>
 </IntegerExpression>
 </BinaryExpression>
 <CallCommand>
@@ -52,7 +52,7 @@
 </IntegerExpression>
 <Operator value="="/>
 <IntegerExpression>
-<IntegerLiteral value="3"/>
+<IntegerLiteral value="4"/>
 </IntegerExpression>
 </BinaryExpression>
 <CallCommand>

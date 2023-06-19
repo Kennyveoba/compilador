@@ -8,7 +8,7 @@
 </IntegerExpression>
 <Operator value="="/>
 <IntegerExpression>
-<IntegerLiteral value="2"/>
+<IntegerLiteral value="1"/>
 </IntegerExpression>
 </BinaryExpression>
 <CallCommand>

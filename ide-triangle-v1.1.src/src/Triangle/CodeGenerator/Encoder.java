@@ -163,22 +163,6 @@ public final class Encoder implements Visitor {
     return null;
   }
 
-  
-  //____________________________________________________________________________
-  public Object visitWhileCommand(WhileCommand aThis, Object o) {
-    System.out.print("WhileCommand");
-    Frame frame = (Frame) o;
-    int jumpAddr, loopAddr;
-
-    jumpAddr = nextInstrAddr;
-    emit(Machine.JUMPop, 0, Machine.CBr, 0);
-    loopAddr = nextInstrAddr;
-    aThis.C.visit(this, frame);
-    patch(jumpAddr, nextInstrAddr);
-    aThis.E.visit(this, frame);
-    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
-    return null;
-  }
 
   // Expressions
   public Object visitArrayExpression(ArrayExpression ast, Object o) {
@@ -1018,108 +1002,15 @@ public final class Encoder implements Visitor {
     }
   }
 
-  @Override
-  public Object visitForCommand(ForCommand ast, Object o) {
-    System.out.println("ahhhhhhhh");
-    Frame frame = (Frame) o;
-    int jumpAddr, loopAddr;
-    
-    ast.E2.visit(this, frame);
-    
-    jumpAddr = nextInstrAddr;
-    emit(Machine.JUMPop, 0, Machine.CBr, 0);
-    loopAddr = nextInstrAddr;
-    
-    ast.C.visit(this, new Frame(frame, 2));
-    
-    emit(Machine.LOADop, 1, displayRegister(frame.level, frame.level), frame.size + 1);
-    emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.succDisplacement);
-    emit(Machine.STOREop, 1, displayRegister(frame.level, frame.level), frame.size + 1);
-    
-    patch(jumpAddr, nextInstrAddr);
-    
-    emit(Machine.LOADop, 1, displayRegister(frame.level, frame.level), frame.size + 1);
-    emit(Machine.LOADop, 1, displayRegister(frame.level, frame.level), frame.size);
-    
-    emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.leDisplacement);
-    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
-    
-    emit(Machine.POPop, 0, 0, 2);
-
-    return null;
-}
-
-
-
-
-
-  public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-    System.out.print("sadasd");
-    
-    Frame frame = (Frame) o;
-    int jumpAddr, loopAddr;
-    
-    ast.E2.visit(this, frame);
-    
-    jumpAddr = nextInstrAddr;
-    emit(Machine.JUMPop, 0, Machine.CBr, 0);
-    loopAddr = nextInstrAddr;
-    
-    ast.E3.visit(this, frame);  // Visitamos la expresión de actualización del bucle
-    
-    // Aquí se agrega la condición de parada
-    ast.E2.visit(this, frame);  // Visitamos la expresión de condición del bucle
-    emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, nextInstrAddr + 2);  // Saltamos si la condición es falsa
-    emit(Machine.JUMPop, 0, Machine.CBr, 0);  // Salto al final del bucle si la condición es verdadera
-    
-    ast.C.visit(this, new Frame(frame, 2));
-    
-    emit(Machine.LOADop, 1, displayRegister(frame.level, frame.level), frame.size + 1);
-    emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.succDisplacement);
-    emit(Machine.STOREop, 1, displayRegister(frame.level, frame.level), frame.size + 1);
-    
-    patch(jumpAddr, nextInstrAddr);
-    
-    emit(Machine.LOADop, 1, displayRegister(frame.level, frame.level), frame.size + 1);
-    emit(Machine.LOADop, 1, displayRegister(frame.level, frame.level), frame.size);
-    
-    emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.leDisplacement);
-    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
-    
-    emit(Machine.POPop, 0, 0, 2);
-
-    return null;
-}
-
-  
-
-  @Override
-  public Object visitForUntilCommand(ForUntilCommand aThis, Object o) {
-    return null;
-  }
-
-  @Override
-  public Object visitForInCommand(ForInCommand ast, Object o) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'visitForInCommand'");
-  }
+    @Override
+    public Object visitForInCommand(ForInCommand ast, Object o) {
+      throw new UnsupportedOperationException("Unimplemented method 'visitForInCommand'");
+    }
     
 
     @Override
     public Object visitPackageIdentifier(PackageIdentifier packageIdentifier, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitRecDeclaration(ReDefinition ast, Object o) {
-        Frame frame = (Frame) o;
-        int recAddr = nextInstrAddr;  
-        ast.PFS.visit(this, frame);  
-        nextInstrAddr  = recAddr;  
-        ast.PFS.visit(this, frame);  
-        nextInstrAddr  = recAddr;  
-        ast.PFS.visit(this, frame); 
-        return new Integer(0);  
     }
 
     @Override
@@ -1141,14 +1032,31 @@ public final class Encoder implements Visitor {
         writeTableDetails(ast);
         return new Integer(extraSize);
     }
-  
-
-    @Override
-    public Object visitUntilCommand(UntilCommand aThis, Object o) {
-        System.out.print("UntilCommand");
+ 
+    
+    //--------------------------------------------------------------------------
+    //| "repeat" "while" Expression "do" Command "end"
+    //| "repeat" "until" Expression "do" Command "end"
+    //| "repeat" "do" Command "while" Expression "end"
+    //| "repeat" "do" Command "until" Expression "end"
+    //| "repeat" Expression "times" "do" Command "end"
+    public Object visitWhileCommand(WhileCommand aThis, Object o) {
         Frame frame = (Frame) o;
         int jumpAddr, loopAddr;
-
+        jumpAddr = nextInstrAddr;
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+        loopAddr = nextInstrAddr;
+        aThis.C.visit(this, frame);
+        patch(jumpAddr, nextInstrAddr);
+        aThis.E.visit(this, frame);
+        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+        return null;
+    }
+    
+    @Override
+    public Object visitUntilCommand(UntilCommand aThis, Object o) {
+        Frame frame = (Frame) o;
+        int jumpAddr, loopAddr;
         jumpAddr = nextInstrAddr;
         emit(Machine.JUMPop, 0, Machine.CBr, 0);
         loopAddr = nextInstrAddr;
@@ -1163,21 +1071,22 @@ public final class Encoder implements Visitor {
     public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
         Frame frame = (Frame) o;
         int jumpAddr, loopAddr;
-
+        aThis.E.visit(this, frame);
+        emit (Machine.LOADLop, 0, 0, 1);
         jumpAddr = nextInstrAddr;
         emit(Machine.JUMPop, 0, Machine.CBr, 0);
         loopAddr = nextInstrAddr;
         aThis.C.visit(this, frame);
+        emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.succDisplacement);
         patch(jumpAddr, nextInstrAddr);
-        aThis.E.visit(this, frame);
+        emit(Machine.LOADop, 2, Machine.STr, -2);
+        emit(Machine.CALLop, 0, Machine.PBr, Machine.geDisplacement);
         emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
         return null;
     }
 
     @Override
-    public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {
-        
-        System.out.print("DoWhile");
+    public Object visitDoWhileCommand(DoWhileCommand aThis, Object o) {  
         Frame frame = (Frame) o;
         int loopAddr;
         loopAddr = nextInstrAddr;
@@ -1196,7 +1105,126 @@ public final class Encoder implements Visitor {
         aThis.E.visit(this, frame);
         emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, loopAddr);
         return null;
-   
+    }
+    
+    
+    //--------------------------------------------------------------------------
+    //| "for" Identifier ":=" Expression ".." Expression
+    //    "do" Command "end"
+    //| "for" Identifier ":=" Expression ".." Expression
+    //    "while" Expression "do" Command "end"
+    //| "for" Identifier ":=" Expression ".." Expression
+    //    "until" Expression "do" Command "end"
+    
+    public Object visitForCommand(ForCommand ast, Object o) {
+        Frame frame = (Frame) o;
+        int jumpAddr, loopAddr;
+
+        ast.E2.visit(this, frame);
+        Frame frame1 = new Frame(frame, 1);
+
+        ForVarDeclaration forDecl = (ForVarDeclaration) ast.D;
+        forDecl.E1.visit(this, frame1);
+        forDecl.entity = new UnknownValue(1, frame1.level, frame1.size);
+        Frame frame2 = new Frame(frame1, 1);
+
+        jumpAddr = nextInstrAddr;
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+        loopAddr = nextInstrAddr;
+
+        ast.C.visit(this, frame2);
+
+        emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.succDisplacement);
+        patch(jumpAddr, nextInstrAddr);
+        emit(Machine.LOADop, 2, Machine.STr, -2);
+        emit(Machine.CALLop, 0, Machine.PBr, Machine.geDisplacement);
+        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+        emit(Machine.POPop, 0, 0, 2);
+
+        return null;
+    }
+
+    public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+        
+        Frame frame = (Frame) o;
+        int jumpAddr, loopAddr, jumpEndAddr;
+
+        ast.E2.visit(this, frame);
+        Frame frame1 = new Frame(frame, 1);
+
+        ForVarDeclaration forDecl = (ForVarDeclaration) ast.D;
+        forDecl.E1.visit(this, frame1);
+        forDecl.entity = new UnknownValue(1, frame1.level, frame1.size);
+        Frame frame2 = new Frame(frame1, 1);
+
+        jumpAddr = nextInstrAddr;
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+
+        loopAddr = nextInstrAddr;
+        ast.C.visit(this, frame2);
+
+        emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.succDisplacement);
+
+        patch(jumpAddr, nextInstrAddr);
+        emit(Machine.LOADop, 2, Machine.STr, -2);
+        emit(Machine.CALLop, 0, Machine.PBr, Machine.geDisplacement);
+        jumpEndAddr = nextInstrAddr;
+        emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, jumpEndAddr);
+        ast.E3.visit(this, frame);
+        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+
+        patch(jumpEndAddr, nextInstrAddr);
+        emit(Machine.POPop, 0, 0, 2);
+
+        return null;
+    }
+    
+    
+    public Object visitForUntilCommand(ForUntilCommand aThis, Object o) {
+        Frame frame = (Frame) o;
+        int jumpAddr, loopAddr, jumpEndAddr;
+
+        aThis.E2.visit(this, frame);
+        Frame frame1 = new Frame(frame, 1);
+
+        ForVarDeclaration forDecl = (ForVarDeclaration) aThis.D;
+        forDecl.E1.visit(this, frame1);
+        forDecl.entity = new UnknownValue(1, frame1.level, frame1.size);
+        Frame frame2 = new Frame(frame1, 1);
+
+        jumpAddr = nextInstrAddr;
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+
+        loopAddr = nextInstrAddr;
+        aThis.C.visit(this, frame2);
+
+        emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.succDisplacement);
+
+        patch(jumpAddr, nextInstrAddr);
+        emit(Machine.LOADop, 2, Machine.STr, -2);
+        emit(Machine.CALLop, 0, Machine.PBr, Machine.geDisplacement);
+        jumpEndAddr = nextInstrAddr;
+        emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, jumpEndAddr);
+        aThis.E3.visit(this, frame);
+        emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, loopAddr);
+
+        patch(jumpEndAddr, nextInstrAddr);
+        emit(Machine.POPop, 0, 0, 2);
+
+        return null;
+   }
+ 
+    //--------------------------------------------------------------------------
+    @Override
+    public Object visitRecDeclaration(ReDefinition ast, Object o) {
+        Frame frame = (Frame) o;
+        int recAddr = nextInstrAddr;  
+        ast.PFS.visit(this, frame);  
+        nextInstrAddr  = recAddr;  
+        ast.PFS.visit(this, frame);  
+        nextInstrAddr  = recAddr;  
+        ast.PFS.visit(this, frame); 
+        return new Integer(0);  
     }
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <ForUntilCommand>
 <ForVarDeclaration>
 <Identifier value="i"/>
@@ -40,4 +41,5 @@
 </SingleActualParameterSequence>
 </CallCommand>
 </ForUntilCommand>
+</BodySingle>
 </Program>

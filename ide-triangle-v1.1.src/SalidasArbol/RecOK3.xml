@@ -14,7 +14,7 @@
 </SingleFormalParameterSequence>
 <IntTypeDenoter/>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="3"/>
 </IntegerExpression>
 </FuncDeclaration>
 <FuncDeclaration>
@@ -82,7 +82,7 @@
 <SingleActualParameterSequence>
 <ConstActualParameter>
 <IntegerExpression>
-<IntegerLiteral value="10"/>
+<IntegerLiteral value="1000"/>
 </IntegerExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>

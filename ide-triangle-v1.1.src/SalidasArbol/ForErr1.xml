@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <SequentialCommand>
 <ForCommand>
 <ForVarDeclaration>
@@ -45,4 +46,5 @@
 </SingleActualParameterSequence>
 </CallCommand>
 </SequentialCommand>
+</BodySingle>
 </Program>
