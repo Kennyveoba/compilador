@@ -32,7 +32,7 @@
 </VnameExpression>
 <Operator value="&lt;"/>
 <IntegerExpression>
-<IntegerLiteral value="3"/>
+<IntegerLiteral value="5"/>
 </IntegerExpression>
 </BinaryExpression>
 <SequentialCommand>

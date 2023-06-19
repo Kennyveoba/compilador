@@ -30,7 +30,7 @@
 </LongIdentifierSimple>
 </SimpleVname>
 </VnameExpression>
-<Operator value=">"/>
+<Operator value="="/>
 <IntegerExpression>
 <IntegerLiteral value="2"/>
 </IntegerExpression>

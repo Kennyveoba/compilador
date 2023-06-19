@@ -29,9 +29,8 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
-import Triangle.AbstractSyntaxTrees.BodyComplex;
-import Triangle.AbstractSyntaxTrees.BodySingle;
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;   
+import Triangle.AbstractSyntaxTrees.Code;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -364,10 +363,12 @@ public final class Encoder implements Visitor {
   // Array Aggregates
   public Object visitMultipleArrayAggregate(MultipleArrayAggregate ast,
 					    Object o) {
+    
     Frame frame = (Frame) o;
     int elemSize = ((Integer) ast.E.visit(this, frame)).intValue();
     Frame frame1 = new Frame(frame, elemSize);
     int arraySize = ((Integer) ast.AA.visit(this, frame1)).intValue();
+    
     return new Integer(elemSize + arraySize);
   }
 
@@ -526,6 +527,7 @@ public final class Encoder implements Visitor {
   }
 
   public Object visitArrayTypeDenoter(ArrayTypeDenoter ast, Object o) {
+  
     int typeSize;
     if (ast.entity == null) {
       int elemSize = ((Integer) ast.T.visit(this, null)).intValue();
@@ -1252,13 +1254,9 @@ public final class Encoder implements Visitor {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  
-    public Object visitBodySingle(BodySingle aThis, Object o) {
+    public Object visitBodySingle(Code aThis, Object o) {
         return aThis.C.visit(this, o);
     }
 
-    @Override
-    public Object visitBodyComplex(BodyComplex aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
- 
+    
 }

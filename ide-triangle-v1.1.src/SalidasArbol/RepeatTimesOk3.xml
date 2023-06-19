@@ -1,20 +1,66 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<WhileCommand>
-<CharacterExpression>
-<CharacterLiteral value="'x'"/>
-</CharacterExpression>
+<BodySingle>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="x"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="getint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<VarActualParameter>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VarActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<RepeatTimes>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+<SequentialCommand>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="putint"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-</WhileCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+</RepeatTimes>
+</SequentialCommand>
+</LetCommand>
+</BodySingle>
 </Program>

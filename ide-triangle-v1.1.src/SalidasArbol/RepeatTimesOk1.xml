@@ -1,8 +1,9 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<WhileCommand>
+<BodySingle>
+<RepeatTimes>
 <IntegerExpression>
-<IntegerLiteral value="101"/>
+<IntegerLiteral value="8"/>
 </IntegerExpression>
 <CallCommand>
 <LongIdentifierSimple>
@@ -11,10 +12,11 @@
 <SingleActualParameterSequence>
 <ConstActualParameter>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="2"/>
 </IntegerExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-</WhileCommand>
+</RepeatTimes>
+</BodySingle>
 </Program>

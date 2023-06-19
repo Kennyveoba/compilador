@@ -5,7 +5,7 @@
 <InitializedVariableDeclaration>
 <Identifier value="n"/>
 <IntegerExpression>
-<IntegerLiteral value="50"/>
+<IntegerLiteral value="1"/>
 </IntegerExpression>
 </InitializedVariableDeclaration>
 <CallCommand>

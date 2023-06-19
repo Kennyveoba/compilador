@@ -11,6 +11,7 @@
 <IntegerExpression>
 <IntegerLiteral value="10"/>
 </IntegerExpression>
+<SequentialCommand>
 <CallCommand>
 <LongIdentifierSimple>
 <Identifier value="putint"/>
@@ -27,6 +28,19 @@
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="' '"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
 </ForCommand>
 </BodySingle>
 </Program>

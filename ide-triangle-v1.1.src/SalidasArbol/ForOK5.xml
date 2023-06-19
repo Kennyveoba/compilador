@@ -1,0 +1,76 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<BodySingle>
+<LetCommand>
+<InitializedVariableDeclaration>
+<Identifier value="miArr"/>
+<ArrayExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+<SingleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="4"/>
+</IntegerExpression>
+</SingleArrayAggregate>
+</MultipleArrayAggregate>
+</MultipleArrayAggregate>
+</MultipleArrayAggregate>
+</ArrayExpression>
+</InitializedVariableDeclaration>
+<ForCommand>
+<ForVarDeclaration>
+<Identifier value="i"/>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</ForVarDeclaration>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SubscriptVname>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="miArr"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</SubscriptVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+</ForCommand>
+</LetCommand>
+</BodySingle>
+</Program>

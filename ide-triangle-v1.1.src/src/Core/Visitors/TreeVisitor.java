@@ -10,9 +10,8 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
-import Triangle.AbstractSyntaxTrees.BodyComplex;
-import Triangle.AbstractSyntaxTrees.BodySingle;
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;   
+import Triangle.AbstractSyntaxTrees.Code;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -547,14 +546,8 @@ public class TreeVisitor implements Visitor {
     }
 
     @Override
-    public Object visitBodySingle(BodySingle aThis, Object o) {
+    public Object visitBodySingle(Code aThis, Object o) {
         return (createUnary("Body Single", aThis.C));
     }
-
-    @Override
-    public Object visitBodyComplex(BodyComplex aThis, Object o) {
-        return (createBinary("Body Complex", aThis.P, aThis.C));
-    }
- 
  
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<BodySingle>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="miArray"/>
+<ArrayTypeDenoter>
+<IntegerLiteral value="4"/>
+<IntTypeDenoter/>
+</ArrayTypeDenoter>
+</VarDeclaration>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="miArray"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<ArrayExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="20"/>
+</IntegerExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="30"/>
+</IntegerExpression>
+<SingleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="40"/>
+</IntegerExpression>
+</SingleArrayAggregate>
+</MultipleArrayAggregate>
+</MultipleArrayAggregate>
+</MultipleArrayAggregate>
+</ArrayExpression>
+</AssignCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SubscriptVname>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="miArray"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</SubscriptVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SubscriptVname>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="miArray"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<BinaryExpression>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+<Operator value="-"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+</SubscriptVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+</LetCommand>
+</BodySingle>
+</Program>

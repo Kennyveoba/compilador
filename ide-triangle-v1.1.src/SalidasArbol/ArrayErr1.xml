@@ -1,13 +1,89 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<BodySingle>
 <LetCommand>
 <VarDeclaration>
-<Identifier value="lista"/>
+<Identifier value="miArray"/>
 <ArrayTypeDenoter>
-<IntegerLiteral value="0"/>
+<IntegerLiteral value="4"/>
 <IntTypeDenoter/>
 </ArrayTypeDenoter>
 </VarDeclaration>
-<EmptyCommand/>
+<SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="miArray"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<ArrayExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="20"/>
+</IntegerExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="30"/>
+</IntegerExpression>
+<SingleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="40"/>
+</IntegerExpression>
+</SingleArrayAggregate>
+</MultipleArrayAggregate>
+</MultipleArrayAggregate>
+</MultipleArrayAggregate>
+</ArrayExpression>
+</AssignCommand>
+<ForCommand>
+<ForVarDeclaration>
+<Identifier value="i"/>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</ForVarDeclaration>
+<IntegerExpression>
+<IntegerLiteral value="4"/>
+</IntegerExpression>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SubscriptVname>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="miArray"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</SubscriptVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+</ForCommand>
+</SequentialCommand>
 </LetCommand>
+</BodySingle>
 </Program>

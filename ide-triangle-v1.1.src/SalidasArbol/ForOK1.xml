@@ -49,9 +49,13 @@
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="k"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>

@@ -1,0 +1,239 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<BodySingle>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="x"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="8"/>
+</IntegerExpression>
+</AssignCommand>
+<ForCommand>
+<ForVarDeclaration>
+<Identifier value="i"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ForVarDeclaration>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'i'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="':'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+<ForCommand>
+<ForVarDeclaration>
+<Identifier value="j"/>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</ForVarDeclaration>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'j'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'*'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'i'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'='"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="j"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+<Operator value="*"/>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+</ForCommand>
+</SequentialCommand>
+</ForCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'x'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'='"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</LetCommand>
+</BodySingle>
+</Program>

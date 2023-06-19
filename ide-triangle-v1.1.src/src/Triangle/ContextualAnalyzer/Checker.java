@@ -21,9 +21,8 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
-import Triangle.AbstractSyntaxTrees.BodyComplex;
-import Triangle.AbstractSyntaxTrees.BodySingle;
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;   
+import Triangle.AbstractSyntaxTrees.Code;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -1262,13 +1261,9 @@ public final class Checker implements Visitor {
     }
 
     
-    public Object visitBodySingle(BodySingle ast, Object o) {
+    public Object visitBodySingle(Code ast, Object o) {
        return ast.C.visit(this, null);
     }
-
-    @Override
-    public Object visitBodyComplex(BodyComplex aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
  
 }

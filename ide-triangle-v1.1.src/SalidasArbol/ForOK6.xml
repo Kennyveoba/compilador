@@ -1,0 +1,209 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<BodySingle>
+<LetCommand>
+<InitializedVariableDeclaration>
+<Identifier value="x"/>
+<IntegerExpression>
+<IntegerLiteral value="8"/>
+</IntegerExpression>
+</InitializedVariableDeclaration>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<ForCommand>
+<ForVarDeclaration>
+<Identifier value="i"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ForVarDeclaration>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'i'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'='"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="i"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+<ForCommand>
+<ForVarDeclaration>
+<Identifier value="j"/>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</ForVarDeclaration>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+<SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'j'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'='"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="j"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="','"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</ForCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+</ForCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="puteol"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'x'"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="put"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="'='"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="x"/>
+</LongIdentifierSimple>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</LetCommand>
+</BodySingle>
+</Program>

@@ -8,7 +8,7 @@
 <EmptyFormalParameterSequence/>
 <IntTypeDenoter/>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="2"/>
 </IntegerExpression>
 </FuncDeclaration>
 <ProcDeclaration>

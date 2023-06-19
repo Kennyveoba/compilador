@@ -8,30 +8,30 @@
 </IntegerExpression>
 <Operator value="="/>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="2"/>
 </IntegerExpression>
 </BinaryExpression>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="putint"/>
+<Identifier value="put"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
+<CharacterExpression>
+<CharacterLiteral value="'K'"/>
+</CharacterExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="putint"/>
+<Identifier value="put"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="3"/>
-</IntegerExpression>
+<CharacterExpression>
+<CharacterLiteral value="'Z'"/>
+</CharacterExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>

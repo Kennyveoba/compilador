@@ -162,7 +162,7 @@
 <SingleActualParameterSequence>
 <ConstActualParameter>
 <IntegerExpression>
-<IntegerLiteral value="4"/>
+<IntegerLiteral value="6"/>
 </IntegerExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>

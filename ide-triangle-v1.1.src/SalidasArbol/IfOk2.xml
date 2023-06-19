@@ -8,20 +8,14 @@
 </IntegerExpression>
 <Operator value="="/>
 <IntegerExpression>
-<IntegerLiteral value="2"/>
+<IntegerLiteral value="0"/>
 </IntegerExpression>
 </BinaryExpression>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="putint"/>
+<Identifier value="puteol"/>
 </LongIdentifierSimple>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
+<EmptyActualParameterSequence/>
 </CallCommand>
 <IfCommand>
 <BinaryExpression>
@@ -30,20 +24,14 @@
 </IntegerExpression>
 <Operator value="="/>
 <IntegerExpression>
-<IntegerLiteral value="3"/>
+<IntegerLiteral value="0"/>
 </IntegerExpression>
 </BinaryExpression>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="putint"/>
+<Identifier value="puteol"/>
 </LongIdentifierSimple>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="2"/>
-</IntegerExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
+<EmptyActualParameterSequence/>
 </CallCommand>
 <IfCommand>
 <BinaryExpression>
@@ -52,18 +40,18 @@
 </IntegerExpression>
 <Operator value="="/>
 <IntegerExpression>
-<IntegerLiteral value="4"/>
+<IntegerLiteral value="3"/>
 </IntegerExpression>
 </BinaryExpression>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="putint"/>
+<Identifier value="put"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="3"/>
-</IntegerExpression>
+<CharacterExpression>
+<CharacterLiteral value="'T'"/>
+</CharacterExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>

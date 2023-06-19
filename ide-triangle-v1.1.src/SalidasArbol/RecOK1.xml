@@ -36,9 +36,12 @@
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
+<CallExpression>
+<LongIdentifierSimple>
+<Identifier value="m"/>
+</LongIdentifierSimple>
+<EmptyActualParameterSequence/>
+</CallExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>

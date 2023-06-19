@@ -21,10 +21,9 @@ import Triangle.AbstractSyntaxTrees.ArrayAggregate;
 import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
-import Triangle.AbstractSyntaxTrees.BinaryExpression;  
-import Triangle.AbstractSyntaxTrees.BodyComplex;
-import Triangle.AbstractSyntaxTrees.BodyProgram;
-import Triangle.AbstractSyntaxTrees.BodySingle;
+import Triangle.AbstractSyntaxTrees.BinaryExpression;   
+import Triangle.AbstractSyntaxTrees.CodeProgram;
+import Triangle.AbstractSyntaxTrees.Code;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
@@ -171,7 +170,7 @@ public class Parser {
   public Program parseProgram() {
 
     Program programAST = null;
-    BodyProgram body = null;
+    CodeProgram codigo = null;
 
     previousTokenPosition.start = 0;
     previousTokenPosition.finish = 0;
@@ -198,12 +197,9 @@ public class Parser {
 
       }
       Command cAST = parseCommand();
-      if (pkgCounter == 0)
-          body = new BodySingle(cAST, previousTokenPosition);
-      else
-          body = new BodyComplex(pkgDeclarationAST, cAST, previousTokenPosition);
-
-      programAST = new Program(body, previousTokenPosition);
+      codigo = new Code(cAST, previousTokenPosition);
+     
+      programAST = new Program(codigo, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {
         syntacticError("\"%\" is not a valid token after the end of the program",
             currentToken.spelling);

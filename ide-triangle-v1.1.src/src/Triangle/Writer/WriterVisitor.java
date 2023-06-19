@@ -11,9 +11,8 @@ import Triangle.AbstractSyntaxTrees.ArrayExpression;
 import Triangle.AbstractSyntaxTrees.ArrayTypeDenoter;
 import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
-import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;  
-import Triangle.AbstractSyntaxTrees.BodyComplex;
-import Triangle.AbstractSyntaxTrees.BodySingle;
+import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;   
+import Triangle.AbstractSyntaxTrees.Code;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
@@ -826,20 +825,13 @@ public class WriterVisitor implements Visitor {
     }
 
     @Override
-    public Object visitBodySingle(BodySingle aThis, Object o) {
+    public Object visitBodySingle(Code aThis, Object o) {
         writeLineHTML("<BodySingle>");        
         aThis.C.visit(this, null);
         writeLineHTML("</BodySingle>");
         return null;
     }
 
-    @Override
-    public Object visitBodyComplex(BodyComplex aThis, Object o) {
-        writeLineHTML("<BodyComplex>");      
-        aThis.P.visit(this, null);  
-        aThis.C.visit(this, null);        
-        writeLineHTML("</BodyComplex>");
-        return null;
-    }
+ 
  
 }

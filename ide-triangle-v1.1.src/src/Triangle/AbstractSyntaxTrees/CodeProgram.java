@@ -2,9 +2,9 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public abstract class BodyProgram extends AST{
+public abstract class CodeProgram extends AST{
 
-    public BodyProgram(SourcePosition thePosition) {
+    public CodeProgram(SourcePosition thePosition) {
         super (thePosition);
         
     }

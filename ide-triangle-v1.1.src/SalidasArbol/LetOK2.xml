@@ -8,7 +8,6 @@
 </VarDeclaration>
 <SequentialCommand>
 <SequentialCommand>
-<SequentialCommand>
 <AssignCommand>
 <SimpleVname>
 <LongIdentifierSimple>
@@ -19,27 +18,6 @@
 <IntegerLiteral value="0"/>
 </IntegerExpression>
 </AssignCommand>
-<AssignCommand>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="a"/>
-</LongIdentifierSimple>
-</SimpleVname>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<LongIdentifierSimple>
-<Identifier value="a"/>
-</LongIdentifierSimple>
-</SimpleVname>
-</VnameExpression>
-<Operator value="+"/>
-<IntegerExpression>
-<IntegerLiteral value="9"/>
-</IntegerExpression>
-</BinaryExpression>
-</AssignCommand>
-</SequentialCommand>
 <AssignCommand>
 <SimpleVname>
 <LongIdentifierSimple>

@@ -130,7 +130,7 @@
 </RECDeclaration>
 <CallCommand>
 <LongIdentifierSimple>
-<Identifier value="Ping"/>
+<Identifier value="Pong"/>
 </LongIdentifierSimple>
 <SingleActualParameterSequence>
 <ConstActualParameter>

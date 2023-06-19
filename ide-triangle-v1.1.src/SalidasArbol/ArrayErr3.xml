@@ -1,0 +1,35 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<BodySingle>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="lista"/>
+<ArrayTypeDenoter>
+<IntegerLiteral value="20"/>
+<IntTypeDenoter/>
+</ArrayTypeDenoter>
+</VarDeclaration>
+<CallCommand>
+<LongIdentifierSimple>
+<Identifier value="putint"/>
+</LongIdentifierSimple>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SubscriptVname>
+<SimpleVname>
+<LongIdentifierSimple>
+<Identifier value="lista"/>
+</LongIdentifierSimple>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="21"/>
+</IntegerExpression>
+</SubscriptVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</LetCommand>
+</BodySingle>
+</Program>

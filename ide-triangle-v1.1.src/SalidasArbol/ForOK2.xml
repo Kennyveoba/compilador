@@ -5,7 +5,7 @@
 <InitializedVariableDeclaration>
 <Identifier value="k"/>
 <IntegerExpression>
-<IntegerLiteral value="10"/>
+<IntegerLiteral value="8"/>
 </IntegerExpression>
 </InitializedVariableDeclaration>
 <ForCommand>

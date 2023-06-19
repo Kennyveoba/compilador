@@ -18,7 +18,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
 
 public class Program extends AST {
 
-  public Program (BodyProgram bodyAST,SourcePosition thePosition) {
+  public Program (CodeProgram bodyAST,SourcePosition thePosition) {
     super (thePosition);
     B = bodyAST;
 
@@ -28,6 +28,6 @@ public class Program extends AST {
     return v.visitProgram(this, o);
   }
 
-  public BodyProgram B;
+  public CodeProgram B;
 
 }
