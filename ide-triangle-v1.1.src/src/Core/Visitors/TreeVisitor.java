@@ -400,7 +400,7 @@ public class TreeVisitor implements Visitor {
     public DefaultMutableTreeNode createUnary(String caption, AST child1) {
         DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
         //DefaultMutableTreeNode fdsdf = (DefaultMutableTreeNode) child1.visit(this, null);
-        //t.add((DefaultMutableTreeNode) child1.visit(this, null));
+        t.add((DefaultMutableTreeNode) child1.visit(this, null));
 
         return (t);
     }
@@ -414,8 +414,8 @@ public class TreeVisitor implements Visitor {
      */
     public DefaultMutableTreeNode createBinary(String caption, AST child1, AST child2) {
         DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
-        //t.add((DefaultMutableTreeNode) child1.visit(this, null));             Da error -> (Revisar)
-        //t.add((DefaultMutableTreeNode) child2.visit(this, null));
+        t.add((DefaultMutableTreeNode) child1.visit(this, null));             
+        t.add((DefaultMutableTreeNode) child2.visit(this, null));
 
         return (t);
     }
@@ -458,7 +458,7 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitPackageIdentifier(PackageIdentifier packageIdentifier, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return createNullary(packageIdentifier.spelling);
     }
 
     @Override
@@ -493,12 +493,12 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitForInCommand(ForInCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createBinary("For In Command", ast.E1, ast.C));
     }
 
     @Override
     public Object visitUntilCommand(UntilCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createBinary("Until Command", aThis.E, aThis.C));
     }
 
 
@@ -522,22 +522,22 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitLongIdentifierComplex(LongIdentifierComplex ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return createBinary("Long Identifier Complex", ast.Pac, ast.I);
     }
     
     @Override
-    public Object visitSinglePackageDeclaration(SinglePackage aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object visitSinglePackageDeclaration(SinglePackage ast, Object o) {
+        return (createBinary("Package Declaration", ast.I, ast.D));
     }
 
     @Override
-    public Object visitSequentialPackageDeclaration(SequentialPackage aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object visitSequentialPackageDeclaration(SequentialPackage ast, Object o) {
+        return (createBinary("Sequential Package", ast.package1, ast.package2));
     }
 
     @Override
     public Object visitRepeatTimes(RepeatTimes aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (createBinary("Repeat Times", aThis.E, aThis.C));
     }
  
     @Override

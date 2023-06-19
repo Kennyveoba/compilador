@@ -2,10 +2,16 @@
 <Program>
 <BodySingle>
 <LetCommand>
+<SequentialDeclaration>
 <VarDeclaration>
 <Identifier value="a"/>
 <IntTypeDenoter/>
 </VarDeclaration>
+<VarDeclaration>
+<Identifier value="b"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+</SequentialDeclaration>
 <SequentialCommand>
 <CallCommand>
 <LongIdentifierSimple>

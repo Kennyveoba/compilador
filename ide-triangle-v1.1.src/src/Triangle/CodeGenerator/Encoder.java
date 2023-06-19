@@ -1035,7 +1035,7 @@ public final class Encoder implements Visitor {
         return new Integer(extraSize);
     }
  
-    
+ 
     //--------------------------------------------------------------------------
     //| "repeat" "while" Expression "do" Command "end"
     //| "repeat" "until" Expression "do" Command "end"

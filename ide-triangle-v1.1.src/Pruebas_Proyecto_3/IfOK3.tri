@@ -2,7 +2,8 @@
 
 let
 
-  var a : Integer
+  var a : Integer;
+  var b : Integer
 
 in
   getint (var a);

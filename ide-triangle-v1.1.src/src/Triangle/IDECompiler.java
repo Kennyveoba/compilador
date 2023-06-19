@@ -78,8 +78,6 @@ public class IDECompiler {
             
              
             Writer writerXML = new Writer(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
-        
-            writerXML.write(rootAST);
             if (report.numErrors == 0) {
                
                 System.out.println("Code Generation ...");
